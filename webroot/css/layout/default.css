@@ -26,7 +26,10 @@ header {
       text-align: center;
       font-weight: bold; }
       header nav.breadcrumb .box:nth-child(1) {
-        background-color: #006638; }
+        background-color: #006638;
+        background-image: url(/img/common/logo.svg);
+        background-repeat: no-repeat;
+        text-indent: 3em; }
       header nav.breadcrumb .box:nth-child(2) {
         background-color: #046F1B; }
       header nav.breadcrumb .box:nth-child(3) {
@@ -41,7 +44,8 @@ header {
         padding: 0 1em;
         transition: all 200ms 0s ease; }
         header nav.breadcrumb .box a:hover {
-          background: #ACC255; }
+          background: rgba(255, 255, 255, 0.2);
+          color: #FFE600; }
 
 /**
  * main style
