@@ -49,3 +49,12 @@ configuration relevant for your application.
 The app skeleton uses a subset of [Foundation](http://foundation.zurb.com/) (v5) CSS
 framework by default. You can, however, replace it with any other library or
 custom styles.
+
+## sass
+
+Create folder "webroot/src/sass".
+Start terminal, and move to webroot folder, input to this command.
+
+```
+sass --watch --sourcemap=none --no-cache .\src\sass:.\css\
+```

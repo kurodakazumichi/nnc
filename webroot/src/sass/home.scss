@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+//-----------------------------------------------------------------------------
+// 全体共通設定
+//-----------------------------------------------------------------------------
+html, body {
+  font-size: 1vw;
+  font-family: 'Rounded Mplus 1c', serif;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+//-----------------------------------------------------------------------------
+// 共通デザイン
+//-----------------------------------------------------------------------------
+// un order list
+ul {
+    &.d1 li {
+      background-image: url(/img/common/pad1.svg);
+      background-repeat:no-repeat;
+      background-size: 1.3em;
+      text-indent:1.5em;;
+    }
+}
+
+// table
+table {
+  &.d1 {
+    tr {
+      th div {
+        background: #CAD1DB;
+        padding:0.1em;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 0.2em;
+        margin: 0.1em 0;
+      }
+    }
+  }
+
+}
+
+//-----------------------------------------------------------------------------
+// header
+//-----------------------------------------------------------------------------
+header {
+  background:#44810F;
+  color:white;
+
+  nav.breadcrumb {
+    display:flex;
+    flex-wrap: none;
+
+    .box {
+      min-width: 8vw;
+      font-size: 1.3em;
+      line-height: 3.5em;
+      text-align:center;
+
+      &:nth-child(1) {
+        background-color:#006638;
+      }
+
+      &:nth-child(2) {
+        background-color:#046F1B;
+      }
+      &:nth-child(3) {
+        background-color:#19780A;
+      }
+      &:nth-child(4) {
+        flex-grow: 1;
+      }
+
+      a{
+        display: block;
+        text-align: center;
+        color:white;
+        text-decoration: none;
+        transition: all 200ms 0s ease;
+        padding:0 1em;
+        &:hover {
+          background: #ACC255;
+        }
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+// main
+//-----------------------------------------------------------------------------
+main {
+  min-height:100vh;
+  overflow: hidden;
+  background-color:rgba(200,200,200,0.05);
+
+  .channels {
+    background-image:url(/img/common/bg.png);
+  }
+
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+
+    .monitor {
+      width:24vw;
+      height:24vw;
+      position: relative;
+
+      img {
+        position: absolute;
+        width:100%;
+      }
+
+      .display {
+        position: absolute;
+        display: block;
+        background: #555;
+        border-radius: 1vw;
+        left: 4.8vw;
+        top: 9.2vw;
+        width: 60%;
+        height: 30%;
+
+        a {
+          position: absolute;
+          display: block;
+          width: 100%;
+          height:100%;
+          border-radius: 2vw;
+          transition: all 500ms 0s ease;
+          color: white;
+          text-align: center;
+          line-height: 7vw;
+          text-decoration: none;
+          box-shadow: 0 0 0 6vw #000 inset;
+
+          &:hover, &:active {
+            background: #fff;
+            box-shadow: 0 0 1vw 0.5vw #bbb inset;
+          }
+
+          span {
+            display:block;
+            width:100%;
+            font-weight: bold;
+
+            &.tt {
+              position: absolute;
+              font-size: 4.0em;
+              color:rgba(255, 255, 255, 1);
+              transition: color 500ms 0s ease;
+
+              &.tt:hover {
+                color:rgba(255, 255, 255, 0);
+              }
+            }
+
+
+
+            &.ut {
+              position: absolute;
+              font-size: 2.5em;
+              color:rgba(0, 0, 0, 0);
+              transition: color 500ms 0s ease;
+              &:hover {
+                display:block;
+                color:rgba(0, 0, 0, 1);
+
+              }
+            }
+
+
+          }
+        }
+      }
+    }
+  }
+
+  .misc {
+    font-size: 1.3vw;
+    line-height: 1.8em;
+
+    section {
+      font-size: 1.2em;
+      flex-grow: 1;
+      margin-bottom:2em;
+      padding:0.5em;
+
+      h2 {
+        text-indent: 0.2em;
+        font-size: 2.5vw;
+        line-height: 1.5em;
+        margin-bottom: 0.5em;
+        font-weight:bold;
+        border-bottom:0.7vw solid #93B11D;
+        border-top:0.7vw solid #93B11D;
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+// footer
+//-----------------------------------------------------------------------------
+footer {
+  background: #006638;
+  color:white;
+  text-align: center;
+  font-size: 1em;
+  line-height: 1.8em;
+}
