@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="pattern-0" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" viewBox="0 0 100 100">
+      <path d="M 0 0 L 50 0 L 50 100 L 0 100 Z" style="fill: black;"/>
+    </pattern>
+  </defs>
+  <g>
+    <path style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(42, 42, 42); fill: rgb(0, 131, 72); stroke-width: 12;" d="M 253.275 156.511 C 96.93 151.241 82.96 54.47 76.711 170.699 C 76.711 170.699 44.812 211.869 49.768 274.23 C 57.593 372.677 145.327 386.276 253.275 386.26"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(42, 42, 42); fill: rgb(0, 131, 72); stroke-width: 12;" d="M 454.329 343.489 C 297.984 348.759 284.014 445.53 277.765 329.301 C 277.765 329.301 245.866 288.131 250.822 225.77 C 258.647 127.323 346.381 113.724 454.329 113.74" transform="matrix(-1, 0, 0, -1, 704.627966, 500.000625)"/>
+  </g>
+</svg>
