@@ -27,7 +27,23 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    /**
+     * パンくずデータ
+     * format
+     * [
+     *  ['title' => value, 'url' => value],
+     *  ['title' => value, 'url' => value],
+     *  ...
+     * ]
+     */
+    protected $breadcrumbs = [];
 
+    /**
+     * パンくずリストにリンクを追加したい場合はこのメソッドを使用する。
+     */
+    protected function addCrumb($title, $url = "") {
+      $this->breadcrumbs[] = ['title' => $title, 'url' => $url];
+    }
     /**
      * Initialization hook method.
      *
@@ -50,5 +66,16 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
+    }
+
+    /**
+     * before rendering hook method.
+     */
+    public function beforeRender($event)
+    {
+      parent::beforeRender($event);
+
+      // Viewにパンくずデータをセット
+      $this->set('breadcrumbs', $this->breadcrumbs);
     }
 }
