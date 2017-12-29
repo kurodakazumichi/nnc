@@ -1,0 +1,123 @@
+@charset "utf-8";
+/**
+ * home.scss
+ */
+
+/**
+ * main style
+ */
+main {
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+  }
+
+  .channels {
+    box-shadow: 0 0 1vw 0 rgba(0,0,0,0.2) inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+
+    // Cat shaped monitor sizing.
+    .monitor {
+      width:24vw;
+      height:24vw;
+      position: relative;
+
+      // fit to parent width.
+      img {
+        position: absolute;
+        width:100%;
+      }
+
+      // Don't specify transition property in display class.
+      // If you specify it, this contents will animation when display size changed.
+      // For the reason, transition property specify to child element of display.
+      .display {
+        position: absolute;
+        display: block;
+        background: #555;
+        border-radius: 1vw;
+        left: 4.8vw;
+        top: 9.2vw;
+        width: 60%;
+        height: 30%;
+
+        a {
+          position: absolute;
+          display: block;
+          width: 100%;
+          height:100%;
+          border-radius: 2vw;
+          transition: all 500ms 0s ease;
+          color: white;
+          text-align: center;
+          line-height: 7vw;
+          text-decoration: none;
+          box-shadow: 0 0 0 6vw #000 inset;
+
+          &:hover, &:active {
+            background: #fff;
+            box-shadow: 0 0 1vw 0.5vw #bbb inset;
+          }
+
+          span {
+            display:block;
+            width:100%;
+            font-weight: bold;
+
+            &.tt {
+              position: absolute;
+              font-size: 4.0em;
+              color:rgba(255, 255, 255, 1);
+              transition: color 500ms 0s ease;
+
+              &.tt:hover {
+                color:rgba(255, 255, 255, 0);
+              }
+            }
+
+            &.ut {
+              position: absolute;
+              font-size: 2.5em;
+              color:rgba(0, 0, 0, 0);
+              transition: color 500ms 0s ease;
+              &:hover {
+                display:block;
+                color:rgba(0, 0, 0, 1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * misc area style
+   */
+  .misc {
+    font-size: 1.3vw;
+    line-height: 1.8em;
+
+    section {
+      font-size: 1.2em;
+      flex-grow: 1;
+      margin-bottom:2em;
+
+      h2 {
+        text-indent: 0.2em;
+        font-size: 2.5vw;
+        line-height: 1.8em;
+        margin-bottom: 1em;
+        font-weight:bold;
+        background:rgba(255,255,255,0.5);
+        color:black;
+      }
+    }
+  }
+}

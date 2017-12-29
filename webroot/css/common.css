@@ -1,0 +1,36 @@
+/**
+ * common.scss
+ */
+/**
+ * declare un order list styles
+ */
+ul.d1 li {
+  background-image: url(/img/common/pad1.svg);
+  background-repeat: no-repeat;
+  background-size: 1.3em;
+  text-indent: 1.5em; }
+
+/**
+ * declare table styles
+ */
+table.d1 tr th div {
+  background: #CAD1DB;
+  padding: 0.1em;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 0.2em;
+  margin: 0.1em 0; }
+
+/**
+ * declare general padding style
+ *
+ * @Naming Rule
+ * 1. Prefix is p, It is first string of padding.
+ * 2. Number in class name is padding value.
+ *    From right to left are the top, right, bottom, left .
+ */
+.p1111 {
+  padding: 1em; }
+
+.p0101 {
+  padding: 0 1em; }

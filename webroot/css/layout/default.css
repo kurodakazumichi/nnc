@@ -1,0 +1,62 @@
+/**
+ * default.css
+ */
+html, body {
+  font-size: 1vw;
+  font-family: 'Rounded Mplus 1c', serif; }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+/**
+ * header
+ * declare breadcrumb style
+ */
+header {
+  background: #44810F;
+  color: white; }
+  header nav.breadcrumb {
+    display: flex;
+    flex-wrap: none; }
+    header nav.breadcrumb .box {
+      min-width: 8vw;
+      font-size: 1.3em;
+      line-height: 3.5em;
+      text-align: center;
+      font-weight: bold; }
+      header nav.breadcrumb .box:nth-child(1) {
+        background-color: #006638; }
+      header nav.breadcrumb .box:nth-child(2) {
+        background-color: #046F1B; }
+      header nav.breadcrumb .box:nth-child(3) {
+        background-color: #19780A; }
+      header nav.breadcrumb .box:nth-child(4) {
+        flex-grow: 1; }
+      header nav.breadcrumb .box a {
+        display: block;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding: 0 1em;
+        transition: all 200ms 0s ease; }
+        header nav.breadcrumb .box a:hover {
+          background: #ACC255; }
+
+/**
+ * main style
+ */
+main {
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: url(/img/common/bg.png); }
+
+/**
+ * footer style
+ */
+footer {
+  background: #006638;
+  color: white;
+  text-align: center;
+  font-size: 1em;
+  line-height: 1.8em; }
