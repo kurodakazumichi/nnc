@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+.admin{
+
+  .ui-error {
+    background: #F7E0EC;
+    border:1px solid #CE93B3;
+    border-radius: 0.2em;
+
+    p{
+      padding:0.5em 1em;
+    }
+  }
+
+  .editable {
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 100, 0, 0.1);
+    }
+  }
+  section {
+    box-shadow: 0 0 10px 2px rgba(0,0,0,0.2);
+    padding:1em;
+    margin-bottom: 1em;
+    border-radius: 0.4em;
+
+    h2 {
+      background: #3B98B2;
+      padding:0.1em 0.3em;
+      color:white;
+      font-size: 1.4em;
+      border-radius: 0.2em;
+    }
+
+    table.single {
+      background:#E3E3E3;
+      border-radius: 0.5em;
+       tr td{
+         padding:1em;
+       }
+    }
+
+    table.multi {
+      width:100%;
+      thead {
+        border-bottom:2px solid #000;
+        tr {
+          background:#3B98B2;
+
+          th {
+
+            color:white;
+            a {color:white;}
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) { background: #fcfcfc; }
+          &:nth-child(odd)  { background: #eeeeee; }
+          &.active          { background: rgba(255, 0, 0, 0.1); }
+        }
+      }
+
+
+      th, td {
+        padding:0.3em;
+        font-size:1.3em;
+        &:nth-child(odd) {
+          background: rgba(0,0,100, 0.05);
+        }
+      }
+    }
+  }
+}
+
+// jquery-uiのためのスタイル 暫定的にここに置いてます。
+#dialog-link {
+  padding: .4em 1em .4em 20px;
+  text-decoration: none;
+  position: relative;
+}
+#dialog-link span.ui-icon {
+  margin: 0 5px 0 0;
+  position: absolute;
+  left: .2em;
+  top: 50%;
+  margin-top: -8px;
+}
+.icons {
+  margin: 0;
+  padding: 0;
+}
+.icons li {
+  margin: 2px;
+  position: relative;
+  padding: 4px 0;
+  cursor: pointer;
+  float: left;
+  list-style: none;
+}
+.icons span.ui-icon {
+  float: left;
+  margin: 0 4px;
+}
+.fakewindowcontain .ui-widget-overlay {
+  position: absolute;
+}
+select {
+  width: 200px;
+}

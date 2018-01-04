@@ -1,0 +1,81 @@
+.admin .ui-error {
+  background: #F7E0EC;
+  border: 1px solid #CE93B3;
+  border-radius: 0.2em; }
+  .admin .ui-error p {
+    padding: 0.5em 1em; }
+.admin .editable {
+  cursor: pointer; }
+  .admin .editable:hover {
+    background: rgba(0, 100, 0, 0.1); }
+.admin section {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.4em; }
+  .admin section h2 {
+    background: #3B98B2;
+    padding: 0.1em 0.3em;
+    color: white;
+    font-size: 1.4em;
+    border-radius: 0.2em; }
+  .admin section table.single {
+    background: #E3E3E3;
+    border-radius: 0.5em; }
+    .admin section table.single tr td {
+      padding: 1em; }
+  .admin section table.multi {
+    width: 100%; }
+    .admin section table.multi thead {
+      border-bottom: 2px solid #000; }
+      .admin section table.multi thead tr {
+        background: #3B98B2; }
+        .admin section table.multi thead tr th {
+          color: white; }
+          .admin section table.multi thead tr th a {
+            color: white; }
+    .admin section table.multi tbody tr:nth-child(even) {
+      background: #fcfcfc; }
+    .admin section table.multi tbody tr:nth-child(odd) {
+      background: #eeeeee; }
+    .admin section table.multi tbody tr.active {
+      background: rgba(255, 0, 0, 0.1); }
+    .admin section table.multi th, .admin section table.multi td {
+      padding: 0.3em;
+      font-size: 1.3em; }
+      .admin section table.multi th:nth-child(odd), .admin section table.multi td:nth-child(odd) {
+        background: rgba(0, 0, 100, 0.05); }
+
+#dialog-link {
+  padding: .4em 1em .4em 20px;
+  text-decoration: none;
+  position: relative; }
+
+#dialog-link span.ui-icon {
+  margin: 0 5px 0 0;
+  position: absolute;
+  left: .2em;
+  top: 50%;
+  margin-top: -8px; }
+
+.icons {
+  margin: 0;
+  padding: 0; }
+
+.icons li {
+  margin: 2px;
+  position: relative;
+  padding: 4px 0;
+  cursor: pointer;
+  float: left;
+  list-style: none; }
+
+.icons span.ui-icon {
+  float: left;
+  margin: 0 4px; }
+
+.fakewindowcontain .ui-widget-overlay {
+  position: absolute; }
+
+select {
+  width: 200px; }
