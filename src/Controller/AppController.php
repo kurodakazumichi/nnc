@@ -16,6 +16,10 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
+use Cake\Network\Exception\BadRequestException;
+use Cake\Network\Exception\NotFoundException;
 
 /**
  * Application Controller
@@ -28,15 +32,29 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
     /**
-     * パンくずデータ
-     * format
-     * [
-     *  ['title' => value, 'url' => value],
-     *  ['title' => value, 'url' => value],
-     *  ...
-     * ]
+     * Breadcrumb list.
      */
     protected $breadcrumbs = [];
+
+    /**
+     * Action list of ajax only.
+     */
+    protected $ajaxOnlyActions = [];
+
+    /**
+     * Related Link list.
+     */
+    protected $relatedLinks = [];
+
+    /**
+     * load css list.
+     */
+    protected $styles = [];
+
+    /**
+     * load js list.
+     */
+    protected $jscripts = [];
 
     /**
      * パンくずリストにリンクを追加したい場合はこのメソッドを使用する。
@@ -44,6 +62,43 @@ class AppController extends Controller
     protected function addCrumb($title, $url = "") {
       $this->breadcrumbs[] = ['title' => $title, 'url' => $url];
     }
+
+    /**
+     * 関連リンクリストにデータを追加する。
+     */
+    protected function addRelatedLink($url, $title) {
+
+      $this->relatedLinks[] = [$title, ['controller' => $url[0], 'action' => $url[1]]];
+    }
+
+    /**
+     * 読み込みたいCSSのパスを追加します。
+     * reset.css、common.css、またLayout,Controller,Actionに関連するstyleなど
+     * 一部のCSSはbeforeRenderのタイミングで自動追加されるため
+     * このメソッドで明示的に追加する必要はありません。
+     */
+    protected function addStyle($path) {
+      if(is_array($path)) {
+        $this->styles += $path;
+      } else {
+        $this->styles[] = $path;
+      }
+    }
+
+    /**
+    * 読み込みたいJSのパスを追加します。
+    * jqueryやLayout,Controller,Actionに関連するjsなど
+    * 一部のJSはbeforeRenderのタイミングで自動追加されるため
+    * このメソッドで明示的に追加する必要はありません。
+     */
+    protected function addScript($path) {
+      if(is_array($path)) {
+        $this->jscripts += $path;
+      } else {
+        $this->jscripts[] = $path;
+      }
+    }
+
     /**
      * Initialization hook method.
      *
@@ -60,6 +115,9 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        // replace from default table class to ex table class.
+        TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -68,14 +126,170 @@ class AppController extends Controller
         //$this->loadComponent('Csrf');
     }
 
+    public function beforeFilter(Event $event)
+    {
+      parent::beforeFilter($event);
+
+      // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
+      if(!$this->request->is("ajax")) {
+        if(in_array($this->request->action, $this->ajaxOnlyActions)){
+          if(Configure::read('debug')) {
+            throw new BadRequestException(__("Ajaxでのみアクセス可能です。"));
+          } else {
+            throw new NotFoundException();
+          }
+        }
+      }
+    }
+
     /**
      * before rendering hook method.
      */
-    public function beforeRender($event)
+    public function beforeRender(Event $event)
     {
       parent::beforeRender($event);
 
-      // Viewにパンくずデータをセット
       $this->set('breadcrumbs', $this->breadcrumbs);
+      $this->set('relatedLinks', $this->relatedLinks);
+      $this->set('styles', $this->getStyles());
+      $this->set('jscripts', $this->getScripts());
     }
+
+    public function getLayoutName()
+    {
+      $layout = $this->viewBuilder()->getLayout();
+      return is_null($layout)? "default" : $layout;
+    }
+
+    /**
+     * Layout,Controller,Actionに対応するCSSが存在すればそのリストを返す
+     */
+    private function getStyles_LCA()
+    {
+      $l = $this->getLayoutname();
+      $c = mb_strtolower($this->request->controller);
+      $a = $this->request->action;
+      $list = [];
+
+      // レイアウトに対応したCSSが存在すればリストに追加
+      if(!empty($l)) {
+        $path = "layout/$l";
+        if(file_exists(WWW_ROOT . "css/$path.css")) {
+          $list[] = $path;
+        }
+      }
+
+      // コントローラーに対応したCSSが存在すればリストに追加
+      $path = "controller/$c";
+      if(file_exists(WWW_ROOT ."css/$path.css")) {
+        $list[] = $path;
+      }
+
+      // アクションに対応したCSSが存在すればリストに追加
+      $path = "$c/$a";
+      if(file_exists(WWW_ROOT . "css/$path.css")) {
+        $list[] = $path;
+      }
+      return $list;
+    }
+
+    /**
+     * Layout,Controller,Actionに対応するJSが存在すればそのリストを返す
+     */
+    private function getScripts_LCA()
+    {
+      $l = $this->getLayoutname();
+      $c = mb_strtolower($this->request->controller);
+      $a = $this->request->action;
+      $list = [];
+
+      // レイアウトに対応したCSSが存在すればリストに追加
+      if(!empty($l)) {
+        $path = "layout/$l";
+        if(file_exists(WWW_ROOT . "js/$path.js")) {
+          $list[] = $path;
+        }
+      }
+
+      // コントローラーに対応したCSSが存在すればリストに追加
+      $path = "controller/$c";
+      if(file_exists(WWW_ROOT ."js/$path.js")) {
+        $list[] = $path;
+      }
+
+      // アクションに対応したCSSが存在すればリストに追加
+      $path = "$c/$a";
+      if(file_exists(WWW_ROOT . "js/$path.js")) {
+        $list[] = $path;
+      }
+      return $list;
+    }
+
+    /**
+     * 読み込むCSSリストを取得する。
+     */
+    private function getStyles()
+    {
+      // デフォルトで読み込むCSS
+      $css = [
+        'https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css'
+        ,'cssreset-min.css'
+        ,'common.css'
+      ];
+
+      // Layout,Controller,Actionに関するCSSを追加
+      $css = array_merge($css, $this->getStyles_LCA());
+
+      // 管理者用(ログイン時のみ読み込む)
+      $css[] = "admin.css";
+      $css[] = '/venders/jquery/ui/jquery-ui.min.css';
+
+      // 他に読み込むものがあればマージする。
+      $css = array_merge($css, $this->styles);
+
+      return $css;
+    }
+
+    /**
+     * 読み込むJSリストを取得する。
+     */
+    private function getScripts()
+    {
+      $js = [
+        '/venders/jquery/jquery-3.2.1.min.js'
+      ];
+
+      // 管理者の時だけ読み込む
+      $js[] = '/venders/jquery/ui/jquery-ui.min.js';
+
+      // アクションに対応したJSが存在すれば読み込む
+      $js = array_merge($js, $this->getScripts_LCA());
+
+      // 他にあればマージする。
+      $js = array_merge($js, $this->jscripts);
+
+      return $js;
+    }
+
+    /**
+     * Viewを使用せず、シンプルなテキストを出力して終了します。
+     */
+    protected function outputSimpleText($text)
+    {
+      $this->autoRender = false;
+      header("Content-Type: text/plain; charset=utf-8");
+      echo $text;
+    }
+
+    /**
+     * Viewを使用せず、JSONテキストを出力して終了します。
+     */
+    protected function outputJsonText($msg, $status)
+    {
+      $this->autoRender = false;
+      header("Content-Type: application/json; charset=utf-8");
+      $json = ["msg" => $msg, "status" => $status];
+      echo json_encode($json);
+    }
+
 }
