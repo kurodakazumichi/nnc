@@ -43,5 +43,24 @@ table {
  * 2. Number in class name is padding value.
  *    From right to left are the top, right, bottom, left .
  */
-.p1111 { padding: 1em; }
-.p0101 { padding: 0 1em; }
+.p1111 { padding: 1vw; }
+.p0101 { padding: 0 1vw; }
+.p1010 { padding: 1vw 0; }
+/**
+ * declare general margin style
+ *
+ * @Naming Rule
+ * 1. Prefix is m, It is first string of margin.
+ * 2. Number in class name is margin value.
+ *    From right to left are the top, right, bottom, left .
+ */
+ .m0010 {
+   margin-bottom:1vw;
+ }
+ .m0020 {
+   margin-bottom:2vw;
+ }
+
+ .hide {
+   display:none;
+ }

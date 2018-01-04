@@ -19,21 +19,15 @@
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Nekonecode:
-        <?= $this->fetch('title') ?>
+        <?= $this->fetch('title') ?>:Nekonecode
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-
-    <?= $this->Html->css('https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css'); ?>
-    <?= $this->Html->css('cssreset-min.css'); ?>
-    <?= $this->Html->css('common.css'); ?>
-    <?= $this->Html->css('layout/default.css'); ?>
-
-    <?= $this->Html->css('base.css'); ?>
+    <?= $this->element("css_and_js"); ?>
 
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
 </head>
 <body ontouchstart="">
   <div id="wrapper">
@@ -58,10 +52,19 @@
       </nav>
     </header>
     <main>
+      <div class="contents">
         <?= $this->fetch('content') ?>
+      </div>
+      <div class="gadgets">
+        <?= $this->fetch('gadgets') ?>
+      </div>
     </main>
     <footer>
       ©Copyright Since 2017 Nekonecode All rights reserved.
     </footer>
 </body>
+<script type="text/javascript">
+  <?= $this->fetch('postfixScripts') ?>
+</script>
+
 </html>

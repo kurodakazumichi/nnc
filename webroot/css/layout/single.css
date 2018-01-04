@@ -49,6 +49,8 @@ header {
         header nav.breadcrumb .box a:hover {
           background: rgba(255, 255, 255, 0.2);
           color: #FFE600; }
+      header nav.breadcrumb .box h1 {
+        font-weight: bold; }
 
 /**
  * main style

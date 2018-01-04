@@ -65,14 +65,13 @@ class CategoriesTable extends AppTable
             ->scalar('name')
             ->maxLength('name', 64)
             ->requirePresence('name', 'create')
-            ->notEmpty('name')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmpty('name', "カテゴリ名は必須にゃ。")
+            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', "message" => "同じ名前のカテゴリが既に登録されているよ。"]);
 
         $validator
             ->integer('order_no')
             ->requirePresence('order_no', 'create')
-            ->notEmpty('order_no')
-            ->add('order_no', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmpty('order_no');
 
         return $validator;
     }
@@ -87,7 +86,6 @@ class CategoriesTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['name']));
-        $rules->add($rules->isUnique(['order_no']));
 
         return $rules;
     }

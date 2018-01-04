@@ -25,10 +25,7 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <?= $this->Html->css('https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css'); ?>
-    <?= $this->Html->css('cssreset-min.css'); ?>
-    <?= $this->Html->css('common.css'); ?>
-    <?= $this->Html->css('layout/single.css'); ?>
+    <?= $this->element("css_and_js"); ?>
 
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
