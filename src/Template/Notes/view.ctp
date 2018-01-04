@@ -3,28 +3,13 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $note
  */
+$this->start("gadgets");
+echo $this->element("gadget/related_menu");
+$this->end();
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Note'), ['action' => 'edit', $note->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Note'), ['action' => 'delete', $note->id], ['confirm' => __('Are you sure you want to delete # {0}?', $note->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Notes'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Note'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Articles'), ['controller' => 'Articles', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Article'), ['controller' => 'Articles', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Modules'), ['controller' => 'Modules', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Module'), ['controller' => 'Modules', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tags'), ['controller' => 'Tags', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tag'), ['controller' => 'Tags', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Sections'), ['controller' => 'Sections', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Section'), ['controller' => 'Sections', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="notes view large-9 medium-8 columns content">
-    <h3><?= h($note->title) ?></h3>
+<div class="admin">
+  <section>
+    <h2><?= h($note->title) ?></h2>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Memo') ?></th>
@@ -182,5 +167,7 @@
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
-    </div>
+    </div>    
+  </section>
+
 </div>

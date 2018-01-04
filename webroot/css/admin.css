@@ -1,3 +1,5 @@
+.admin .paginator ul li {
+  display: inline; }
 .admin .ui-error {
   background: #F7E0EC;
   border: 1px solid #CE93B3;
