@@ -20,6 +20,7 @@ class NotesController extends AppController
 
     $this->addCrumb("Notes", "/notes");
 
+    $this->addRelatedLink(['Notes'   , 'index' ], 'List Notes');
     $this->addRelatedLink(['Notes'   , 'add'   ], 'New Note');
     $this->addRelatedLink(['Modules' , 'add'   ], 'New Module');
     $this->addRelatedLink(['Modules' , 'index' ], 'List Modules');
