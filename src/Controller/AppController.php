@@ -42,6 +42,11 @@ class AppController extends Controller
     protected $ajaxOnlyActions = [];
 
     /**
+     * Gadget List.
+     */
+    protected $gadgets = ["related_link"];
+
+    /**
      * Related Link list.
      */
     protected $relatedLinks = [];
@@ -55,6 +60,92 @@ class AppController extends Controller
      * load js list.
      */
     protected $jscripts = [];
+
+    /**
+     * Initialization hook method.
+     *
+     * Use this method to add common initialization code like loading components.
+     *
+     * e.g. `$this->loadComponent('Security');`
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            // 未認証の場合、直前のページに戻します
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
+        // display アクションを許可して、PagesController が引き続き
+        // 動作するようにします。また、読み取り専用のアクションを有効にします。
+        $this->Auth->allow(['display', 'view', 'index']);
+
+        // replace from default table class to ex table class.
+        TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
+
+        /*
+         * Enable the following components for recommended CakePHP security settings.
+         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
+         */
+        //$this->loadComponent('Security');
+        //$this->loadComponent('Csrf');
+    }
+
+    public function beforeFilter(Event $event)
+    {
+      parent::beforeFilter($event);
+
+      // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
+      if(!$this->request->is("ajax")) {
+        if(in_array($this->request->action, $this->ajaxOnlyActions)){
+          if(Configure::read('debug')) {
+            throw new BadRequestException(__("Ajaxでのみアクセス可能です。"));
+          } else {
+            throw new NotFoundException();
+          }
+        }
+      }
+    }
+
+    /**
+     * before rendering hook method.
+     */
+    public function beforeRender(Event $event)
+    {
+      parent::beforeRender($event);
+
+      $this->set('breadcrumbs', $this->breadcrumbs);
+      $this->set('gadgets', $this->gadgets);
+      $this->set('relatedLinks', $this->relatedLinks);
+      $this->set('styles', $this->getStyles());
+      $this->set('jscripts', $this->getScripts());
+      $this->set('logined', $this->Auth->user() != null);
+
+    }
+
+    public function getLayoutName()
+    {
+      $layout = $this->viewBuilder()->getLayout();
+      return is_null($layout)? "default" : $layout;
+    }
 
     /**
      * パンくずリストにリンクを追加したい場合はこのメソッドを使用する。
@@ -97,68 +188,6 @@ class AppController extends Controller
       } else {
         $this->jscripts[] = $path;
       }
-    }
-
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-
-        // replace from default table class to ex table class.
-        TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
-
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
-    }
-
-    public function beforeFilter(Event $event)
-    {
-      parent::beforeFilter($event);
-
-      // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
-      if(!$this->request->is("ajax")) {
-        if(in_array($this->request->action, $this->ajaxOnlyActions)){
-          if(Configure::read('debug')) {
-            throw new BadRequestException(__("Ajaxでのみアクセス可能です。"));
-          } else {
-            throw new NotFoundException();
-          }
-        }
-      }
-    }
-
-    /**
-     * before rendering hook method.
-     */
-    public function beforeRender(Event $event)
-    {
-      parent::beforeRender($event);
-
-      $this->set('breadcrumbs', $this->breadcrumbs);
-      $this->set('relatedLinks', $this->relatedLinks);
-      $this->set('styles', $this->getStyles());
-      $this->set('jscripts', $this->getScripts());
-    }
-
-    public function getLayoutName()
-    {
-      $layout = $this->viewBuilder()->getLayout();
-      return is_null($layout)? "default" : $layout;
     }
 
     /**
