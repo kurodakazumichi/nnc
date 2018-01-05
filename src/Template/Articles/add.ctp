@@ -3,21 +3,16 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $article
  */
+ $this->start("gadgets");
+ echo $this->element("gadget/related_menu");
+ $this->end();
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Articles'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Notes'), ['controller' => 'Notes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Note'), ['controller' => 'Notes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="articles form large-9 medium-8 columns content">
+<div class="admin">
+  <section>
+    <h2><?= __('Add Article') ?></h2>
     <?= $this->Form->create($article) ?>
     <fieldset>
-        <legend><?= __('Add Article') ?></legend>
+
         <?php
             echo $this->Form->control('note_id', ['options' => $notes]);
             echo $this->Form->control('layer');
@@ -27,4 +22,6 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+  </section>
+
 </div>
