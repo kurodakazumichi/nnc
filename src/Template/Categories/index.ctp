@@ -5,10 +5,6 @@
  */
 
 $this->Form->create($category);
-
-$this->start("gadgets");
-echo $this->element("gadget/related_menu");
-$this->end();
 ?>
 
 

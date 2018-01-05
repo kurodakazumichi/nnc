@@ -3,9 +3,6 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $note
  */
-$this->start("gadgets");
-echo $this->element("gadget/related_menu");
-$this->end();
 ?>
 <div class="admin">
   <section>
@@ -167,7 +164,7 @@ $this->end();
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
-    </div>    
+    </div>
   </section>
 
 </div>

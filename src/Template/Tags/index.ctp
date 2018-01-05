@@ -3,9 +3,6 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $tags
  */
- $this->start("gadgets");
- echo $this->element("gadget/related_menu");
- $this->end();
 ?>
 <div class="admin">
   <section>
