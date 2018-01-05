@@ -96,7 +96,7 @@ class AppController extends Controller
 
         // display アクションを許可して、PagesController が引き続き
         // 動作するようにします。また、読み取り専用のアクションを有効にします。
-        $this->Auth->allow(['display', 'view', 'index']);
+        $this->Auth->allow(['display']);
 
         // replace from default table class to ex table class.
         TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
