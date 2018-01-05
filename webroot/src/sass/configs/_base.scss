@@ -67,6 +67,16 @@ header {
       }
     }
   }
+
+  nav.ch {
+
+    ul {
+      display:flex;
+      justify-content:space-around;
+      margin:0;
+      background: #91A182;
+    }
+  }
 }
 
 /**

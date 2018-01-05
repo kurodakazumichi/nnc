@@ -1,51 +1,57 @@
-.admin .paginator ul li {
+header nav.admin ul {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  background: #E1DBC9; }
+
+main div.admin .paginator ul li {
   display: inline; }
-.admin .ui-error {
+main div.admin .ui-error {
   background: #F7E0EC;
   border: 1px solid #CE93B3;
   border-radius: 0.2em; }
-  .admin .ui-error p {
+  main div.admin .ui-error p {
     padding: 0.5em 1em; }
-.admin .editable {
+main div.admin .editable {
   cursor: pointer; }
-  .admin .editable:hover {
+  main div.admin .editable:hover {
     background: rgba(0, 100, 0, 0.1); }
-.admin section {
+main div.admin section {
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
   padding: 1em;
   margin-bottom: 1em;
   border-radius: 0.4em; }
-  .admin section h2 {
+  main div.admin section h2 {
     background: #3B98B2;
     padding: 0.1em 0.3em;
     color: white;
     font-size: 1.4em;
     border-radius: 0.2em; }
-  .admin section table.single {
+  main div.admin section table.single {
     background: #E3E3E3;
     border-radius: 0.5em; }
-    .admin section table.single tr td {
+    main div.admin section table.single tr td {
       padding: 1em; }
-  .admin section table.multi {
+  main div.admin section table.multi {
     width: 100%; }
-    .admin section table.multi thead {
+    main div.admin section table.multi thead {
       border-bottom: 2px solid #000; }
-      .admin section table.multi thead tr {
+      main div.admin section table.multi thead tr {
         background: #3B98B2; }
-        .admin section table.multi thead tr th {
+        main div.admin section table.multi thead tr th {
           color: white; }
-          .admin section table.multi thead tr th a {
+          main div.admin section table.multi thead tr th a {
             color: white; }
-    .admin section table.multi tbody tr:nth-child(even) {
+    main div.admin section table.multi tbody tr:nth-child(even) {
       background: #fcfcfc; }
-    .admin section table.multi tbody tr:nth-child(odd) {
+    main div.admin section table.multi tbody tr:nth-child(odd) {
       background: #eeeeee; }
-    .admin section table.multi tbody tr.active {
+    main div.admin section table.multi tbody tr.active {
       background: rgba(255, 0, 0, 0.1); }
-    .admin section table.multi th, .admin section table.multi td {
+    main div.admin section table.multi th, main div.admin section table.multi td {
       padding: 0.3em;
       font-size: 1.3em; }
-      .admin section table.multi th:nth-child(odd), .admin section table.multi td:nth-child(odd) {
+      main div.admin section table.multi th:nth-child(odd), main div.admin section table.multi td:nth-child(odd) {
         background: rgba(0, 0, 100, 0.05); }
 
 #dialog-link {

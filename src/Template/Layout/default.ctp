@@ -33,29 +33,17 @@
   <div id="wrapper">
     <header>
       <?= $this->element("breadcrumb"); ?>
-      <nav>
-        <ul style="display:flex; justify-content:space-around; margin:0; background:#E1DBC9;">
-          <li><?= $this->Html->link("Categories", "/categories"); ?></li>
-          <li><?= $this->Html->link("Sections", "/sections"); ?></li>
-          <li><?= $this->Html->link("Tags", "/tags"); ?></li>
-          <li><?= $this->Html->link("Modules", "/modules"); ?></li>
-          <li><?= $this->Html->link("Assets", "/assets"); ?></li>
-          <li><?= $this->Html->link("Notes", "/notes"); ?></li>
-          <li><?= $this->Html->link("Articles", "/articles"); ?></li>
-          <li><?= $this->Html->link("Books", "/books"); ?></li>
-          <li><?= $this->Html->link("SectionNotes", "/sections-notes"); ?></li>
-          <li><?= $this->Html->link("BookSections", "/books-sections"); ?></li>
-          <li><?= $this->Html->link("ModuleAssets", "/modules-assets"); ?></li>
-          <li><?= $this->Html->link("NoteModules", "/notes-modules"); ?></li>
-          <li><?= $this->Html->link("NoteTags", "/notes-tags"); ?></li>
-        </ul>
-      </nav>
+      <?= $this->element("main_menu", ["mode" => 1]) ?>
+      <?= $this->element("admin_menu"); ?>
     </header>
     <main>
       <div class="contents">
         <?= $this->fetch('content') ?>
       </div>
       <div class="gadgets">
+        <?php foreach($gadgets as $gadget): ?>
+          <?= $this->element("gadget/$gadget") ?>
+        <?php endforeach; ?>
         <?= $this->fetch('gadgets') ?>
       </div>
     </main>

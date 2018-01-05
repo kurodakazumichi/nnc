@@ -10,29 +10,10 @@ $this->start('css');
 echo $this->Html->css('pages/home.css');
 $this->end();
 
-// ちゃんねるデータを定義
-$data = [
-   ["title" => "IT記事", "ch" => "1ch", "url" => "/", "img" => "green"]
-  ,["title" => "本棚",  "ch" => "2ch", "url" => "/", "img" => "lime"]
-  ,["title" => "レッスン", "ch" => "3ch", "url" => "/", "img" => "blue"]
-  ,["title" => "日常", "ch" => "4ch", "url" => "/", "img" => "red"]
-  ,["title" => "ステータス", "ch" => "5ch", "url" => "/", "img" => "pink"]
-  ,["title" => "スキル", "ch" => "6ch", "url" => "/", "img" => "yellow"]
-  ,["title" => "ゲーム", "ch" => "7ch", "url" => "/", "img" => "purple"]
-  ,["title" => "問合せ", "ch" => "8ch", "url" => "/", "img" => "orange"]
-];
+
 ?>
 
-<div class="container channels">
-  <?php foreach($data as $val): ?>
-    <div class="monitor">
-      <?= $this->Html->image("pages/home/cat.${val['img']}.svg", ["alt" => $val["title"]]); ?>
-      <div class="display">
-          <?= $this->Html->link("<span class='tt'>${val['ch']}</span><span class='ut'>${val['title']}</span>", [], ["escape" => false]); ?>
-      </div>
-    </div>
-  <?php endforeach; ?>
-</div>
+<?= $this->element('main_menu', ['mode' => 2]); ?>
 
 <div class="container misc">
 

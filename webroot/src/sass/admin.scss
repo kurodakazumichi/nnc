@@ -1,6 +1,16 @@
 @charset "UTF-8";
 
-.admin{
+header nav.admin {
+  ul{
+      display:flex;
+      justify-content:space-around;
+      margin:0;
+      background:#E1DBC9;
+  }
+
+}
+
+main div.admin{
   .paginator {
     ul {
       li {display: inline;}

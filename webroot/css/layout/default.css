@@ -51,6 +51,11 @@ header {
           color: #FFE600; }
       header nav.breadcrumb .box h1 {
         font-weight: bold; }
+  header nav.ch ul {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    background: #91A182; }
 
 /**
  * main style

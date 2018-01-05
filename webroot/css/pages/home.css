@@ -63,13 +63,23 @@ main {
                 color: rgba(255, 255, 255, 0); }
             main .channels .monitor .display a span.ut {
               position: absolute;
-              font-size: 2.5em;
+              font-size: 1.4em;
+              font-weight: normal;
+              line-height: 1.45em;
+              overflow: hidden;
+              padding:0.4em 1em;
+              box-sizing: border-box;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
               color: transparent;
               transition: color 500ms 0s ease; }
               main .channels .monitor .display a span.ut:hover {
                 display: block;
                 color: black; }
   main .misc {
+    flex-wrap:nowrap;
     font-size: 1.3vw;
     line-height: 1.8em; }
     main .misc section {
