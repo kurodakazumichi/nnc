@@ -23,9 +23,9 @@
             <tr>
                 <td><?= $this->Number->format($article->id) ?></td>
                 <td><?= $article->has('note') ? $this->Html->link($article->note->title, ['controller' => 'Notes', 'action' => 'view', $article->note->id]) : '' ?></td>
-                <td><?= $this->Number->format($article->layer) ?></td>
-                <td><?= $article->has('category') ? $this->Html->link($article->category->name, ['controller' => 'Categories', 'action' => 'view', $article->category->id]) : '' ?></td>
-                <td><?= h($article->published) ?></td>
+                <td><?= $layers[$article->layer] ?></td>
+                <td><?= $article->has('category') ? $article->category->name : '' ?></td>
+                <td><?= ($article->published)? "公開" : "非公開" ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $article->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->id]) ?>
