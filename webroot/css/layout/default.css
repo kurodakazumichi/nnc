@@ -81,25 +81,24 @@ footer {
 main {
   display: flex;
   padding-top: 1.5em; }
-  main .gadgets {
-    flex-grow: 1;
-    max-width: 300px;
-    min-width: 300px; }
   main .contents {
     flex-grow: 3;
     padding: 0 1em;
     font-size: 1.3em; }
-
-.gadgets .gadget {
-  width: 90%;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 0.5em;
-  font-size: 1.0em;
-  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.7); }
-  .gadgets .gadget > div {
-    padding: 0.5em; }
-  .gadgets .gadget .header {
-    background: #555;
-    border-radius: 0.5em 0.5em 0 0;
-    color: white; }
+  main .gadgets {
+    flex-grow: 1;
+    max-width: 300px;
+    min-width: 300px; }
+    main .gadgets .gadget {
+      width: 90%;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 0.5em;
+      font-size: 1.0em;
+      box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.7); }
+      main .gadgets .gadget > div {
+        padding: 0.5em; }
+      main .gadgets .gadget .header {
+        background: #555;
+        border-radius: 0.5em 0.5em 0 0;
+        color: white; }

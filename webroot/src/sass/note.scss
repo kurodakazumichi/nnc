@@ -1,0 +1,15 @@
+.contents {
+  .note {
+
+    & > section {
+      box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+      padding:1em;
+      margin-bottom: 3em;
+
+      h2 {
+        background:#087;
+        padding:0.3em;
+      }
+    }
+  }
+}

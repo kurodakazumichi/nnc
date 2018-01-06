@@ -4,7 +4,7 @@
  * @var \Cake\Datasource\EntityInterface $note
  */
 ?>
-<div class="admin">
+<div class="note">
   <section>
     <h2><?= h($note->title) ?></h2>
     <table class="vertical-table">
