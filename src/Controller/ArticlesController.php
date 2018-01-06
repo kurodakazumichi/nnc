@@ -12,6 +12,14 @@ use App\Controller\AppController;
  */
 class ArticlesController extends AppController
 {
+    /**
+     * initialize method.
+     */
+    public function initialize() {
+      parent::initialize();
+      $this->Auth->allow("categories");
+    }
+
 
     /**
      * Index method
@@ -110,5 +118,9 @@ class ArticlesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function categories($id = null) {
+
     }
 }
