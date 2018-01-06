@@ -21,7 +21,7 @@ class NotesController extends AppController
     $this->addCrumb("Notes", "/notes");
 
     $this->addRelatedLink(['Notes'   , 'index' ], 'List Notes');
-    $this->addRelatedLink(['Notes'   , 'add'   ], 'New Note');
+    $this->addRelatedLink(['Notes'   , 'edit'  ], 'New Note');
     $this->addRelatedLink(['Modules' , 'add'   ], 'New Module');
     $this->addRelatedLink(['Modules' , 'index' ], 'List Modules');
     $this->addRelatedLink(['Sections', 'add'   ], 'New Section');
@@ -40,8 +40,8 @@ class NotesController extends AppController
       'contain' => ['Categories']
     ];
     $notes = $this->paginate($this->Notes);
-
-    $this->set(compact('notes'));
+    $statuses =$this->Notes->getStatuses();
+    $this->set(compact('notes', 'statuses'));
   }
 
   /**
@@ -53,38 +53,14 @@ class NotesController extends AppController
   */
   public function view($id = null)
   {
+    $this->addStyle("note");
     $note = $this->Notes->get($id, [
       'contain' => ['Categories', 'Modules', 'Tags', 'Sections', 'Articles']
     ]);
 
     $this->addCrumb($note->category->name);
-    pr($note);
 
     $this->set('note', $note);
-  }
-
-  /**
-  * Add method
-  *
-  * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-  */
-  public function add()
-  {
-    $note = $this->Notes->newEntity();
-    if ($this->request->is('post')) {
-      $note = $this->Notes->patchEntity($note, $this->request->getData());
-      if ($this->Notes->save($note)) {
-        $this->Flash->success(__('The note has been saved.'));
-
-        return $this->redirect(['action' => 'index']);
-      }
-      $this->Flash->error(__('The note could not be saved. Please, try again.'));
-    }
-    $categories = $this->Notes->Categories->find('list', ['limit' => 200]);
-    $modules = $this->Notes->Modules->find('list', ['limit' => 200]);
-    $tags = $this->Notes->Tags->find('list', ['limit' => 200]);
-    $sections = $this->Notes->Sections->find('list', ['limit' => 200]);
-    $this->set(compact('note', 'categories', 'modules', 'tags', 'sections'));
   }
 
   /**
@@ -96,23 +72,32 @@ class NotesController extends AppController
   */
   public function edit($id = null)
   {
-    $note = $this->Notes->get($id, [
-      'contain' => ['Modules', 'Tags', 'Sections']
-    ]);
-    if ($this->request->is(['patch', 'post', 'put'])) {
+    $this->addScript("/venders/marked/marked.min.js");
+    $this->addStyle("note");
+    $note = null;
+    if(is_null($id)) {
+      $note = $this->Notes->newEntity();
+    } else {
+      $note = $this->Notes->get($id, [
+        'contain' => ['Modules', 'Tags', 'Sections']
+      ]);
+    }
+
+    if ($this->request->is(['post', 'put'])) {
       $note = $this->Notes->patchEntity($note, $this->request->getData());
       if ($this->Notes->save($note)) {
         $this->Flash->success(__('The note has been saved.'));
-
         return $this->redirect(['action' => 'index']);
       }
+
       $this->Flash->error(__('The note could not be saved. Please, try again.'));
     }
     $categories = $this->Notes->Categories->find('list', ['limit' => 200]);
     $modules = $this->Notes->Modules->find('list', ['limit' => 200]);
     $tags = $this->Notes->Tags->find('list', ['limit' => 200]);
     $sections = $this->Notes->Sections->find('list', ['limit' => 200]);
-    $this->set(compact('note', 'categories', 'modules', 'tags', 'sections'));
+    $statuses = $this->Notes->getStatuses();
+    $this->set(compact('note', 'categories', 'modules', 'tags', 'sections', 'statuses'));
   }
 
   /**

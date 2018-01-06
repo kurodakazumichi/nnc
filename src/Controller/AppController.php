@@ -113,6 +113,9 @@ class AppController extends Controller
     {
       parent::beforeFilter($event);
 
+      // beforeRenderで呼ぶと例外時にInternal server errorになる。
+      $this->set('logined', $this->Auth->user() != null);
+
       // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
       if(!$this->request->is("ajax")) {
         if(in_array($this->request->action, $this->ajaxOnlyActions)){
@@ -137,7 +140,8 @@ class AppController extends Controller
       $this->set('relatedLinks', $this->relatedLinks);
       $this->set('styles', $this->getStyles());
       $this->set('jscripts', $this->getScripts());
-      $this->set('logined', $this->Auth->user() != null);
+
+
 
     }
 

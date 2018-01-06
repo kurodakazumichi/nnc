@@ -36,6 +36,7 @@
       <?= $this->element("main_menu", ["mode" => 1]) ?>
       <?= $this->element("admin_menu"); ?>
     </header>
+    <?= $this->Flash->render() ?>
     <main>
       <div class="contents">
         <?= $this->fetch('content') ?>

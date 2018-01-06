@@ -48,4 +48,14 @@ class NotesTableEx extends NotesTable
       parent::buildRules($rules);
       return $rules;
     }
+
+    protected $statuses = [
+      0 => '非公開',
+      1 => '公開',
+      2 => '修正中'
+    ];
+
+    public function getStatuses() {
+      return $this->statuses;
+    }
 }
