@@ -100,7 +100,8 @@ class AppController extends Controller
 
         // replace from default table class to ex table class.
         TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
-        TableRegistry::config('Notes', ['className' => 'App\Model\Table\NotesTableEx']);
+        TableRegistry::config('Notes'     , ['className' => 'App\Model\Table\NotesTableEx']);
+        TableRegistry::config('Articles'  , ['className' => 'App\Model\Table\ArticlesTableEx']);
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
