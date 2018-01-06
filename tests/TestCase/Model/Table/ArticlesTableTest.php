@@ -28,15 +28,15 @@ class ArticlesTableTest extends TestCase
         'app.notes',
         'app.categories',
         'app.books',
+        'app.sections',
+        'app.books_sections',
+        'app.sections_notes',
         'app.modules',
         'app.assets',
         'app.modules_assets',
         'app.notes_modules',
         'app.tags',
-        'app.notes_tags',
-        'app.sections',
-        'app.books_sections',
-        'app.sections_notes'
+        'app.notes_tags'
     ];
 
     /**
