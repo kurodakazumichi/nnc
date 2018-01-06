@@ -21,6 +21,7 @@ class ArticlesTableEx extends ArticlesTable
     public function initialize(array $config)
     {
       parent::initialize($config);
+      $this->setEntityClass('App\Model\Entity\ArticleEx');
     }
 
     /**
@@ -46,5 +47,14 @@ class ArticlesTableEx extends ArticlesTable
     {
       parent::buildRules($rules);
       return $rules;
+    }
+
+    protected $layers = [
+      0 => 'IT記事',
+      1 => 'ブログ',
+    ];
+
+    public function getLayers() {
+      return $this->layers;
     }
 }
