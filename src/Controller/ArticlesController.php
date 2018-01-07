@@ -49,44 +49,6 @@ class ArticlesController extends AppController
   }
 
   /**
-  * View method
-  *
-  * @param string|null $id Article id.
-  * @return \Cake\Http\Response|void
-  * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-  */
-  public function view($id = null)
-  {
-    $article = $this->Articles->get($id, [
-      'contain' => ['Notes', 'Categories']
-    ]);
-
-    $this->set('article', $article);
-  }
-
-  /**
-  * Add method
-  *
-  * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-  */
-  public function add()
-  {
-    $article = $this->Articles->newEntity();
-    if ($this->request->is('post')) {
-      $article = $this->Articles->patchEntity($article, $this->request->getData());
-      if ($this->Articles->save($article)) {
-        $this->Flash->success(__('The article has been saved.'));
-
-        return $this->redirect(['action' => 'index']);
-      }
-      $this->Flash->error(__('The article could not be saved. Please, try again.'));
-    }
-    $notes = $this->Articles->Notes->find('list', ['limit' => 200]);
-    $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
-    $this->set(compact('article', 'notes', 'categories'));
-  }
-
-  /**
   * Edit method
   *
   * @param string|null $id Article id.
@@ -150,13 +112,26 @@ class ArticlesController extends AppController
       throw new NotFoundException();
     }
 
+
+
+    $where = ['Articles.layer' => $this->request->layer];
+
+    if(!is_null($category_id)) {
+      $where['Categories.id'] = $category_id;
+    }
+
     $articles = $this->Articles->find()
-    ->where(['layer' => $this->request->layer
-  ]);
+    ->contain(['Notes', 'Categories'])
+    ->where($where)
+    ->order(['Categories.order_no' => 'desc']);
 
+    $grouping = [];
 
-
-
-  $this->set(compact('articles'));
-}
+    foreach($articles as $article) {
+      $grouping[$article->category->id][] = $article;
+    }
+    $categories = $this->Articles->Categories->find('list')->toArray();
+    
+    $this->set(compact('grouping', 'categories'));
+  }
 }
