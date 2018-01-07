@@ -56,9 +56,16 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
+    $routes->connect('/1ch/*', ['controller' => 'Articles', 'action' => 'articles']);
     $routes->connect('/1ch/view/*', ['controller' => 'Articles', 'action' => 'display']);
-    $routes->connect('/1ch/*', ['controller' => 'Articles', 'action' => 'categories', 'layer' => 0]);
-    $routes->connect('/5ch/*', ['controller' => 'Articles', 'action' => 'categories', 'layer' => 1]);
+
+    $routes->connect('/2ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/3ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/4ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/5ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/6ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/7ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/8ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     /**
      * Connect catchall routes for all controllers.
