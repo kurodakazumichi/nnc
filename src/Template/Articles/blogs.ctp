@@ -4,9 +4,9 @@
   </section>
 
   <?php foreach($articles as $article): ?>
-    <?= $this->Html->link($article->note->title, "/1ch/view/$article->id"); ?>
+    <?= $this->Html->link($article->note->title, "/5ch/view/$article->id") ?>
   <?php endforeach; ?>
 
-  <?= $this->Html->link("もっと見る", "/1ch/$id") ?>
+  <?= $this->Html->link("もっと見る", "/5ch/$id") ?>
 
 <?php endforeach; ?>

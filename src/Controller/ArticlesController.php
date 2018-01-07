@@ -114,7 +114,40 @@ class ArticlesController extends AppController
       throw new NotFoundException();
     }
 
+    $where = ['Articles.layer' => $layer];
 
+    if(!is_null($category_id)) {
+      $where['Categories.id'] = $category_id;
+
+      $this->addCrumb($categories[$category_id], ["controller" => "articles", "action" => "articles", $category_id]);
+    }
+
+    $articles = $this->Articles->find()
+    ->contain(['Notes', 'Categories'])
+    ->where($where)
+    ->order(['Categories.order_no' => 'desc']);
+
+    $grouping = [];
+
+    foreach($articles as $article) {
+      $grouping[$article->category->id][] = $article;
+    }
+    $categories = $this->Articles->Categories->find('list')->toArray();
+
+    $this->set(compact('grouping', 'categories'));
+  }
+
+  /**
+   * ブログ一覧
+   */
+  public function blogs($category_id = null)
+  {
+    $layer = 1;
+    $categories = $this->Articles->Categories->find('list')->toArray();
+
+    if(!is_null($category_id) && !array_key_exists($category_id, $categories)){
+      throw new NotFoundException();
+    }
 
     $where = ['Articles.layer' => $layer];
 
