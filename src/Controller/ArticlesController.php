@@ -114,7 +114,7 @@ class ArticlesController extends AppController
       throw new NotFoundException();
     }
 
-    
+
 
     $where = ['Articles.layer' => $layer];
 
@@ -151,6 +151,7 @@ class ArticlesController extends AppController
     $this->addCrumb($article->note->title);
 
     $this->addScript("/venders/marked/marked.min.js");
+    $this->addScript("/js/share/note.js");
     $this->addStyle("note");
 
     $this->set(compact('article'));

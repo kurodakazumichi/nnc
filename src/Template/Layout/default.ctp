@@ -52,8 +52,6 @@
       ©Copyright Since 2017 Nekonecode All rights reserved.
     </footer>
 </body>
-<script type="text/javascript">
-  <?= $this->fetch('postfixScripts') ?>
-</script>
+<?= $this->fetch('postfixScripts') ?>
 
 </html>
