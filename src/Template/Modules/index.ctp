@@ -4,19 +4,11 @@
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $modules
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Module'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Assets'), ['controller' => 'Assets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Asset'), ['controller' => 'Assets', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Notes'), ['controller' => 'Notes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Note'), ['controller' => 'Notes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="modules index large-9 medium-8 columns content">
-    <h3><?= __('Modules') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+
+<div class="admin">
+  <section>
+    <h2 class="m0020"><?= __('Modules') ?></h2>
+    <table class="multi" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -50,4 +42,5 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
+  </section>
 </div>
