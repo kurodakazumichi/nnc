@@ -113,9 +113,8 @@
 <div style="display:flex; flex-wrap:nowrap; justify-content: space-around;">
   <div class="admin" style="width:47.5%;">
       <?= $this->Form->create($note) ?>
-
     <section class="inputs">
-      <h2 class="m0020">ノートを編集する。</h2>
+      <h2 class="m0020">ノートを<?= ($note->id)? "編集" :"作成" ?>する。</h2>
       <div id="tabs" style="font-size:0.7em;">
       	<ul>
       		<li><a href="#tabs-1">Body</a></li>
@@ -124,6 +123,7 @@
           <li><a href="#tabs-4">Options</a></li>
       	</ul>
       	<div id="tabs-1">
+          <?= $this->Form->control('title'); ?>
           <?= $this->Form->error('body'); ?>
           <div id="md-editor" class="editor"><?= $note->body ?></div>
           <input type="hidden" id="ui-body" name="body" value="">
@@ -141,7 +141,6 @@
         <div id="tabs-4">
           <?php
             echo $this->Form->control('memo');
-            echo $this->Form->control('title');
             echo $this->Form->control('search_word');
             echo $this->Form->control('description', ['type' => "textarea"]);
             echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true]);
@@ -152,7 +151,9 @@
         </div>
       </div>
       <?= $this->Form->button(__('Submit'), ['id' => "submit"]) ?>
-      <?= $this->Form->postButton(__('Delete'), ['action' => 'delete', $note->id], ['confirm' => __('「{0}」を削除しますか?', $note->title)]) ?>
+      <?php if($note->id): ?>
+        <?= $this->Form->postButton(__('Delete'), ['action' => 'delete', $note->id], ['confirm' => __('「{0}」を削除しますか?', $note->title)]) ?>
+      <?php endif; ?>
       <?= $this->Form->end() ?>
     </section>
   </div>
