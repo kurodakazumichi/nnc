@@ -1,34 +1,24 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface $asset
- */
+* @var \App\View\AppView $this
+* @var \Cake\Datasource\EntityInterface $asset
+*/
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $asset->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $asset->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Assets'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Modules'), ['controller' => 'Modules', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Module'), ['controller' => 'Modules', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="assets form large-9 medium-8 columns content">
+<div class="admin">
+  <section class="inputs">
+    <h2 class="m0020"><?= ($asset->id)? "Edit" : "Create" ?> Asset</h2>
     <?= $this->Form->create($asset) ?>
     <fieldset>
-        <legend><?= __('Edit Asset') ?></legend>
-        <?php
-            echo $this->Form->control('kind');
-            echo $this->Form->control('memo');
-            echo $this->Form->control('src');
-            echo $this->Form->control('modules._ids', ['options' => $modules]);
-        ?>
+      <?php
+        echo $this->Form->control('kind');
+        echo $this->Form->control('memo');
+        echo $this->Form->control('src');
+      ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
+    <?php if($asset->id): ?>
+      <li><?= $this->Form->postButton(__('Delete Asset'), ['action' => 'delete', $asset->id], ['confirm' => __('Are you sure you want to delete # {0}?', $asset->id)]) ?> </li>
+    <?php endif; ?>
     <?= $this->Form->end() ?>
+  </section>
 </div>
