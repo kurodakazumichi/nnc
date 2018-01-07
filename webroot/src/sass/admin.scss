@@ -103,9 +103,17 @@ main div.admin{
           display:block;
         }
 
-        input, select, textarea {
+        input[type=text]{
           width:100%;
         }
+        select {
+          width:100%;
+        }
+        textarea {
+          width:100%;
+        }
+
+
     }
     .editor {
       width:100%;
@@ -114,7 +122,7 @@ main div.admin{
 
     .error-message {
       color:red;
-    }    
+    }
   }
 }
 

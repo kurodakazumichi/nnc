@@ -20,11 +20,11 @@ class BooksController extends AppController
     parent::beforeFilter($event);
 
     $this->addRelatedLink(['Books'    , 'index' ], 'List Books');
-    $this->addRelatedLink(['Books'    , 'add'   ], 'New Book');
+    $this->addRelatedLink(['Books'    , 'edit'  ], 'New Book');
     $this->addRelatedLink(['Sections' , 'index' ], 'List Sections');
     $this->addRelatedLink(['Sections' , 'add'   ], 'New Section');
   }
-  
+
   /**
   * Index method
   *
@@ -57,28 +57,6 @@ class BooksController extends AppController
   }
 
   /**
-  * Add method
-  *
-  * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-  */
-  public function add()
-  {
-    $book = $this->Books->newEntity();
-    if ($this->request->is('post')) {
-      $book = $this->Books->patchEntity($book, $this->request->getData());
-      if ($this->Books->save($book)) {
-        $this->Flash->success(__('The book has been saved.'));
-
-        return $this->redirect(['action' => 'index']);
-      }
-      $this->Flash->error(__('The book could not be saved. Please, try again.'));
-    }
-    $categories = $this->Books->Categories->find('list', ['limit' => 200]);
-    $sections = $this->Books->Sections->find('list', ['limit' => 200]);
-    $this->set(compact('book', 'categories', 'sections'));
-  }
-
-  /**
   * Edit method
   *
   * @param string|null $id Book id.
@@ -87,9 +65,14 @@ class BooksController extends AppController
   */
   public function edit($id = null)
   {
-    $book = $this->Books->get($id, [
-      'contain' => ['Sections']
-    ]);
+    $book = null;
+
+    if(is_null($id)) {
+      $book = $this->Books->newEntity();
+    } else {
+      $book = $this->Books->get($id, ['contain' => ['Sections']]);
+    }
+
     if ($this->request->is(['patch', 'post', 'put'])) {
       $book = $this->Books->patchEntity($book, $this->request->getData());
       if ($this->Books->save($book)) {
@@ -101,7 +84,8 @@ class BooksController extends AppController
     }
     $categories = $this->Books->Categories->find('list', ['limit' => 200]);
     $sections = $this->Books->Sections->find('list', ['limit' => 200]);
-    $this->set(compact('book', 'categories', 'sections'));
+    $layers = $this->Books->getLayers();
+    $this->set(compact('book', 'categories', 'sections', 'layers'));
   }
 
   /**

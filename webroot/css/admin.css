@@ -63,7 +63,11 @@ main div.admin .inputs .input {
   main div.admin .inputs .input label {
     font-weight: bold;
     display: block; }
-  main div.admin .inputs .input input, main div.admin .inputs .input select, main div.admin .inputs .input textarea {
+  main div.admin .inputs .input input[type=text] {
+    width: 100%; }
+  main div.admin .inputs .input select {
+    width: 100%; }
+  main div.admin .inputs .input textarea {
     width: 100%; }
 main div.admin .inputs .editor {
   width: 100%;
