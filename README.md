@@ -58,3 +58,11 @@ Start terminal, and move to webroot folder, input to this command.
 ```
 sass --watch --sourcemap=none --no-cache .\src\sass:.\css\
 ```
+
+## typescript
+Create folder "webroot/src/ts", and tsconfig.json.
+Start terminal, and move to webroot folder, input to this command.
+
+```
+tsc -p src/ts -w
+```
