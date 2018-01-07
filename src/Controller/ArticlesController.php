@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Table\ArticlesTableEx;
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 
@@ -107,7 +108,7 @@ class ArticlesController extends AppController
    */
   public function articles($category_id = null)
   {
-    $layer = 0;
+    $layer = ArticlesTableEx::LAYER_NEW;
     $categories = $this->Articles->Categories->find('list')->toArray();
 
     if(!is_null($category_id) && !array_key_exists($category_id, $categories)){
@@ -142,7 +143,7 @@ class ArticlesController extends AppController
    */
   public function blogs($category_id = null)
   {
-    $layer = 1;
+    $layer = ArticlesTableEx::LAYER_BLOG;
     $categories = $this->Articles->Categories->find('list')->toArray();
 
     if(!is_null($category_id) && !array_key_exists($category_id, $categories)){

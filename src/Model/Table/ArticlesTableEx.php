@@ -7,54 +7,61 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Articles Ex Model
- */
+* Articles Ex Model
+*/
 class ArticlesTableEx extends ArticlesTable
 {
+  /**
+  * Const variables
+  */
+  const LAYER_NEW = 0;
+  const LAYER_BLOG  = 1;
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-      parent::initialize($config);
-      $this->setEntityClass('App\Model\Entity\ArticleEx');
-    }
+  protected $layers = [
+    ArticlesTableEx::LAYER_NEW  => '新着記事',
+    ArticlesTableEx::LAYER_BLOG => 'ブログ'
+  ];
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-      parent::validationDefault($validator);
-      return $validator;
-    }
+  public function getLayers() {
+    return $this->layers;
+  }
+  
+  /**
+  * Initialize method
+  *
+  * @param array $config The configuration for the Table.
+  * @return void
+  */
+  public function initialize(array $config)
+  {
+    parent::initialize($config);
+    $this->setEntityClass('App\Model\Entity\ArticleEx');
+  }
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-      parent::buildRules($rules);
-      return $rules;
-    }
+  /**
+  * Default validation rules.
+  *
+  * @param \Cake\Validation\Validator $validator Validator instance.
+  * @return \Cake\Validation\Validator
+  */
+  public function validationDefault(Validator $validator)
+  {
+    parent::validationDefault($validator);
+    return $validator;
+  }
 
-    protected $layers = [
-      0 => 'IT記事',
-      1 => 'ブログ',
-    ];
+  /**
+  * Returns a rules checker object that will be used for validating
+  * application integrity.
+  *
+  * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+  * @return \Cake\ORM\RulesChecker
+  */
+  public function buildRules(RulesChecker $rules)
+  {
+    parent::buildRules($rules);
+    return $rules;
+  }
 
-    public function getLayers() {
-      return $this->layers;
-    }
+
 }
