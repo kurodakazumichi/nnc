@@ -4,26 +4,11 @@
  * @var \Cake\Datasource\EntityInterface $section
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $section->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $section->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Sections'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Books'), ['controller' => 'Books', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Book'), ['controller' => 'Books', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Notes'), ['controller' => 'Notes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Note'), ['controller' => 'Notes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="sections form large-9 medium-8 columns content">
+<div class="admin">
+  <section class="inputs">
+    <h2 class="m0020"><?= ($section->id)? "Edit" : "Create" ?> Section</h2>
     <?= $this->Form->create($section) ?>
     <fieldset>
-        <legend><?= __('Edit Section') ?></legend>
         <?php
             echo $this->Form->control('title');
             echo $this->Form->control('memo');
@@ -34,4 +19,6 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+  </section>
+
 </div>
