@@ -26,15 +26,17 @@ class SectionsTableTest extends TestCase
     public $fixtures = [
         'app.sections',
         'app.books',
-        'app.books_sections',
-        'app.notes',
         'app.categories',
         'app.articles',
+        'app.notes',
         'app.modules',
+        'app.assets',
+        'app.modules_assets',
         'app.notes_modules',
         'app.tags',
         'app.notes_tags',
-        'app.sections_notes'
+        'app.sections_notes',
+        'app.books_sections'
     ];
 
     /**

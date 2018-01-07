@@ -103,7 +103,8 @@ class AppController extends Controller
     TableRegistry::config('Notes'     , ['className' => 'App\Model\Table\NotesTableEx']);
     TableRegistry::config('Articles'  , ['className' => 'App\Model\Table\ArticlesTableEx']);
     TableRegistry::config('Books'     , ['className' => 'App\Model\Table\BooksTableEx']);
-    
+    TableRegistry::config('Sctions'   , ['className' => 'App\Model\Table\SectionsTableEx']);
+
     /*
     * Enable the following components for recommended CakePHP security settings.
     * see https://book.cakephp.org/3.0/en/controllers/components/security.html
