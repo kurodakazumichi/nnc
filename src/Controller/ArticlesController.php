@@ -29,7 +29,7 @@ class ArticlesController extends AppController
   {
     parent::beforeFilter($event);
     $this->Auth->allow("categories");
-    $this->addCrumb("記事(1ch)", "/1ch");
+
   }
 
   /**
@@ -103,21 +103,25 @@ class ArticlesController extends AppController
   }
 
   /**
-  * 1ch
-  */
-  public function categories($category_id = null)
+   * 記事一覧
+   */
+  public function articles($category_id = null)
   {
+    $layer = 0;
+    $categories = $this->Articles->Categories->find('list')->toArray();
 
-    if(is_null($this->request->layer)) {
+    if(!is_null($category_id) && !array_key_exists($category_id, $categories)){
       throw new NotFoundException();
     }
 
+    
 
-
-    $where = ['Articles.layer' => $this->request->layer];
+    $where = ['Articles.layer' => $layer];
 
     if(!is_null($category_id)) {
       $where['Categories.id'] = $category_id;
+
+      $this->addCrumb($categories[$category_id], ["controller" => "articles", "action" => "articles", $category_id]);
     }
 
     $articles = $this->Articles->find()
@@ -135,7 +139,20 @@ class ArticlesController extends AppController
     $this->set(compact('grouping', 'categories'));
   }
 
-  public function display($id = null) {
-    
+  /**
+   * 記事の表示
+   */
+  public function display($id = null)
+  {
+    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
+
+
+    $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
+    $this->addCrumb($article->note->title);
+
+    $this->addScript("/venders/marked/marked.min.js");
+    $this->addStyle("note");
+
+    $this->set(compact('article'));
   }
 }
