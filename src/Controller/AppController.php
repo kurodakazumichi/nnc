@@ -102,6 +102,7 @@ class AppController extends Controller
         TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
         TableRegistry::config('Notes'     , ['className' => 'App\Model\Table\NotesTableEx']);
         TableRegistry::config('Articles'  , ['className' => 'App\Model\Table\ArticlesTableEx']);
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -110,9 +111,36 @@ class AppController extends Controller
         //$this->loadComponent('Csrf');
     }
 
+    /**
+     * パンくずリストの最初の項目を構築する。
+     */
+    protected function buildFirstBreadCrumb()
+    {
+      // ちゃんねる対応
+      $ch = substr($this->request->url, 0, 3);
+
+      switch($ch) {
+        case '1ch':
+        case '2ch':
+        case '3ch':
+        case '4ch':
+        case '5ch':
+        case '6ch':
+        case '7ch':
+        case '8ch':
+         $this->addCrumb($ch, $ch);
+          break;
+        default:
+          break;
+      }
+
+    }
+
     public function beforeFilter(Event $event)
     {
       parent::beforeFilter($event);
+
+      $this->buildFirstBreadCrumb();
 
       // beforeRenderで呼ぶと例外時にInternal server errorになる。
       $this->set('logined', $this->Auth->user() != null);
