@@ -31,12 +31,12 @@ class ModulesTableTest extends TestCase
         'app.categories',
         'app.articles',
         'app.books',
-        'app.notes_modules',
-        'app.tags',
-        'app.notes_tags',
         'app.sections',
         'app.books_sections',
-        'app.sections_notes'
+        'app.sections_notes',
+        'app.notes_modules',
+        'app.tags',
+        'app.notes_tags'
     ];
 
     /**
