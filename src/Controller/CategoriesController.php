@@ -24,8 +24,6 @@ class CategoriesController extends AppController
   public function beforeFilter($event) {
     parent::beforeFilter($event);
 
-    $this->addCrumb("Categories");
-
     $this->addRelatedLink(['Articles' , 'index' ], 'List Articles');
     $this->addRelatedLink(['Articles' , 'add'   ], 'New Article');
     $this->addRelatedLink(['Books'    , 'index' ], 'List Books');
