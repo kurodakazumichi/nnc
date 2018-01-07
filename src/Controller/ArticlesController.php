@@ -131,7 +131,11 @@ class ArticlesController extends AppController
       $grouping[$article->category->id][] = $article;
     }
     $categories = $this->Articles->Categories->find('list')->toArray();
-    
+
     $this->set(compact('grouping', 'categories'));
+  }
+
+  public function display($id = null) {
+    
   }
 }
