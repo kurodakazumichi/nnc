@@ -22,7 +22,7 @@ $this->Breadcrumbs->templates([
 $this->Breadcrumbs->add("Nekonecode", "/");
 
 // 登録されているリンクを追加。
-foreach($breadcrumbs as $v) {
+foreach($element['breadcrumbs'] as $v) {
   $this->Breadcrumbs->add($v['title'], $v['url']);
 }
 ?>

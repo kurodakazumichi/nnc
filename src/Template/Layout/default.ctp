@@ -43,7 +43,7 @@
         <?= $this->fetch('content') ?>
       </div>
       <div class="gadgets">
-        <?php foreach($gadgets as $gadget): ?>
+        <?php foreach($element['gadgets'] as $gadget): ?>
           <?= $this->element("gadget/$gadget") ?>
         <?php endforeach; ?>
         <?= $this->fetch('gadgets') ?>

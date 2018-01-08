@@ -1,8 +1,8 @@
 <?php
-foreach($styles as $css) {
+foreach($element['styles'] as $css) {
   echo $this->Html->css($css);
 }
 
-foreach($jscripts as $js) {
+foreach($element['jscripts'] as $js) {
   echo $this->Html->script($js);
 }

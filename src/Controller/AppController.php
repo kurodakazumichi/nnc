@@ -165,11 +165,11 @@ class AppController extends Controller
   {
     parent::beforeRender($event);
 
-    $this->set('breadcrumbs', $this->breadcrumbs);
-    $this->set('gadgets', $this->gadgets);
-    $this->set('relatedLinks', $this->relatedLinks);
-    $this->set('styles', $this->getStyles());
-    $this->set('jscripts', $this->getScripts());
+    $this->setElementVar('breadcrumbs', $this->breadcrumbs);
+    $this->setElementVar('gadgets', $this->gadgets);
+    $this->setElementVar('relatedLinks', $this->relatedLinks);
+    $this->setElementVar('styles', $this->getStyles());
+    $this->setElementVar('jscripts', $this->getScripts());
 
     $this->set('element', $this->elementViewVars);
 
