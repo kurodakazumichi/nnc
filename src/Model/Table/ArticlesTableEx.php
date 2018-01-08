@@ -33,15 +33,71 @@ class ArticlesTableEx extends ArticlesTable
     return $this->layers;
   }
 
-  public function getCategoriesUsedIn($layer)
+  /**
+  * 指定されたレイヤーに所属する記事で使われているカテゴリリストを取得する。
+  * $publicOnly = trueの場合、一般公開されてる記事に限定される。
+  */
+  public function getCategoriesUsedIn($layer, $publicOnly = true)
   {
+    // where条件を定義
+    $where = ['Articles.layer' => $layer];
+    if($publicOnly) {
+      $where['Articles.published'] = true;
+      $where['Notes.status !='] = NotesTableEx::STATUS_PRIVATE;
+    }
+
     return $this->find('list', ['keyField' => 'Categories.id', 'valueField' => 'Categories.name'])
-      ->contain(['Categories'])
-      ->where(['Articles.layer' => $layer])
+      ->contain(['Notes', 'Categories'])
+      ->where($where)
       ->select(['Categories.id', 'Categories.name'])
       ->group('Articles.category_id')
       ->order('Categories.order_no')
       ->toArray();
+  }
+
+  /**
+  * 指定された条件で一般公開されている記事を取得する。
+  * 一致するものがなかった場合はnullを返却する。
+  */
+  public function getArticleOfPublic($layer, $id)
+  {
+    $article = $this->find()
+      ->contain(['Notes', 'Categories'])
+      ->where([
+        'Articles.layer'      => $layer,
+        'Articles.id'         => $id,
+        'Articles.published'  => true,
+        'Notes.status !='     => NotesTableEx::STATUS_PRIVATE
+      ]);
+
+    return $article->first();
+  }
+
+  public function getArticlesOfPublic($layer, $categories, $limit = 0)
+  {
+    $articles = [];
+
+    foreach($categories as $category_id) {
+
+      $query = $this
+        ->find()
+        ->contain('Notes')
+        ->order(['Notes.modified' => 'desc'])
+        ->where([
+          'Articles.layer'        => $layer,
+          'Articles.category_id'  => $category_id,
+          'Articles.published'    => true,
+          'Notes.status !='       => NotesTableEx::STATUS_PRIVATE
+        ]);
+
+        if(0 < $limit) {
+          $query->limit($limit);
+        }
+
+        $articles[$category_id] = $query;
+    }
+
+    return $articles;
   }
 
   /**

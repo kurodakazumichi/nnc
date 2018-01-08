@@ -23,6 +23,7 @@ class ArticlesController extends AppController
   {
     parent::initialize();
     $this->loadModel("Categories");
+    $this->loadModel('NotesModules');
   }
 
   /**
@@ -112,8 +113,7 @@ class ArticlesController extends AppController
    */
   public function memos($category_id = null)
   {
-    $layer = ArticlesTableEx::LAYER_MEMO;
-    $this->categories($layer, $category_id);
+    $this->categories(ArticlesTableEx::LAYER_MEMO, $category_id);
   }
 
   /**
@@ -121,43 +121,7 @@ class ArticlesController extends AppController
    */
   public function blogs($category_id = null)
   {
-    $layer = ArticlesTableEx::LAYER_BLOG;
-    $this->categories($layer, $category_id);
-  }
-
-  /**
-  * 記事に登録されているノート情報の取得とViewへのセット。
-  */
-  public function note($id, $layer)
-  {
-    // 記事情報を取得
-    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
-
-    // 記事が指定されたレイヤーと異なる場合はNot Found
-    if(
-      $article->layer != $layer ||
-      !$article->published ||
-      $article->note->status == NotesTableEx::STATUS_PRIVATE
-    ){
-      throw new NotFoundException();
-    }
-
-
-
-    // // パンくずリストの設定。layerによってアクションを変更。
-    // $actions = [
-    //   ArticlesTableEx::LAYER_MEMO => 'memos',
-    //   ArticlesTableEx::LAYER_BLOG => 'blogs',
-    // ];
-    //
-    // $params = [
-    //   'controller'  => 'Articles',
-    //   'action'      => $actions[$layer],
-    //   $category_id
-    // ];
-
-
-
+    $this->categories(ArticlesTableEx::LAYER_BLOG, $category_id);
   }
 
   /**
@@ -165,53 +129,7 @@ class ArticlesController extends AppController
    */
   public function memo($id = null)
   {
-    $this->note($id, 0);
-    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
-
-    if($this->isLogin()) {
-      $this->addRelatedLink(['Notes', 'edit', $article->note_id], 'Edit Note');
-    }
-
-    $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
-    $this->addCrumb($article->note->title);
-
-    $this->loadModel('NotesModules');
-    $modules = $this->NotesModules
-      ->find()
-      ->contain(['Modules'])
-      ->order(['NotesModules.order_no'])
-      ->where(['note_id' => $article->note_id]);
-
-    $assets = $this->NotesModules
-      ->find()
-      ->select(['Assets.kind', 'Assets.src'])
-      ->join([
-        'ModulesAssets' => [
-          'table' => 'modules_assets',
-          'type'  => 'left',
-          'conditions' => 'ModulesAssets.module_id = NotesModules.module_id'
-        ],
-        'Assets' => [
-          'table' => 'assets',
-          'type'  => 'left',
-          'conditions' => 'ModulesAssets.asset_id = Assets.id'
-        ]
-      ])
-      ->order(['NotesModules.order_no', 'ModulesAssets.order_no'])
-      ->where(['NotesModules.note_id' => $article->note->id]);
-
-    foreach($assets as $asset) {
-      switch($asset->Assets['kind']){
-        case AssetsTableEx::KIND_JS :
-          $this->addScript($asset->Assets['src']);
-          break;
-        case AssetsTableEx::KIND_CSS :
-          $this->addStyle($asset->Assets['src']);
-          break;
-      }
-    }
-
-    $this->set(compact('article', 'modules'));
+    $this->note(ArticlesTableEx::LAYER_MEMO, $id);
   }
 
   /**
@@ -219,52 +137,7 @@ class ArticlesController extends AppController
    */
   public function blog($id = null)
   {
-    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
-
-    if($this->isLogin()) {
-      $this->addRelatedLink(['Notes', 'edit', $article->note_id], 'Edit Note');
-    }
-
-    $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
-    $this->addCrumb($article->note->title);
-
-    $this->loadModel('NotesModules');
-    $modules = $this->NotesModules
-      ->find()
-      ->contain(['Modules'])
-      ->order(['NotesModules.order_no'])
-      ->where(['note_id' => $article->note_id]);
-
-    $assets = $this->NotesModules
-      ->find()
-      ->select(['Assets.kind', 'Assets.src'])
-      ->join([
-        'ModulesAssets' => [
-          'table' => 'modules_assets',
-          'type'  => 'left',
-          'conditions' => 'ModulesAssets.module_id = NotesModules.module_id'
-        ],
-        'Assets' => [
-          'table' => 'assets',
-          'type'  => 'left',
-          'conditions' => 'ModulesAssets.asset_id = Assets.id'
-        ]
-      ])
-      ->order(['NotesModules.order_no', 'ModulesAssets.order_no'])
-      ->where(['NotesModules.note_id' => $article->note->id]);
-
-    foreach($assets as $asset) {
-      switch($asset->Assets['kind']){
-        case AssetsTableEx::KIND_JS :
-          $this->addScript($asset->Assets['src']);
-          break;
-        case AssetsTableEx::KIND_CSS :
-          $this->addStyle($asset->Assets['src']);
-          break;
-      }
-    }
-
-    $this->set(compact('article', 'modules'));
+    $this->note(ArticlesTableEx::LAYER_BLOG, $id);
   }
 
   /**
@@ -278,6 +151,9 @@ class ArticlesController extends AppController
   */
   private function categories($layer, $category_id)
   {
+    // 変数定義
+    $categories; $datas;
+
     // 指定されたlayerの記事で使われているカテゴリリストを取得
     $categories = $this->Articles->getCategoriesUsedIn($layer);
 
@@ -295,48 +171,64 @@ class ArticlesController extends AppController
 
       // パンくずを設定。
       $this->addCrumb($categories[$category_id]);
-    }
 
-    // 表示用の記事リストデータを取得。
-    $grouping = [];
-
-    if(is_null($category_id)) {
-      $grouping = $this->getArticles($layer, $categories, 20);
+      // 記事を取得
+      $datas = $this->Articles->getArticlesOfPublic($layer, [$category_id]);
     } else {
-      $grouping = $this->getArticles($layer, [$category_id => ""]);
+      $datas = $this->Articles->getArticlesOfPublic($layer, array_keys($categories), 20);
     }
 
-    $this->set(compact('grouping', 'categories'));
+    $this->set(compact('datas', 'categories'));
   }
 
   /**
-  * カテゴリ毎に記事を取得します。
-  * @param int $layer 取得する記事のレイヤーを指定します。
-  * @param array $categories 取得する記事のカテゴリリスト。
-  * @param int $limit 取得最大数。0以下の場合は無効。
-  * @return keyをカテゴリIDとしたqueryの配列。
+  * 記事に登録されているノート情報の取得とViewへのセット。
   */
-  private function getArticles($layer, $categories, $limit = 0)
+  public function note($layer, $id)
   {
-    $articles = [];
+    // 記事情報を取得
+    $article = $this->Articles->getArticleOfPublic($layer, $id);
 
-    foreach($categories as $id => $name) {
-
-      $query = $this->Articles
-        ->find()
-        ->where([
-          'Articles.layer'        => $layer,
-          'Articles.category_id'  => $id,
-        ])
-        ->contain('Notes');
-
-        if(0 < $limit) {
-          $query->limit($limit);
-        }
-
-        $articles[$id] = $query;
+    // 記事が指定されたレイヤーと異なる場合はNot Found
+    if(is_null($article)){
+      throw new NotFoundException();
     }
 
-    return $articles;
+    // 関連リンクに編集ページを追加
+    if($this->isLogin()) {
+      $this->addRelatedLink(['Notes', 'edit', $article->note_id], 'Edit Note');
+    }
+
+    // 記事のパンくずリストをセットアップ。
+    $this->setupBreadcrumb($article);
+
+    // モジュールデータを取得
+    $modules = $this->NotesModules->getModulesUsedIn($article->note_id);
+    $assets = $this->NotesModules->getAssetsUsedIn($article->note_id);
+
+    // Viewへセット
+    $this->set(compact('article', 'modules'));
+    $this->setElementVar("assets", $assets);
+  }
+
+  /**
+  * 記事のパンくずメニューを設定する。
+  */
+  private function setupBreadcrumb($article)
+  {
+    // パンくずリストの設定。layerによってアクションを変更。
+    $actions = [
+      ArticlesTableEx::LAYER_MEMO => 'memos',
+      ArticlesTableEx::LAYER_BLOG => 'blogs',
+    ];
+
+    $params = [
+      'controller'  => 'Articles',
+      'action'      => $actions[$article->layer],
+      $article->category->id
+    ];
+
+    $this->addCrumb($article->category->name, $params);
+    $this->addCrumb($article->note->title);
   }
 }

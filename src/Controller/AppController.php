@@ -61,6 +61,8 @@ class AppController extends Controller
   */
   protected $jscripts = [];
 
+  protected $elementViewVars = [];
+
   /**
   * Initialization hook method.
   *
@@ -169,8 +171,22 @@ class AppController extends Controller
     $this->set('styles', $this->getStyles());
     $this->set('jscripts', $this->getScripts());
 
+    $this->set('element', $this->elementViewVars);
 
+  }
 
+  /**
+  * エレメント用のView変数をセットする。
+  */
+  protected function setElementVar($name, $var) {
+    $this->elementViewVars[$name] = $var;
+  }
+
+  /**
+  * エレメント用のView変数を取得する。
+  */
+  protected function getElementVar($name) {
+    return $this->elementViewVars[$name];
   }
 
   /**

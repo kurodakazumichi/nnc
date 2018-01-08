@@ -11,7 +11,7 @@
   <?= $this->Html->script('/venders/marked/marked.min.js'); ?>
   <?= $this->Html->script('share/note'); ?>
   <?php foreach($modules as $module): ?>
-    <?= $module->module->prefix_script ?>
+    <?= $module->prefix_script ?>
   <?php endforeach; ?>
 <?php $this->end(); ?>
 
@@ -24,7 +24,7 @@
   });
 
   <?php foreach($modules as $module): ?>
-    <?= $module->module->postfix_script ?>
+    <?= $module->postfix_script ?>
   <?php endforeach; ?>
 
   <?= $article->note->js; ?>

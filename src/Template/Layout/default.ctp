@@ -24,6 +24,7 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->element("css_and_js"); ?>
+    <?= $this->element("assets"); ?>
 
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>

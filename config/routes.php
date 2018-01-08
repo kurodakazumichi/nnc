@@ -64,7 +64,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/3ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/4ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/5ch/*', ['controller' => 'Articles', 'action' => 'blogs']);
-    $routes->connect('/5ch/view/*', ['controller' => 'Articles', 'action' => 'display']);
+    $routes->connect('/5ch/blog/*', ['controller' => 'Articles', 'action' => 'blog']);
     $routes->connect('/6ch/*', ['controller' => 'Pages', 'action' => 'display', 'skill']);
     $routes->connect('/7ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/8ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);
