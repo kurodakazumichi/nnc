@@ -21,7 +21,7 @@ class ArticlesController extends AppController
   public function initialize()
   {
     parent::initialize();
-
+    $this->loadModel("Categories");
   }
 
   /**
@@ -31,6 +31,8 @@ class ArticlesController extends AppController
   {
     parent::beforeFilter($event);
     $this->Auth->allow("categories");
+
+    $this->addRelatedLink(['Articles', 'edit'], 'New Article');
 
   }
 
@@ -105,38 +107,12 @@ class ArticlesController extends AppController
   }
 
   /**
-   * 記事一覧
+   * メモ一覧
    */
-  public function articles($category_id = null)
+  public function memos($category_id = null)
   {
-    $layer = ArticlesTableEx::LAYER_NEW;
-    $categories = $this->Articles->Categories->find('list')->toArray();
-
-    if(!is_null($category_id) && !array_key_exists($category_id, $categories)){
-      throw new NotFoundException();
-    }
-
-    $where = ['Articles.layer' => $layer];
-
-    if(!is_null($category_id)) {
-      $where['Categories.id'] = $category_id;
-
-      $this->addCrumb($categories[$category_id], ["controller" => "articles", "action" => "articles", $category_id]);
-    }
-
-    $articles = $this->Articles->find()
-    ->contain(['Notes', 'Categories'])
-    ->where($where)
-    ->order(['Categories.order_no' => 'desc']);
-
-    $grouping = [];
-
-    foreach($articles as $article) {
-      $grouping[$article->category->id][] = $article;
-    }
-    $categories = $this->Articles->Categories->find('list')->toArray();
-
-    $this->set(compact('grouping', 'categories'));
+    $layer = ArticlesTableEx::LAYER_MEMO;
+    $this->categories($layer, $category_id);
   }
 
   /**
@@ -145,33 +121,7 @@ class ArticlesController extends AppController
   public function blogs($category_id = null)
   {
     $layer = ArticlesTableEx::LAYER_BLOG;
-    $categories = $this->Articles->Categories->find('list')->toArray();
-
-    if(!is_null($category_id) && !array_key_exists($category_id, $categories)){
-      throw new NotFoundException();
-    }
-
-    $where = ['Articles.layer' => $layer];
-
-    if(!is_null($category_id)) {
-      $where['Categories.id'] = $category_id;
-
-      $this->addCrumb($categories[$category_id], ["controller" => "articles", "action" => "articles", $category_id]);
-    }
-
-    $articles = $this->Articles->find()
-    ->contain(['Notes', 'Categories'])
-    ->where($where)
-    ->order(['Categories.order_no' => 'desc']);
-
-    $grouping = [];
-
-    foreach($articles as $article) {
-      $grouping[$article->category->id][] = $article;
-    }
-    $categories = $this->Articles->Categories->find('list')->toArray();
-
-    $this->set(compact('grouping', 'categories'));
+    $this->categories($layer, $category_id);
   }
 
   /**
@@ -180,6 +130,10 @@ class ArticlesController extends AppController
   public function display($id = null)
   {
     $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
+
+    if($this->isLogin()) {
+      $this->addRelatedLink(['Notes', 'edit', $article->note_id], 'Edit Note');
+    }
 
     $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
     $this->addCrumb($article->note->title);
@@ -193,7 +147,7 @@ class ArticlesController extends AppController
       ->find()
       ->contain(['Modules'])
       ->order(['NotesModules.order_no'])
-      ->where(['note_id' => $id]);
+      ->where(['note_id' => $article->note_id]);
 
     $assets = $this->NotesModules
       ->find()
@@ -225,5 +179,89 @@ class ArticlesController extends AppController
     }
 
     $this->set(compact('article', 'modules'));
+  }
+
+  /**
+  * memos,blogsアクション用の処理。
+  * 記事一覧を表示するためのデータを取得し、Viewへセットします。
+  *
+  * @param int $layer 取得する記事のレイヤーを指定します。
+  * @param int|null $category_id 取得する記事のカテゴリを指定、null時は全カテゴリ。
+  * @return null
+  * @throws Cake\Network\Exception\NotFoundException; パラメータ不正時。
+  */
+  private function categories($layer, $category_id)
+  {
+    // 指定されたlayerの記事で使われているカテゴリリストを取得
+    $categories = $this->Articles->getCategoriesUsedIn($layer);
+
+    /**
+    * カテゴリIDが指定されている(null以外)場合の事前処理
+    * 1.使用されていないカテゴリだった場合はNotFoundの例外を吐き出します。
+    * 2.存在するカテゴリであればパンくずメニューにカテゴリへのリンクを追加します。
+    */
+    if(!is_null($category_id))
+    {
+      // カテゴリリストに存在しなければNot Found
+      if(!array_key_exists($category_id, $categories)) {
+        throw new NotFoundException();
+      }
+
+      // パンくずリストの設定。layerによってアクションを変更。
+      $actions = [
+        ArticlesTableEx::LAYER_MEMO => 'memos',
+        ArticlesTableEx::LAYER_BLOG => 'blogs',
+      ];
+
+      $params = [
+        'controller'  => 'Articles',
+        'action'      => $actions[$layer],
+        $category_id
+      ];
+
+      $this->addCrumb($categories[$category_id], $params);
+    }
+
+    // 表示用の記事リストデータを取得。
+    $grouping = [];
+
+    if(is_null($category_id)) {
+      $grouping = $this->getArticles($layer, $categories, 20);
+    } else {
+      $grouping = $this->getArticles($layer, [$category_id => ""]);
+    }
+
+    $this->set(compact('grouping', 'categories'));
+  }
+
+  /**
+  * カテゴリ毎に記事を取得します。
+  * @param int $layer 取得する記事のレイヤーを指定します。
+  * @param array $categories 取得する記事のカテゴリリスト。
+  * @param int $limit 取得最大数。0以下の場合は無効。
+  * @return keyをカテゴリIDとしたqueryの配列。
+  */
+  private function getArticles($layer, $categories, $limit = 0)
+  {
+    $articles = [];
+
+    foreach($categories as $id => $name) {
+
+      $query = $this->Articles
+        ->find()
+        ->where([
+          'Articles.layer'        => $layer,
+          'Articles.category_id'  => $id,
+        ])
+        ->contain('Notes');
+
+        if(0 < $limit) {
+          $query->limit($limit);
+        }
+
+        $articles[$id] = $query;
+    }
+
+    return $articles;
   }
 }

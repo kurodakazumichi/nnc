@@ -14,18 +14,36 @@ class ArticlesTableEx extends ArticlesTable
   /**
   * Const variables
   */
-  const LAYER_NEW = 0;
+  const LAYER_MEMO = 0;
   const LAYER_BLOG  = 1;
 
-  protected $layers = [
-    ArticlesTableEx::LAYER_NEW  => '新着記事',
+  /**
+  * レイヤー定義
+  */
+  protected $layers =
+  [
+    ArticlesTableEx::LAYER_MEMO => 'メモ',
     ArticlesTableEx::LAYER_BLOG => 'ブログ'
   ];
 
+  /**
+  * レイヤーリストを返す。
+  */
   public function getLayers() {
     return $this->layers;
   }
-  
+
+  public function getCategoriesUsedIn($layer)
+  {
+    return $this->find('list', ['keyField' => 'Categories.id', 'valueField' => 'Categories.name'])
+      ->contain(['Categories'])
+      ->where(['Articles.layer' => $layer])
+      ->select(['Categories.id', 'Categories.name'])
+      ->group('Articles.category_id')
+      ->order('Categories.order_no')
+      ->toArray();
+  }
+
   /**
   * Initialize method
   *

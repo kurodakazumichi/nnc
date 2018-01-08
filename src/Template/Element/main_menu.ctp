@@ -2,8 +2,8 @@
   // ちゃんねるデータを定義
   $data = [
     [
-      "title" => "新着記事", "ch" => "1ch", "url" => "/1ch", "img" => "green",
-      'desc' => 'IT系のあれこれを記事にまとめて掲載しています。'
+      "title" => "メモ", "ch" => "1ch", "url" => "/1ch", "img" => "green",
+      'desc' => 'IT系のあれこれメモ。'
     ],
     [
       "title" => "技術書",  "ch" => "2ch", "url" => "/2ch", "img" => "lime",

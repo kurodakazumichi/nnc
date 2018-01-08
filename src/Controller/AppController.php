@@ -142,7 +142,7 @@ class AppController extends Controller
     $this->buildFirstBreadCrumb();
 
     // beforeRenderで呼ぶと例外時にInternal server errorになる。
-    $this->set('logined', $this->Auth->user() != null);
+    $this->set('logined', $this->isLogin());
 
     // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
     if(!$this->request->is("ajax")) {
@@ -173,6 +173,13 @@ class AppController extends Controller
 
   }
 
+  /**
+  * ログインしているかどうか
+  */
+  protected function isLogin() {
+    return ($this->Auth->user() != null);
+  }
+
   public function getLayoutName()
   {
     $layout = $this->viewBuilder()->getLayout();
@@ -189,9 +196,18 @@ class AppController extends Controller
   /**
   * 関連リンクリストにデータを追加する。
   */
-  protected function addRelatedLink($url, $title) {
+  protected function addRelatedLink($url, $title)
+  {
+    $params = [];
+    foreach($url as $key => $val) {
+      switch($key) {
+        case 0: $params['controller'] = $val; break;
+        case 1: $params['action']     = $val; break;
+        default: $params[] = $val;
+      }
+    }
 
-    $this->relatedLinks[] = [$title, ['controller' => $url[0], 'action' => $url[1]]];
+    $this->relatedLinks[] = [$title, $params];
   }
 
   /**
