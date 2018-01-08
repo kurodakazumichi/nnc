@@ -21,7 +21,7 @@ class NotesModulesTableEx extends NotesModulesTable
     public function initialize(array $config)
     {
       parent::initialize($config);
-      $this->setEntityClass('App\Model\Entity\NotesModulesEx');
+      $this->setEntityClass('App\Model\Entity\NotesModuleEx');
     }
 
     /**

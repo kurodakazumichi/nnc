@@ -24,8 +24,13 @@ var cNote = {
   prototype: {
     initRenderer ()
     {
+      // markedの描画ルールをカスタマイズしていく。
       var r = new marked.Renderer();
-      r.heading = function(text, level) {
+
+      // h1タグはページヘッダで使用するためmarkedではh2から始まるように
+      // デフォルトのレベルを変更。
+      r.heading = function(text, level)
+      {
         level += 1;
         level = Math.max(2, level);
         return '<h'+level+'>'+text+'</h'+level+'>';
@@ -33,7 +38,7 @@ var cNote = {
 
       marked.setOptions({
         gfm:false,
-        renderer:r
+        renderer:r,
       });
     },
     draw() {

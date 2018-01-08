@@ -1,5 +1,4 @@
 <?php
-
 foreach($styles as $css) {
   echo $this->Html->css($css);
 }

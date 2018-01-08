@@ -32,8 +32,8 @@ class AssetsController extends AppController
   public function index()
   {
     $assets = $this->paginate($this->Assets);
-
-    $this->set(compact('assets'));
+    $kinds = $this->Assets->getKinds();
+    $this->set(compact('assets', 'kinds'));
   }
 
   /**
@@ -80,7 +80,7 @@ class AssetsController extends AppController
       $this->Flash->error(__('The asset could not be saved. Please, try again.'));
     }
     $modules = $this->Assets->Modules->find('list', ['limit' => 200]);
-    $kinds = $this->Assets->getKinds(true);
+    $kinds = $this->Assets->getKinds();
     $this->set(compact('asset', 'modules', 'kinds'));
   }
 

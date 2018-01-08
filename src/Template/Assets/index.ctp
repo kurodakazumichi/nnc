@@ -21,7 +21,7 @@
         <?php foreach ($assets as $asset): ?>
           <tr>
             <td><?= $this->Number->format($asset->id) ?></td>
-            <td><?= h($asset->kind) ?></td>
+            <td><?= h($kinds[$asset->kind]) ?></td>
             <td><?= h($asset->memo) ?></td>
             <td><?= h($asset->src) ?></td>
             <td class="actions">

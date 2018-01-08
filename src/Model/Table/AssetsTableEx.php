@@ -22,13 +22,9 @@ class AssetsTableEx extends AssetsTable
     AssetsTableEx::KIND_CSS => 'css'
   ];
 
-  public function getKinds($addEmpty = false)
+  public function getKinds()
   {
-    $kinds = $this->kinds;
-    if($addEmpty) {
-      $kinds = array_merge([""], $kinds);
-    }
-    return $kinds;
+    return $this->kinds;
   }
 
   /**

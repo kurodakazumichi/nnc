@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Table\AssetsTableEx;
 use App\Model\Table\ArticlesTableEx;
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
@@ -180,7 +181,6 @@ class ArticlesController extends AppController
   {
     $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
 
-
     $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
     $this->addCrumb($article->note->title);
 
@@ -188,6 +188,42 @@ class ArticlesController extends AppController
     $this->addScript("/js/share/note.js");
     $this->addStyle("note");
 
-    $this->set(compact('article'));
+    $this->loadModel('NotesModules');
+    $modules = $this->NotesModules
+      ->find()
+      ->contain(['Modules'])
+      ->order(['NotesModules.order_no'])
+      ->where(['note_id' => $id]);
+
+    $assets = $this->NotesModules
+      ->find()
+      ->select(['Assets.kind', 'Assets.src'])
+      ->join([
+        'ModulesAssets' => [
+          'table' => 'modules_assets',
+          'type'  => 'left',
+          'conditions' => 'ModulesAssets.module_id = NotesModules.module_id'
+        ],
+        'Assets' => [
+          'table' => 'assets',
+          'type'  => 'left',
+          'conditions' => 'ModulesAssets.asset_id = Assets.id'
+        ]
+      ])
+      ->order(['NotesModules.order_no', 'ModulesAssets.order_no'])
+      ->where(['NotesModules.note_id' => $article->note->id]);
+
+    foreach($assets as $asset) {
+      switch($asset->Assets['kind']){
+        case AssetsTableEx::KIND_JS :
+          $this->addScript($asset->Assets['src']);
+          break;
+        case AssetsTableEx::KIND_CSS :
+          $this->addStyle($asset->Assets['src']);
+          break;
+      }
+    }
+
+    $this->set(compact('article', 'modules'));
   }
 }

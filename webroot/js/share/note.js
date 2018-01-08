@@ -17,7 +17,7 @@
                 };
                 marked.setOptions({
                     gfm: false,
-                    renderer: r
+                    renderer: r,
                 });
             },
             draw() {

@@ -10,7 +10,7 @@
     <?= $this->Form->create($asset) ?>
     <fieldset>
       <?php
-        echo $this->Form->control('kind');
+        echo $this->Form->control('kind', ['empty' => '選択してください。']);
         echo $this->Form->control('memo');
         echo $this->Form->control('src');
       ?>

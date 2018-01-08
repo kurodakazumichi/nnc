@@ -8,12 +8,17 @@
 <?php /* POSTFIX SCRIPTS VIEW BLOCK */ ?>
 <?php $this->append("postfixScripts"); ?>
 <script type="text/javascript">
-  <?= $article->note->js; ?>
-
   $(function(){
     var n = note.create("#article");
     n.draw();
   });
+
+  <?php foreach($modules as $module): ?>
+    <?= $module->module->postfix_script ?>
+  <?php endforeach; ?>
+
+  <?= $article->note->js; ?>
+
 </script>
 <?php $this->end(); ?>
 

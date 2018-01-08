@@ -4,7 +4,7 @@
  * @var \Cake\Datasource\EntityInterface $note
  */
 ?>
-<?php $this->start("script"); ?>
+<?php $this->append("script"); ?>
 <script src="/venders/ace/ace.js"></script>
 <script src="/venders/ace/mode-javascript.js"></script>
 <?php $this->end(); ?>
@@ -105,6 +105,11 @@
       $("#ui-js").val(js_editor.getValue());
       return true;
     });
+
+    $(window).scroll(function(){
+      $("div.admin").css({marginTop:$(this).scrollTop() + 'px'});
+    });
+
   });
 
 
@@ -125,7 +130,7 @@
       	<div id="tabs-1">
           <?= $this->Form->control('title'); ?>
           <?= $this->Form->error('body'); ?>
-          <div id="md-editor" class="editor"><?= $note->body ?></div>
+          <div id="md-editor" class="editor"><?= h($note->body) ?></div>
           <input type="hidden" id="ui-body" name="body" value="">
         </div>
       	<div id="tabs-2">
