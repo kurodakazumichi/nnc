@@ -4,7 +4,7 @@
 
     <?php foreach($articles as $article): ?>
       <div class="">
-      <?= $this->Html->link($article->note->title, "/1ch/view/$article->id"); ?>
+      <?= $this->Html->link($article->note->title, ['controller' => 'Articles', 'action' => 'memo', $article->id]); ?>
       </div>
     <?php endforeach; ?>
 

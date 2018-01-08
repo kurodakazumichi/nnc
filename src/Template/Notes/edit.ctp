@@ -106,10 +106,6 @@
       return true;
     });
 
-    $(window).scroll(function(){
-      $("div.admin").css({marginTop:$(this).scrollTop() + 'px'});
-    });
-
   });
 
 
@@ -163,7 +159,7 @@
     </section>
   </div>
   <div style="width:47.5%">
-    <article id="preview" class="note">
+    <article id="preview" class="note" style="overflow:scroll; overflow-x:hidden; height:50vw; font-size:0.5em;">
       <?= $note->body; ?>
     </article>
   </div>

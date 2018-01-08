@@ -57,7 +57,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     $routes->connect('/1ch/*', ['controller' => 'Articles', 'action' => 'memos']);
-    $routes->connect('/1ch/view/*', ['controller' => 'Articles', 'action' => 'display']);
+    $routes->connect('/1ch/memo/*', ['controller' => 'Articles', 'action' => 'memo']);
 
 
     $routes->connect('/2ch/*', ['controller' => 'Pages', 'action' => 'display', 'home']);

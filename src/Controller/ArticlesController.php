@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\Table\AssetsTableEx;
 use App\Model\Table\ArticlesTableEx;
+use App\Model\Table\NotesTableEx;
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 
@@ -125,10 +126,46 @@ class ArticlesController extends AppController
   }
 
   /**
-   * 記事の表示
-   */
-  public function display($id = null)
+  * 記事に登録されているノート情報の取得とViewへのセット。
+  */
+  public function note($id, $layer)
   {
+    // 記事情報を取得
+    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
+
+    // 記事が指定されたレイヤーと異なる場合はNot Found
+    if(
+      $article->layer != $layer ||
+      !$article->published ||
+      $article->note->status == NotesTableEx::STATUS_PRIVATE
+    ){
+      throw new NotFoundException();
+    }
+
+
+
+    // // パンくずリストの設定。layerによってアクションを変更。
+    // $actions = [
+    //   ArticlesTableEx::LAYER_MEMO => 'memos',
+    //   ArticlesTableEx::LAYER_BLOG => 'blogs',
+    // ];
+    //
+    // $params = [
+    //   'controller'  => 'Articles',
+    //   'action'      => $actions[$layer],
+    //   $category_id
+    // ];
+
+
+
+  }
+
+  /**
+   * メモの表示
+   */
+  public function memo($id = null)
+  {
+    $this->note($id, 0);
     $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
 
     if($this->isLogin()) {
@@ -138,9 +175,58 @@ class ArticlesController extends AppController
     $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
     $this->addCrumb($article->note->title);
 
-    $this->addScript("/venders/marked/marked.min.js");
-    $this->addScript("/js/share/note.js");
-    $this->addStyle("note");
+    $this->loadModel('NotesModules');
+    $modules = $this->NotesModules
+      ->find()
+      ->contain(['Modules'])
+      ->order(['NotesModules.order_no'])
+      ->where(['note_id' => $article->note_id]);
+
+    $assets = $this->NotesModules
+      ->find()
+      ->select(['Assets.kind', 'Assets.src'])
+      ->join([
+        'ModulesAssets' => [
+          'table' => 'modules_assets',
+          'type'  => 'left',
+          'conditions' => 'ModulesAssets.module_id = NotesModules.module_id'
+        ],
+        'Assets' => [
+          'table' => 'assets',
+          'type'  => 'left',
+          'conditions' => 'ModulesAssets.asset_id = Assets.id'
+        ]
+      ])
+      ->order(['NotesModules.order_no', 'ModulesAssets.order_no'])
+      ->where(['NotesModules.note_id' => $article->note->id]);
+
+    foreach($assets as $asset) {
+      switch($asset->Assets['kind']){
+        case AssetsTableEx::KIND_JS :
+          $this->addScript($asset->Assets['src']);
+          break;
+        case AssetsTableEx::KIND_CSS :
+          $this->addStyle($asset->Assets['src']);
+          break;
+      }
+    }
+
+    $this->set(compact('article', 'modules'));
+  }
+
+  /**
+   * ブログの表示
+   */
+  public function blog($id = null)
+  {
+    $article = $this->Articles->get($id, ['contain' => ['Notes', 'Categories']]);
+
+    if($this->isLogin()) {
+      $this->addRelatedLink(['Notes', 'edit', $article->note_id], 'Edit Note');
+    }
+
+    $this->addCrumb($article->category->name, ["controller" => "articles", "action" => "articles", $article->category->id]);
+    $this->addCrumb($article->note->title);
 
     $this->loadModel('NotesModules');
     $modules = $this->NotesModules
@@ -207,19 +293,8 @@ class ArticlesController extends AppController
         throw new NotFoundException();
       }
 
-      // パンくずリストの設定。layerによってアクションを変更。
-      $actions = [
-        ArticlesTableEx::LAYER_MEMO => 'memos',
-        ArticlesTableEx::LAYER_BLOG => 'blogs',
-      ];
-
-      $params = [
-        'controller'  => 'Articles',
-        'action'      => $actions[$layer],
-        $category_id
-      ];
-
-      $this->addCrumb($categories[$category_id], $params);
+      // パンくずを設定。
+      $this->addCrumb($categories[$category_id]);
     }
 
     // 表示用の記事リストデータを取得。
