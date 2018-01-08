@@ -107,6 +107,7 @@ class AppController extends Controller
     TableRegistry::config('Modules'       , ['className' => 'App\Model\Table\ModulesTableEx']);
     TableRegistry::config('Assets'        , ['className' => 'App\Model\Table\AssetsTableEx']);
     TableRegistry::config('NotesModules'  , ['className' => 'App\Model\Table\NotesModulesTableEx']);
+    TableRegistry::config('ModulesAssets' , ['className' => 'App\Model\Table\ModulesAssetsTableEx']);
 
     /*
     * Enable the following components for recommended CakePHP security settings.
