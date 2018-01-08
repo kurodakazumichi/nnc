@@ -75,11 +75,6 @@ class ModulesTable extends AppTable
             ->scalar('postfix_script')
             ->allowEmpty('postfix_script');
 
-        $validator
-            ->integer('order_no')
-            ->requirePresence('order_no', 'create')
-            ->notEmpty('order_no');
-
         return $validator;
     }
 }

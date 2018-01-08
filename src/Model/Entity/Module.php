@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $prefix_script
  * @property string $postfix_script
- * @property int $order_no
  *
  * @property \App\Model\Entity\Asset[] $assets
  * @property \App\Model\Entity\Note[] $notes
@@ -31,7 +30,6 @@ class Module extends Entity
         'name' => true,
         'prefix_script' => true,
         'postfix_script' => true,
-        'order_no' => true,
         'assets' => true,
         'notes' => true
     ];

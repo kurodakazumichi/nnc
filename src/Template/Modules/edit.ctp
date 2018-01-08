@@ -14,7 +14,6 @@
       echo $this->Form->control('name');
       echo $this->Form->control('prefix_script');
       echo $this->Form->control('postfix_script');
-      echo $this->Form->control('order_no');
       echo $this->Form->control('assets._ids', ['options' => $assets]);
       echo $this->Form->control('notes._ids', ['options' => $notes]);
       ?>
