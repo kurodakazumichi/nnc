@@ -99,13 +99,14 @@ class AppController extends Controller
     $this->Auth->allow(['display']);
 
     // replace from default table class to ex table class.
-    TableRegistry::config('Categories', ['className' => 'App\Model\Table\CategoriesTableEx']);
-    TableRegistry::config('Notes'     , ['className' => 'App\Model\Table\NotesTableEx']);
-    TableRegistry::config('Articles'  , ['className' => 'App\Model\Table\ArticlesTableEx']);
-    TableRegistry::config('Books'     , ['className' => 'App\Model\Table\BooksTableEx']);
-    TableRegistry::config('Sctions'   , ['className' => 'App\Model\Table\SectionsTableEx']);
-    TableRegistry::config('Modules'   , ['className' => 'App\Model\Table\ModulesTableEx']);
-    TableRegistry::config('Assets'    , ['className' => 'App\Model\Table\AssetsTableEx']);
+    TableRegistry::config('Categories'    , ['className' => 'App\Model\Table\CategoriesTableEx']);
+    TableRegistry::config('Notes'         , ['className' => 'App\Model\Table\NotesTableEx']);
+    TableRegistry::config('Articles'      , ['className' => 'App\Model\Table\ArticlesTableEx']);
+    TableRegistry::config('Books'         , ['className' => 'App\Model\Table\BooksTableEx']);
+    TableRegistry::config('Sctions'       , ['className' => 'App\Model\Table\SectionsTableEx']);
+    TableRegistry::config('Modules'       , ['className' => 'App\Model\Table\ModulesTableEx']);
+    TableRegistry::config('Assets'        , ['className' => 'App\Model\Table\AssetsTableEx']);
+    TableRegistry::config('NotesModules'  , ['className' => 'App\Model\Table\NotesModulesTableEx']);
 
     /*
     * Enable the following components for recommended CakePHP security settings.
