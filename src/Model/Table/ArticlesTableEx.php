@@ -50,7 +50,7 @@ class ArticlesTableEx extends ArticlesTable
       ->contain(['Notes', 'Categories'])
       ->where($where)
       ->select(['Categories.id', 'Categories.name'])
-      ->group('Articles.category_id')
+      ->group(['Articles.category_id'])
       ->order('Categories.order_no')
       ->toArray();
   }
@@ -82,13 +82,21 @@ class ArticlesTableEx extends ArticlesTable
       $query = $this
         ->find()
         ->contain('Notes')
-        ->order(['Notes.modified' => 'desc'])
         ->where([
           'Articles.layer'        => $layer,
           'Articles.category_id'  => $category_id,
           'Articles.published'    => true,
           'Notes.status !='       => NotesTableEx::STATUS_PRIVATE
         ]);
+
+        // レイヤーによっとソート方法を変更する。
+        // ブログは変更日、スニペットはタイトルでソート
+        switch($layer){
+          case ArticlesTableEx::LAYER_BLOG:
+            $query->order(['Notes.modified' => 'desc']); break;
+          case ArticlesTableEx::LAYER_SNIP:
+            $query->order(['Notes.title'    => 'asc']); break;
+        }
 
         if(0 < $limit) {
           $query->limit($limit);

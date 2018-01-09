@@ -1,3 +1,13 @@
+<?php
+use App\Model\Table\NotesTableEx;
+
+// 修正中の場合
+if(!$logined && $note->status != NotesTableEx::STATUS_PUBLIC) {
+  echo "修正中";
+  return;
+}
+?>
+
 <?php /* CSS VIEW BLOCK */ ?>
 <?php $this->append("css"); ?>
 <?= $this->Html->css('note'); ?>

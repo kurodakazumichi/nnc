@@ -55,15 +55,18 @@ class NotesTableEx extends NotesTable
 
   /**
   * 公開されているノートを取得する。
+  * 管理者の場合は非公開でも取得する。
   */
-  public function getNoteOfPublic($id)
+  public function getNoteOfPublic($id, $isAdmin = false)
   {
+    $where = ['Notes.id' => $id];
+    if(!$isAdmin) {
+      $where['Notes.status !='] = NotesTableEx::STATUS_PRIVATE;
+    }
+
     $article = $this->find()
       ->contain(['Categories'])
-      ->where([
-        'Notes.id'         => $id,
-        'Notes.status !='     => NotesTableEx::STATUS_PRIVATE
-      ]);
+      ->where($where);
 
     return $article->first();
   }

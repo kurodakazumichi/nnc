@@ -81,20 +81,23 @@ class NotesController extends AppController
     $this->addScript("/venders/marked/marked.min.js");
     $this->addStyle("note");
     $note = null;
-    $article = null;
+
+    if(!is_null($id)) {
+      $this->addRelatedLink(['Notes', 'note', $id], "Public View");
+    }
+
     if(is_null($id)) {
       $note = $this->Notes->newEntity();
     } else {
-      $note = $this->Notes->get($id, [
-        'contain' => ['Modules', 'Tags', 'Sections']
-      ]);
+      $note = $this->Notes->get($id, ['contain' => ['Modules', 'Tags', 'Sections']]);
     }
 
     if ($this->request->is(['post', 'put'])) {
       $note = $this->Notes->patchEntity($note, $this->request->getData());
       if ($this->Notes->save($note)) {
+
         $this->Flash->success(__('The note has been saved.'));
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'edit', $note->id]);
       }
 
       $this->Flash->error(__('The note could not be saved. Please, try again.'));
@@ -168,11 +171,16 @@ class NotesController extends AppController
   public function note($id)
   {
     // 記事情報を取得
-    $note = $this->Notes->getNoteOfPublic($id);
+    $note = $this->Notes->getNoteOfPublic($id, $this->isLogin());
 
     // ノートがなければNot Found
     if(is_null($note)){
       throw new NotFoundException();
+    }
+
+    // ログイン中はノートの状態を表示
+    if($this->isLogin()) {
+      $this->Flash->set($this->Notes->getStatuses()[$note->status]);
     }
 
     // 関連リンクに編集ページを追加
