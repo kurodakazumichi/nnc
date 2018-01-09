@@ -13,6 +13,15 @@ use App\Controller\AppController;
 class NotesController extends AppController
 {
   /**
+  * initialize method.
+  */
+  public function initialize()
+  {
+    parent::initialize();
+    $this->loadModel('NotesModules');
+  }
+
+  /**
   * before action method
   */
   public function beforeFilter($event) {
@@ -24,7 +33,6 @@ class NotesController extends AppController
     $this->addRelatedLink(['Modules' , 'index' ], 'List Modules');
     $this->addRelatedLink(['Sections', 'add'   ], 'New Section');
     $this->addRelatedLink(['Sections', 'index' ], 'List Sections');
-
 
   }
   /**
@@ -73,6 +81,7 @@ class NotesController extends AppController
     $this->addScript("/venders/marked/marked.min.js");
     $this->addStyle("note");
     $note = null;
+    $article = null;
     if(is_null($id)) {
       $note = $this->Notes->newEntity();
     } else {
@@ -116,5 +125,71 @@ class NotesController extends AppController
     }
 
     return $this->redirect(['action' => 'index']);
+  }
+
+  /**
+  * カテゴリー別ノート一覧。
+  */
+  public function notes($category_id = null)
+  {
+    // 変数定義
+    $categories; $datas;
+
+    // 公開中のノートで使用されているカテゴリのリストを取得
+    $categories = $this->Notes->getCategoriesUsedIn();
+
+    /**
+    * カテゴリIDが指定されている(null以外)場合の事前処理
+    * 1.使用されていないカテゴリだった場合はNotFoundの例外を吐き出します。
+    * 2.存在するカテゴリであればパンくずメニューにカテゴリへのリンクを追加します。
+    */
+    if(!is_null($category_id))
+    {
+      // カテゴリリストに存在しなければNot Found
+      if(!array_key_exists($category_id, $categories)) {
+        throw new NotFoundException();
+      }
+
+      // パンくずを設定。
+      $this->addCrumb($categories[$category_id]);
+
+      // 記事を取得
+      $datas = $this->Notes->getNotesOfPublic([$category_id]);
+    } else {
+      $datas = $this->Notes->getNotesOfPublic(array_keys($categories), 20);
+    }
+
+    $this->set(compact('datas', 'categories'));
+  }
+
+  /**
+  * 公開用ノートページ。
+  */
+  public function note($id)
+  {
+    // 記事情報を取得
+    $note = $this->Notes->getNoteOfPublic($id);
+
+    // ノートがなければNot Found
+    if(is_null($note)){
+      throw new NotFoundException();
+    }
+
+    // 関連リンクに編集ページを追加
+    if($this->isLogin()) {
+      $this->addRelatedLink(['Notes', 'edit', $note->id], 'Edit Note');
+    }
+
+    // 記事のパンくずリストをセットアップ。
+    $this->addCrumb($note->category->name, ['controller' => 'Notes', 'action' => 'notes', $note->category_id]);
+    $this->addCrumb($note->title);
+
+    // モジュールデータを取得
+    $modules = $this->NotesModules->getModulesUsedIn($note->id);
+    $assets = $this->NotesModules->getAssetsUsedIn($note->id);
+
+    // Viewへセット
+    $this->set(compact('note', 'modules'));
+    $this->setElementVar("assets", $assets);
   }
 }

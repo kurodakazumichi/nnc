@@ -2,7 +2,7 @@
 <?php $this->append("css"); ?>
 <?= $this->Html->css('note'); ?>
 <style media="screen">
-  <?= $article->note->css; ?>
+  <?= $note->css; ?>
 </style>
 <?php $this->end(); ?>
 
@@ -27,12 +27,12 @@
     <?= $module->postfix_script ?>
   <?php endforeach; ?>
 
-  <?= $article->note->js; ?>
+  <?= $note->js; ?>
 
 </script>
 <?php $this->end(); ?>
 
 <?php /* MAIN CONTENTS */ ?>
 <article id="article" class="note" style="display:none;">
-  <?= $article->note->body; ?>
+  <?= $note->body; ?>
 </article>

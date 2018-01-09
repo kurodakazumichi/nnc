@@ -34,7 +34,66 @@ class NotesTableEx extends NotesTable
   public function getStatuses() {
     return $this->statuses;
   }
-  
+
+  /**
+  * ノートで使われているカテゴリリストを取得する。
+  * $publicOnly = trueの場合、一般公開されてる記事に限定される。
+  */
+  public function getCategoriesUsedIn($publicOnly = true)
+  {
+    $query = $this->find('list', ['keyField' => 'Categories.id', 'valueField' => 'Categories.name'])
+      ->contain(['Categories'])
+      ->select(['Categories.id', 'Categories.name'])
+      ->group('Notes.category_id')
+      ->order('Categories.order_no');
+
+    if($publicOnly) {
+      $query->where(['Notes.status !=' => NotesTableEx::STATUS_PRIVATE]);
+    }
+      return $query->toArray();
+  }
+
+  /**
+  * 公開されているノートを取得する。
+  */
+  public function getNoteOfPublic($id)
+  {
+    $article = $this->find()
+      ->contain(['Categories'])
+      ->where([
+        'Notes.id'         => $id,
+        'Notes.status !='     => NotesTableEx::STATUS_PRIVATE
+      ]);
+
+    return $article->first();
+  }
+  /**
+  * 公開されているノートをカテゴリ別に取得する。
+  */
+  public function getNotesOfPublic($categories, $limit = 0)
+  {
+    $notes = [];
+
+    foreach($categories as $category_id) {
+
+      $query = $this
+        ->find()
+        ->order(['Notes.modified' => 'desc'])
+        ->where([
+          'Notes.category_id'  => $category_id,
+          'Notes.status !='       => NotesTableEx::STATUS_PRIVATE
+        ]);
+
+        if(0 < $limit) {
+          $query->limit($limit);
+        }
+
+        $notes[$category_id] = $query;
+    }
+
+    return $notes;
+  }
+
   /**
   * Initialize method
   *

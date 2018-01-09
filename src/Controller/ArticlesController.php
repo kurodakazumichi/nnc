@@ -109,11 +109,11 @@ class ArticlesController extends AppController
   }
 
   /**
-   * メモ一覧
+   * スニペット一覧
    */
-  public function memos($category_id = null)
+  public function snippets($category_id = null)
   {
-    $this->categories(ArticlesTableEx::LAYER_MEMO, $category_id);
+    $this->categories(ArticlesTableEx::LAYER_SNIP, $category_id);
   }
 
   /**
@@ -125,11 +125,11 @@ class ArticlesController extends AppController
   }
 
   /**
-   * メモの表示
+   * スニペットの表示
    */
-  public function memo($id = null)
+  public function snippet($id = null)
   {
-    $this->note(ArticlesTableEx::LAYER_MEMO, $id);
+    $this->note(ArticlesTableEx::LAYER_SNIP, $id);
   }
 
   /**
@@ -207,7 +207,8 @@ class ArticlesController extends AppController
     $assets = $this->NotesModules->getAssetsUsedIn($article->note_id);
 
     // Viewへセット
-    $this->set(compact('article', 'modules'));
+    $note = $article->note;
+    $this->set(compact('note', 'modules'));
     $this->setElementVar("assets", $assets);
   }
 
@@ -218,7 +219,7 @@ class ArticlesController extends AppController
   {
     // パンくずリストの設定。layerによってアクションを変更。
     $actions = [
-      ArticlesTableEx::LAYER_MEMO => 'memos',
+      ArticlesTableEx::LAYER_SNIP => 'snippets',
       ArticlesTableEx::LAYER_BLOG => 'blogs',
     ];
 

@@ -4,11 +4,11 @@
 
     <?php foreach($articles as $article): ?>
       <div class="">
-      <?= $this->Html->link($article->note->title, ['controller' => 'Articles', 'action' => 'memo', $article->id]); ?>
+      <?= $this->Html->link($article->note->title, ['controller' => 'Articles', 'action' => 'snippet', $article->id]); ?>
       </div>
     <?php endforeach; ?>
 
-    <?= $this->Html->link("もっと見る", ['controller' => 'Articles', 'action' => 'memos', $category_id]) ?>
+    <?= $this->Html->link("もっと見る", ['controller' => 'Articles', 'action' => 'snippets', $category_id]) ?>
   </section>
 
 <?php endforeach; ?>

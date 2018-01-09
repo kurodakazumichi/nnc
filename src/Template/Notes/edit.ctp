@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $("#tabs").tabs();
+    //$("#tabs").tabs();
 
 
 

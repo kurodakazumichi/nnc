@@ -14,15 +14,15 @@ class ArticlesTableEx extends ArticlesTable
   /**
   * Const variables
   */
-  const LAYER_MEMO = 0;
-  const LAYER_BLOG  = 1;
+  const LAYER_SNIP = 0;
+  const LAYER_BLOG = 1;
 
   /**
   * レイヤー定義
   */
   protected $layers =
   [
-    ArticlesTableEx::LAYER_MEMO => 'メモ',
+    ArticlesTableEx::LAYER_SNIP => 'スニペット',
     ArticlesTableEx::LAYER_BLOG => 'ブログ'
   ];
 
