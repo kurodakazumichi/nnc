@@ -133,7 +133,8 @@ class AppController extends Controller
 
     // ちゃんねる以外は原則コントローラー名を表示
     else if($this->request->controller != "Pages") {
-      $this->addCrumb($this->request->controller);
+      $c = $this->request->controller;
+      $this->addCrumb($c, $c);
     }
   }
 

@@ -18,8 +18,6 @@ class NotesController extends AppController
   public function beforeFilter($event) {
     parent::beforeFilter($event);
 
-    $this->addCrumb("Notes", "/notes");
-
     $this->addRelatedLink(['Notes'   , 'index' ], 'List Notes');
     $this->addRelatedLink(['Notes'   , 'edit'  ], 'New Note');
     $this->addRelatedLink(['Modules' , 'add'   ], 'New Module');
