@@ -25,7 +25,7 @@ class NotesFixture extends TestFixture
         'js' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'search_word' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'description' => ['type' => 'string', 'length' => 128, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'status' => ['type' => 'string', 'fixed' => true, 'length' => 1, 'null' => false, 'default' => '0', 'collate' => 'utf8mb4_general_ci', 'comment' => '0:非公開、1:公開、2:修正中', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -34,7 +34,7 @@ class NotesFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'category_id' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
+            'notes.category_id' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -60,8 +60,8 @@ class NotesFixture extends TestFixture
             'description' => 'Lorem ipsum dolor sit amet',
             'category_id' => 1,
             'status' => 'Lorem ipsum dolor sit ame',
-            'created' => '2018-01-05 12:55:36',
-            'modified' => '2018-01-05 12:55:36'
+            'created' => '2018-01-09 03:56:56',
+            'modified' => '2018-01-09 03:56:56'
         ],
     ];
 }

@@ -118,6 +118,11 @@ class NotesTableEx extends NotesTable
   public function validationDefault(Validator $validator)
   {
     parent::validationDefault($validator);
+
+    $validator
+      ->integer('cateogory_id')
+      ->notEmpty('cateogory_id');
+
     return $validator;
   }
 

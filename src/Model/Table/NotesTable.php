@@ -45,7 +45,8 @@ class NotesTable extends AppTable
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id'
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER'
         ]);
         $this->hasMany('Articles', [
             'foreignKey' => 'note_id'
