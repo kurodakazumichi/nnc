@@ -120,8 +120,10 @@ class NotesTableEx extends NotesTable
     parent::validationDefault($validator);
 
     $validator
-      ->integer('cateogory_id')
-      ->notEmpty('cateogory_id');
+      ->scalar('category_id')
+      ->integer('category_id')
+      ->requirePresence('category_id', 'create')
+      ->notEmpty('category_id');
 
     return $validator;
   }

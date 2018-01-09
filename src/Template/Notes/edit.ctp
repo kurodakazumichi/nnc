@@ -6,13 +6,13 @@
 ?>
 <?php $this->append("script"); ?>
 <script src="/venders/ace/ace.js"></script>
-<script src="/venders/ace/mode-javascript.js"></script>
+
 <?php $this->end(); ?>
 
 
 <script type="text/javascript">
   $(function(){
-    //$("#tabs").tabs();
+    $("#tabs").tabs();
 
 
 
@@ -152,10 +152,10 @@
         </div>
       </div>
       <?= $this->Form->button(__('Submit'), ['id' => "submit"]) ?>
+      <?= $this->Form->end() ?>
       <?php if($note->id): ?>
         <?= $this->Form->postButton(__('Delete'), ['action' => 'delete', $note->id], ['confirm' => __('「{0}」を削除しますか?', $note->title)]) ?>
       <?php endif; ?>
-      <?= $this->Form->end() ?>
     </section>
   </div>
   <div style="width:47.5%">
