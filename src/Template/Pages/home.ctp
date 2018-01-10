@@ -6,11 +6,9 @@
 $this->assign("title", "Home");
 
 // cssブロックを作成する。
-$this->start('css');
+$this->start('assets');
 echo $this->Html->css('pages/home.css');
 $this->end();
-
-
 ?>
 
 <?= $this->element('main_menu', ['mode' => 2]); ?>

@@ -1,34 +1,38 @@
 "use strict";
-(function () {
-    var cNote = {
-        create(selector) {
-            var obj = Object.create(cNote.prototype);
-            obj.folder = $(selector);
-            obj.initRenderer();
-            return obj;
-        },
-        prototype: {
-            initRenderer() {
-                var r = new marked.Renderer();
-                r.heading = function (text, level) {
-                    level += 1;
-                    level = Math.max(2, level);
-                    return '<h' + level + '>' + text + '</h' + level + '>';
-                };
-                marked.setOptions({
-                    gfm: false,
-                    renderer: r,
-                });
-            },
-            draw() {
-                var text = marked(this.folder.html());
-                this.folder.html(text).find("h2, h3, h4, h5, h6").each(function () {
-                    var a = $(this);
-                    a.nextUntil(a.prop("tagName")).addBack().wrapAll("<section></section>");
-                });
-                this.folder.show();
-            }
+$(function () {
+    class cNote {
+        static create(selector) {
+            return new cNote(selector);
         }
-    };
-    window.note = cNote;
-})();
+        constructor(selector) {
+            this.folder = $(selector);
+            this.markdown = this.folder.html();
+            this.init();
+        }
+        setMarkdown(text) {
+            this.markdown = text;
+            return this;
+        }
+        init() {
+            var r = new marked.Renderer();
+            r.heading = function (text, level) {
+                level += 1;
+                level = Math.max(2, level);
+                return '<h' + level + '>' + text + '</h' + level + '>';
+            };
+            marked.setOptions({
+                gfm: false,
+                renderer: r,
+            });
+        }
+        draw() {
+            var text = marked(this.markdown);
+            this.folder.html(text).find("h2, h3, h4, h5, h6").each(function () {
+                var block = $(this);
+                block.nextUntil(block.prop("tagName")).addBack().wrapAll("<section></section>");
+            });
+            this.folder.show();
+        }
+    }
+    window.nnc("Note", cNote);
+});

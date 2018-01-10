@@ -59,7 +59,6 @@ class NotesController extends AppController
   */
   public function view($id = null)
   {
-    $this->addStyle("note");
     $note = $this->Notes->get($id, [
       'contain' => ['Categories', 'Modules', 'Tags', 'Sections', 'Articles']
     ]);
@@ -78,8 +77,7 @@ class NotesController extends AppController
   */
   public function edit($id = null)
   {
-    $this->addScript("/venders/marked/marked.min.js");
-    $this->addStyle("note");
+
     $note = null;
 
     if(!is_null($id)) {

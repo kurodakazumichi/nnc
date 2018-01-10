@@ -3,114 +3,38 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $note
  */
-?>
-<?php $this->append("script"); ?>
-<script src="/venders/ace/ace.js"></script>
 
+$this->append('assets');
+echo $this->Html->script('/venders/marked/marked.min.js');
+echo $this->Html->css('share/note');
+
+echo $this->Html->css('/venders/syntaxhighlighter/styles/shCoreDefault.css');
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shCore.js');
+
+/* shBrushXXXX.jsはace.jsを使う場合は直接書く、autoloaderを使うとうまくいかない。*/
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushPlain.js');
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushXml.js');
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushCss.js');
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushJScript.js');
+echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushPhp.js');
+
+/* ace.jsはSyntaxhighlighterより後に読み込まないとばぐる、can't find brush... */
+echo $this->Html->script('/venders/ace/ace.js');
+echo $this->Html->script('share/note');
+$this->end();
+?>
+
+<?php $this->append("postfixScripts"); ?>
+
+<script type="text/javascript">
+$(function(){
+  nnc('View').create().init();
+});
+</script>
 <?php $this->end(); ?>
 
 
-<script type="text/javascript">
-  $(function(){
-    $("#tabs").tabs();
 
-
-
-
-    var md_editor = ace.edit("md-editor");
-
-    md_editor.getSession().setMode("ace/mode/markdown");
-    md_editor.$blockScrolling = Infinity;
-
-    var js_editor = ace.edit("js-editor");
-    js_editor.getSession().setMode("ace/mode/javascript");
-    js_editor.$blockScrolling = Infinity;
-
-    var css_editor = ace.edit("css-editor");
-    css_editor.getSession().setMode("ace/mode/css");
-    css_editor.$blockScrolling = Infinity;
-
-    var style = document.createElement('style');
-    document.head.appendChild(style);
-
-    var func = function() {
-      var r = new marked.Renderer();
-      r.heading = function(text, level) {
-        level += 1;
-        level = Math.max(2, level);
-        return '<h'+level+'>'+text+'</h'+level+'>';
-      };
-
-      marked.setOptions({
-        gfm:false,
-        renderer:r
-      });
-
-      var htmlText = marked(md_editor.getValue());
-
-      $('#preview').html(htmlText);
-
-      $('#preview').find("h2, h3, h4, h5, h6").each(function(){
-        var a = $(this);
-
-        a.nextUntil(a.prop("tagName")).addBack().wrapAll("<section></section>");
-
-      });
-    };
-
-    func();
-
-    md_editor.on("change", function(e){
-      func();
-    });
-
-    // $("#ui-body").on("keypress blur", function(e){
-    //
-    //   if(e.type == "blur" || e.type == "keypress" && e.which == 13) {
-    //     func();
-    //   }
-    //
-    // });
-
-
-    $("#apply-css").on("click", function(){
-      if(style.sheet.cssRules.length != 0) {
-        style.sheet.deleteRule(0);
-      }
-
-      var css = css_editor.getValue();
-      try{
-        if(css != "") {
-          style.sheet.insertRule(css, 0);
-        }
-      } catch(e) {
-        alert(e);
-      }
-
-    });
-
-    $("#apply-js").on("click", function(){
-      var e = ace.edit("js-editor");
-      eval(e.getValue());
-    });
-
-    // $("#ui-body").blur(function(){
-    //   console.log("blur");
-    //   $('#preview').html($(this).val());
-    // });
-
-    $("#submit").on("click", function(){
-      $("#ui-body").val(md_editor.getValue());
-      $("#ui-css").val(css_editor.getValue());
-      $("#ui-js").val(js_editor.getValue());
-      return true;
-    });
-
-  });
-
-
-
-</script>
 <div style="display:flex; flex-wrap:nowrap; justify-content: space-around;">
   <div class="admin" style="width:47.5%;">
       <?= $this->Form->create($note) ?>
@@ -159,8 +83,6 @@
     </section>
   </div>
   <div style="width:47.5%">
-    <article id="preview" class="note" style="overflow:scroll; overflow-x:hidden; height:50vw; font-size:0.5em;">
-      <?= $note->body; ?>
-    </article>
+    <article id="preview" class="note" style="display:none; overflow:scroll; overflow-x:hidden; height:50vw; font-size:0.5em;"><?= $note->body; ?></article>
   </div>
 </div>

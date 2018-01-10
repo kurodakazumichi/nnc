@@ -324,22 +324,11 @@ class AppController extends Controller
   */
   private function getStyles()
   {
-    // デフォルトで読み込むCSS
-    $css = [
-      'https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css'
-      ,'cssreset-min.css'
-      ,'common.css'
-    ];
-
     // Layout,Controller,Actionに関するCSSを追加
-    $css = array_merge($css, $this->getStyles_LCA());
-
-    // 管理者用(ログイン時のみ読み込む)
-    $css[] = "admin.css";
-    $css[] = '/venders/jquery/ui/jquery-ui.min.css';
+    $css = $this->getStyles_LCA();
 
     // 他に読み込むものがあればマージする。
-    $css = array_merge($css, $this->styles);
+    $css = array_merge($this->getStyles_LCA(), $this->styles);
 
     return $css;
   }
@@ -349,18 +338,8 @@ class AppController extends Controller
   */
   private function getScripts()
   {
-    $js = [
-      '/venders/jquery/jquery-3.2.1.min.js'
-    ];
-
-    // 管理者の時だけ読み込む
-    $js[] = '/venders/jquery/ui/jquery-ui.min.js';
-
-    // アクションに対応したJSが存在すれば読み込む
-    $js = array_merge($js, $this->getScripts_LCA());
-
     // 他にあればマージする。
-    $js = array_merge($js, $this->jscripts);
+    $js = array_merge($this->getScripts_LCA(), $this->jscripts);
 
     return $js;
   }

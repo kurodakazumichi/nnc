@@ -23,12 +23,23 @@
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-    <?= $this->element("css_and_js"); ?>
+
+    <?= $this->Html->css('https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css') ?>
+    <?= $this->Html->css('cssreset-min.css') ?>
+    <?= $this->Html->css('common.css') ?>
+
+    <?= $this->Html->script('/venders/jquery/jquery-3.2.1.min.js') ?>
+    <?= $this->Html->script('nnc.js') ?>
+
+    <?php if($logined): ?>
+      <?= $this->Html->css('/venders/jquery/ui/jquery-ui.min.css') ?>
+      <?= $this->Html->script('/venders/jquery/ui/jquery-ui.min.js') ?>
+      <?= $this->Html->css('share/admin.css') ?>
+      <?= $this->Html->script('share/admin.js') ?>
+    <?php endif; ?>
+
     <?= $this->element("assets"); ?>
-
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-
+    <?= $this->fetch('assets'); ?>
 </head>
 <body ontouchstart="">
   <div id="wrapper">

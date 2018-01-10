@@ -63,6 +63,15 @@ sass --watch --sourcemap=none --no-cache .\src\sass:.\css\
 Create folder "webroot/src/ts", and tsconfig.json.
 Start terminal, and move to webroot folder, input to this command.
 
+### At First
+```
+npm init
+npm install --save @types/jquery
+npm install --save @types/jqueryui
+npm install --save @types/marked
+npm install --save @types/ace
+```
+
 ```
 tsc -p src/ts -w
 ```
