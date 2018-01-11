@@ -89,6 +89,21 @@ class CategoriesTableEx extends CategoriesTable
   */
   public function getPaginateConfigWithRelated()
   {
+    $subNote = $this->query();
+    $subNote->select(['note_count' => $subNote->func()->count("Notes.id")]);
+    $subNote->where(['Notes.category_id = Categories.id']);
+    $subNote->from("Notes");
+
+    $subArticle = $this->query();
+    $subArticle->select(['article_count' => $subArticle->func()->count("Articles.id")]);
+    $subArticle->where(['Articles.category_id = Categories.id']);
+    $subArticle->from("Articles");
+
+    $subBook = $this->query();
+    $subBook->select(['book_count' => $subBook->func()->count("Books.id")]);
+    $subBook->where(['Books.category_id = Categories.id']);
+    $subBook->from("Books");
+
     $query = $this->query();
 
     // Notes, Articles, Booksを関連づける設定を追記
@@ -96,9 +111,9 @@ class CategoriesTableEx extends CategoriesTable
 
     // Notes, Articles, Booksのカウント列を追加
     $config['fields'] = array_merge($config['fields'], [
-      'note_count'     => $query->func()->count("Notes.id")
-      ,'article_count'  => $query->func()->count('Articles.id')
-      ,'book_count'     => $query->func()->count('Books.id')
+      'note_count'    => $subNote,
+      'article_count' => $subArticle,
+      'book_count'    => $subBook
     ]);
 
     $config['sortWhitelist'] = array_merge($config['sortWhitelist'],[
