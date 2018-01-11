@@ -8,7 +8,7 @@
 
   <section>
       <h2 class="m0020"><?= __('Notes') ?></h3>
-      <table class="multi" style="font-size:0.6em;" cellpadding="0" cellspacing="0">
+      <table class="multi" cellpadding="0" cellspacing="0">
           <thead>
               <tr>
                   <th style="width:2em;" scope="col"><?= $this->Paginator->sort('id', 'ID') ?></th>
