@@ -11,11 +11,15 @@ $datas = [
   ],
   'Modules' => [
     'url' => '/modules',
-    'sub' => []
+    'sub' => [
+      '新しいモジュール' => '/modules/edit'
+    ]
   ],
   'Assets' => [
     'url' => '/assets',
-    'sub' => []
+    'sub' => [
+      '新しいアセット' => '/assets/edit'
+    ]
   ],
   'Notes' => [
     'url' => '/notes',
@@ -25,15 +29,21 @@ $datas = [
   ],
   'Articles' => [
     'url' => '/articles',
-    'sub' => []
+    'sub' => [
+      '新しい記事' => '/articles/edit'
+    ]
   ],
   'Books' => [
     'url' => '/books',
-    'sub' => []
+    'sub' => [
+      '新しいブック' => '/books/edit'
+    ]
   ],
   'Sections' => [
     'url' => '/sections',
-    'sub' => []
+    'sub' => [
+      '新しいセクション' => '/sections/edit'
+    ]
   ],
   'SectionNotes' => [
     'url' => '/sections-notes',

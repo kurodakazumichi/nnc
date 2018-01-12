@@ -18,10 +18,6 @@ class AssetsController extends AppController
   public function beforeFilter($event)
   {
     parent::beforeFilter($event);
-
-    $this->addRelatedLink(['Assets'   , 'index' ], 'List Assets');
-    $this->addRelatedLink(['Assets'   , 'edit'  ], 'New Asset');
-
   }
 
   /**

@@ -18,9 +18,6 @@ class ModulesController extends AppController
   public function beforeFilter($event)
   {
     parent::beforeFilter($event);
-
-    $this->addRelatedLink(['Modules' , 'index' ], 'List Modules');
-    $this->addRelatedLink(['Modules' , 'edit'  ], 'New Module');
   }
 
   /**
