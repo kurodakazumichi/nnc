@@ -1,12 +1,29 @@
 @charset "UTF-8";
 
 header nav.admin {
-  ul{
+  &>ul{
       display:flex;
       justify-content:space-around;
       margin:0;
       background:#E1DBC9;
   }
+
+  .sub {
+    display:none;
+    position: relative;
+
+    ul{
+      position: absolute;
+      background: #ddd;
+
+      li{
+        padding-left: 0.5em;
+        width:10em;
+      }
+    }
+  }
+
+
 
 }
 

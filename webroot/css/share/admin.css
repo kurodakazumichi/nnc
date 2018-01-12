@@ -1,8 +1,17 @@
-header nav.admin ul {
+header nav.admin > ul {
   display: flex;
   justify-content: space-around;
   margin: 0;
   background: #E1DBC9; }
+header nav.admin .sub {
+  display: none;
+  position: relative; }
+  header nav.admin .sub ul {
+    position: absolute;
+    background: #ddd; }
+    header nav.admin .sub ul li {
+      padding-left: 0.5em;
+      width: 10em; }
 
 div.message.error {
   padding: 0.4em 1em;

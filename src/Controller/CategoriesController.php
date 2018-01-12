@@ -23,13 +23,6 @@ class CategoriesController extends AppController
    */
   public function beforeFilter($event) {
     parent::beforeFilter($event);
-
-    $this->addRelatedLink(['Articles' , 'index' ], 'List Articles');
-    $this->addRelatedLink(['Articles' , 'add'   ], 'New Article');
-    $this->addRelatedLink(['Books'    , 'index' ], 'List Books');
-    $this->addRelatedLink(['Books'    , 'add'   ], 'New Book');
-    $this->addRelatedLink(['Notes'    , 'index' ], 'List Notes');
-    $this->addRelatedLink(['Notes'    , 'add'   ], 'New Note');
   }
 
   /**
