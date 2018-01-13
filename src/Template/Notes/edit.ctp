@@ -21,8 +21,24 @@ echo $this->Html->script('/venders/syntaxhighlighter/scripts/shBrushPhp.js');
 /* ace.jsはSyntaxhighlighterより後に読み込まないとばぐる、can't find brush... */
 echo $this->Html->script('/venders/ace/ace.js');
 echo $this->Html->script('share/note');
-$this->end();
+
 ?>
+<style media="screen">
+#preview {
+  display:none;
+  overflow:scroll;
+  overflow-x:hidden;
+  height:50vw;
+  font-size:0.96em;
+}
+
+</style>
+
+
+
+
+
+<?php $this->end(); ?>
 
 <?php $this->append("postfixScripts"); ?>
 
@@ -83,6 +99,6 @@ $(function(){
     </section>
   </div>
   <div style="width:47.5%">
-    <article id="preview" class="note" style="display:none; overflow:scroll; overflow-x:hidden; height:50vw; font-size:0.5em;"><?= $note->body; ?></article>
+    <article id="preview" class="note"><?= $note->body; ?></article>
   </div>
 </div>

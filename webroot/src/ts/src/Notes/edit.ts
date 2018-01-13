@@ -75,47 +75,5 @@
   }
 
   (<any>window).nnc("View", new cView);
-  // var admin = nnc('Admin');
-  //
-  //
-  //   $("#tabs").tabs();
-  //
-  //   var md_editor  = admin.aceEditor('md-editor', 'md');
-  //   var js_editor  = admin.aceEditor('js-editor', 'js');
-  //   var css_editor = admin.aceEditor('css-editor', 'css');
-  //
-  //   var apply = function(init)
-  //   {
-  //     // Markdownをコンバート
-  //     var note = nnc('Note').create("#preview");
-  //     note.setMarkdown(md_editor.getValue()).draw();
-  //
-  //     // SyntaxHighlighter設定
-  //     (init)? SyntaxHighlighter.all() : SyntaxHighlighter.highlight();
-  //   }
-  //
-  //   admin.updateStyle('note-css', css_editor.getValue());
-  //
-  //   apply();
-  //
-  //   md_editor.on("change", function(e){
-  //     apply();
-  //   });
-  //
-  //   $("#apply-css").on("click", function(){
-  //     admin.updateStyle('note-css', css_editor.getValue());
-  //   });
-  //
-  //   $("#apply-js").on("click", function(){
-  //     var e = ace.edit("js-editor");
-  //     eval(e.getValue());
-  //   });
-  //
-  //   $("#submit").on("click", function(){
-  //     $("#ui-body").val(md_editor.getValue());
-  //     $("#ui-css").val(css_editor.getValue());
-  //     $("#ui-js").val(js_editor.getValue());
-  //     return true;
-  //   });
 
 })();

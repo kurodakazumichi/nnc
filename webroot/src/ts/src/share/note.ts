@@ -33,6 +33,11 @@ class cNote
   {
     this.folder = $(selector);
     this.markdown = this.folder.html();
+
+    // domのhtmlを取得すると">"などの特殊文字が自動でエスケープされてしまう。
+    // ">"はmarkdownのblockquote記法としてそのままにしておきたいのでデコードする。
+    this.markdown = this.markdown.replace(/&gt;/g, '>');
+    
     this.init();
   }
 
@@ -53,7 +58,14 @@ class cNote
     {
       level += 1;
       level = Math.max(2, level);
-      return '<h'+level+'>'+text+'</h'+level+'>';
+      return `<h${level}>${text}</h${level}>`;
+    };
+
+    // linkタグはtarget=_blankにする。
+    // Markdown:[text](href)
+    // titleの指定方法が謎。
+    r.link = function(href, title, text) {
+      return `<a href=${href} target="_blank">${text}</a>`;
     };
 
     marked.setOptions({

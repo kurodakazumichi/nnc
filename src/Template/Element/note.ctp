@@ -36,6 +36,4 @@ $(function(){
 <?php $this->end(); ?>
 
 <?php /* MAIN CONTENTS */ ?>
-<article id="article" class="note" style="display:none;">
-  <?= $note->body; ?>
-</article>
+<article id="article" class="note" style="display:none;"><?= $note->body; ?></article>

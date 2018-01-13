@@ -1,15 +1,214 @@
+@charset "UTF-8";
+
 .contents {
   .note {
-
+    // ノート全体の基底フォントサイズ
+    font-size: 3.0vw;
+    line-height: 1.5em;
     & > section {
+
       box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
       padding:1em;
       margin-bottom: 3em;
 
-      h2 {
-        background:#087;
-        padding:0.3em;
+
+    }
+
+    h2 {
+      background:#0F8779;
+      padding:0.2em;
+      font-weight: bold;
+      color:white;
+      margin-bottom: 1em;
+      font-size: 1.1em;
+    }
+
+    h3 {
+      border-left:0.8em double #0F8779;
+      margin-bottom: 0.5em;
+      text-indent: 0.3em;
+      font-weight: bold;
+    }
+
+    h4, h5, h6 {
+      font-weight: bold;
+    }
+
+    p{
+      margin-bottom:1em;
+    }
+
+    a {
+      text-decoration: none;
+      color:#30A31F;
+
+      &:hover{
+        color:#68BB5C;
       }
     }
+
+    em, strong {
+      font-weight: bold;
+      font-size: 1.2em;
+
+    }
+
+    strong {
+      color: #B6304F;
+    }
+
+    em {
+      color:#1280A5;
+    }
+
+    img {
+      width:100%
+    }
+
+    blockquote {
+      border-radius: 0.5em;
+      padding:0.8em;
+      background:rgba(0, 0, 0, 0.1);
+
+      blockquote {
+        margin-left:0.8em;
+      }
+    }
+
+    table {
+      border-top:1px solid #ccc;
+      border-left:1px solid #ccc;
+      td, th {
+        padding:0.2em;
+        border-bottom:1px solid #ccc;
+        border-right:1px solid #ccc;
+      }
+      td{
+        &:nth-child(odd) { background: rgba(0, 0, 0, 0.05); }
+        &:nth-child(even) { background: rgba(255, 255, 255, 0.2); }
+      }
+
+      th{
+        &:nth-child(even) { background: rgba(0, 100, 0, 0.1); }
+        &:nth-child(odd) { background: rgba(0, 100, 0, 0.2); }
+      }
+
+      tr:nth-child(even) {
+        background:rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    /**
+     * declare un order list styles
+     */
+    ul {
+        // This style of listmark is cat's paw pads.
+        li {
+          background-image: url(/img/common/pad1.svg);
+          background-repeat:no-repeat;
+          background-size: 1.5em;
+          padding-left:1.8em;;
+          margin-bottom: 0.5em;
+        }
+    }
+
+    ol{
+      counter-reset: number;
+      list-style: none;
+      margin: 0;
+      padding:0;
+
+      li{
+        margin-bottom: 0.5em;
+      }
+
+      li:before {
+        counter-increment: number;
+        content: counter(number);
+        background: #000;
+        color:white;
+        width:1.5em;
+        height:1.5em;
+        text-align:center;
+        display: inline-block;
+        border-radius: 1em;
+        margin-right: 0.5em;
+      }
+    }
+
+    dl {
+      dt {
+        background-image: url(/img/pages/home/cat.blue.svg);
+        background-repeat:no-repeat;
+        background-size: 1.4em;
+        padding-left:1.5em;;
+        font-weight: bold;
+        color:#1280A5;
+        font-size: 1.2em;
+      }
+    }
+
+    .syntaxhighlighter a,
+    .syntaxhighlighter div,
+    .syntaxhighlighter code,
+    .syntaxhighlighter table,
+    .syntaxhighlighter table td,
+    .syntaxhighlighter table tr,
+    .syntaxhighlighter table tbody,
+    .syntaxhighlighter table thead,
+    .syntaxhighlighter table caption,
+    .syntaxhighlighter textarea {
+      line-height: 1.3em !important;/*行間*/
+    }
+
+    .syntaxhighlighter {
+      margin: 0 !important;
+      border: solid 1px #92a3b5 !important; /*枠線*/
+      overflow-y: hidden !important; /*縦スクロールバー消去*/
+      font-size: 0.5em !important;
+      box-sizing: border-box;
+    }
+
+    .syntaxhighlighter .line.alt1 {
+      background-color: #FFFFFF !important; /*偶数行背景色*/
+    }
+
+    .syntaxhighlighter .line.alt2 {
+      background-color: #F5F7FA !important; /*奇数行背景色*/
+    }
+
+    .syntaxhighlighter .gutter .line {
+      border-right: solid 3px #D6D6D6 !important; /*行番号の境界線*/
+    }
+
+    .syntaxhighlighter .line.highlighted.alt1 {
+      background-color: #FFDDDD !important; /*偶数行ハイライト背景色*/
+    }
+
+    .syntaxhighlighter .line.highlighted.alt2 {
+      background-color: #FFDDDD !important; /*奇数行ハイライト背景色*/
+    }
+
+    .syntaxhighlighter .gutter .line.highlighted {
+      border-color: #EEAAAA !important; /*ハイライトの境界線*/
+      color: #DD6666 !important; /*ハイライト文字色*/
+    }
+
+    .syntaxhighlighter table caption {
+      padding: 0.2em 0 0.2em 1em !important; /*タイトルの余白*/
+      color: #FFF !important; /*タイトルの文字色*/
+      background-color: #92a3b5 !important; /*タイトルの背景色*/
+    }
+
+    .syntaxhighlighter.nogutter td.code .container textarea,
+    .syntaxhighlighter.nogutter td.code .line {
+      padding: 0 1em !important; /*行番号なしの時の余白*/
+    }
+
+    .syntaxhighlighter.ie {
+      font-size: 1em !important; /*IEフォントサイズ*/
+      padding: 0 0 1.4em !important; /*IE横スクロールバー対策*/
+    }
+
   }
 }

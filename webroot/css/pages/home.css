@@ -67,7 +67,7 @@ main {
               font-weight: normal;
               line-height: 1.45em;
               overflow: hidden;
-              padding:0.4em 1em;
+              padding: 0.4em 1em;
               box-sizing: border-box;
               top: 0;
               left: 0;
@@ -79,13 +79,14 @@ main {
                 display: block;
                 color: black; }
   main .misc {
-    flex-wrap:nowrap;
     font-size: 1.3vw;
-    line-height: 1.8em; }
+    line-height: 1.8em;
+    flex-wrap: nowrap; }
     main .misc section {
       font-size: 1.2em;
       flex-grow: 1;
-      margin-bottom: 2em; }
+      margin-bottom: 2em;
+      width: 100%; }
       main .misc section h2 {
         text-indent: 0.2em;
         font-size: 2.5vw;

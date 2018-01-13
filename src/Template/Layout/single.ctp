@@ -29,6 +29,10 @@
     <?= $this->Html->css('cssreset-min.css') ?>
     <?= $this->Html->css('common.css') ?>
 
+    <?= $this->Html->script('/venders/jquery/jquery-3.2.1.min.js') ?>
+    <?= $this->Html->script('nnc.js') ?>
+
+
     <?php if($logined): ?>
       <?= $this->Html->css('/venders/jquery/ui/jquery-ui.min.css') ?>
       <?= $this->Html->script('/venders/jquery/ui/jquery-ui.min.js') ?>
@@ -53,4 +57,5 @@
       ©Copyright Since 2017 Nekonecode All rights reserved<a href="/users/login" style="text-decoration:none; cursor:none; color:white;">.</a>
     </footer>
 </body>
+<?= $this->fetch('postfixScripts') ?>
 </html>

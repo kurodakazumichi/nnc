@@ -19,6 +19,9 @@ class NotesController extends AppController
   {
     parent::initialize();
     $this->loadModel('NotesModules');
+
+    // 許可するメソッドを指定
+    $this->Auth->allow(['notes', 'note']);
   }
 
   /**
@@ -26,14 +29,6 @@ class NotesController extends AppController
   */
   public function beforeFilter($event) {
     parent::beforeFilter($event);
-
-    $this->addRelatedLink(['Notes'   , 'index' ], 'List Notes');
-    $this->addRelatedLink(['Notes'   , 'edit'  ], 'New Note');
-    $this->addRelatedLink(['Modules' , 'add'   ], 'New Module');
-    $this->addRelatedLink(['Modules' , 'index' ], 'List Modules');
-    $this->addRelatedLink(['Sections', 'add'   ], 'New Section');
-    $this->addRelatedLink(['Sections', 'index' ], 'List Sections');
-
   }
   /**
   * Index method
@@ -181,14 +176,17 @@ class NotesController extends AppController
       $this->Flash->set($this->Notes->getStatuses()[$note->status]);
     }
 
-    // 関連リンクに編集ページを追加
-    if($this->isLogin()) {
-      $this->addRelatedLink(['Notes', 'edit', $note->id], 'Edit Note');
-    }
+    // ガジェットを非表示
+    $this->gadgets = false;
 
     // 記事のパンくずリストをセットアップ。
     $this->addCrumb($note->category->name, ['controller' => 'Notes', 'action' => 'notes', $note->category_id]);
-    $this->addCrumb($note->title);
+    if($this->isLogin()) {
+      $this->addCrumb($note->title, ['controller' => 'Notes', 'action' => 'edit', $note->id]);
+    } else {
+      $this->addCrumb($note->title);
+    }
+
 
     // モジュールデータを取得
     $modules = $this->NotesModules->getModulesUsedIn($note->id);

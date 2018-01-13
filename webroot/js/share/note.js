@@ -7,6 +7,7 @@ $(function () {
         constructor(selector) {
             this.folder = $(selector);
             this.markdown = this.folder.html();
+            this.markdown = this.markdown.replace(/&gt;/g, '>');
             this.init();
         }
         setMarkdown(text) {
@@ -18,7 +19,10 @@ $(function () {
             r.heading = function (text, level) {
                 level += 1;
                 level = Math.max(2, level);
-                return '<h' + level + '>' + text + '</h' + level + '>';
+                return `<h${level}>${text}</h${level}>`;
+            };
+            r.link = function (href, title, text) {
+                return `<a href=${href} target="_blank">${text}</a>`;
             };
             marked.setOptions({
                 gfm: false,

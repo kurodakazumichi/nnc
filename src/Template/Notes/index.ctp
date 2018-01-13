@@ -18,7 +18,7 @@
                   <th style="width:10em;" scope="col"><?= $this->Paginator->sort('category_id', 'カテゴリ') ?></th>
                   <th style="width:4em;" scope="col"><?= $this->Paginator->sort('status', '状態') ?></th>
                   <th style="width:10em;" scope="col"><?= $this->Paginator->sort('modified', '更新日') ?></th>
-                  <th style="width:5em;" scope="col" class="actions">&nbsp;</th>
+                  <th style="width:8em;" scope="col" class="actions">&nbsp;</th>
               </tr>
           </thead>
           <tbody>
@@ -37,6 +37,7 @@
                     <ul class="icons ui-widget ui-helper-clearfix">
                       <li class="delete ui-state-default ui-corner-all" onclick="location.href='/notes/view/<?= $note->id ?>';"><span class="ui-icon ui-icon-circle-arrow-e"></span></li>
                       <li class="delete ui-state-default ui-corner-all" onclick="location.href='/notes/edit/<?= $note->id ?>';"><span class="ui-icon ui-icon-document"></span></li>
+                      <li class="delete ui-state-default ui-corner-all" onclick="location.href='/1ch/note/<?= $note->id ?>';"><span class="ui-icon ui-icon-star"></span></li>
                     </ul>
                   </td>
               </tr>

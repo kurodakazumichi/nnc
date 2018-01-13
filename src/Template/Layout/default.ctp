@@ -53,12 +53,14 @@
       <div class="contents">
         <?= $this->fetch('content') ?>
       </div>
+      <?php if($element['gadgets']): ?>
       <div class="gadgets">
         <?php foreach($element['gadgets'] as $gadget): ?>
           <?= $this->element("gadget/$gadget") ?>
         <?php endforeach; ?>
         <?= $this->fetch('gadgets') ?>
       </div>
+      <?php endif; ?>
     </main>
     <footer>
       ©Copyright Since 2017 Nekonecode All rights reserved.

@@ -26,8 +26,8 @@ header {
 
     .box {
       min-width: 8vw;
-      font-size: 1.3em;
-      line-height: 3.5em;
+      font-size: 1.5em;
+      line-height: 2.5em;
       text-align:center;
       font-weight: bold;
 
@@ -35,7 +35,7 @@ header {
         background-color:#006638;
         background-image: url(/img/common/logo.svg);
         background-repeat: no-repeat;
-        text-indent:3em;
+        text-indent:2em;
       }
 
       &:nth-child(2) {
@@ -74,7 +74,19 @@ header {
       display:flex;
       justify-content:space-around;
       margin:0;
-      background: #91A182;
+      background: #444;
+
+      li{
+        width:100%;
+        text-align: center;
+        font-size: 1.5em;
+
+        &:nth-child(odd) { background: #555; }
+        a {
+          text-decoration: none;
+          color:white;
+        }
+      }
     }
   }
 }

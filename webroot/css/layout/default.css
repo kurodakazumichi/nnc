@@ -24,15 +24,15 @@ header {
     flex-wrap: none; }
     header nav.breadcrumb .box {
       min-width: 8vw;
-      font-size: 1.3em;
-      line-height: 3.5em;
+      font-size: 1.5em;
+      line-height: 2.5em;
       text-align: center;
       font-weight: bold; }
       header nav.breadcrumb .box:nth-child(1) {
         background-color: #006638;
         background-image: url(/img/common/logo.svg);
         background-repeat: no-repeat;
-        text-indent: 3em; }
+        text-indent: 2em; }
       header nav.breadcrumb .box:nth-child(2) {
         background-color: #046F1B; }
       header nav.breadcrumb .box:nth-child(3) {
@@ -55,7 +55,16 @@ header {
     display: flex;
     justify-content: space-around;
     margin: 0;
-    background: #91A182; }
+    background: #444; }
+    header nav.ch ul li {
+      width: 100%;
+      text-align: center;
+      font-size: 1.5em; }
+      header nav.ch ul li:nth-child(odd) {
+        background: #555; }
+      header nav.ch ul li a {
+        text-decoration: none;
+        color: white; }
 
 /**
  * main style
@@ -84,14 +93,14 @@ main {
   main .contents {
     flex-grow: 3;
     padding: 0 1em;
-    font-size: 1.3em; }
+    font-size: 1.3em;
+    min-width: 0; }
   main .gadgets {
     flex-grow: 1;
-    max-width: 300px;
-    min-width: 300px; }
+    max-width: 200px;
+    min-width: 200px; }
     main .gadgets .gadget {
       width: 90%;
-      margin: 0 auto;
       background: #fff;
       border-radius: 0.5em;
       font-size: 1.0em;

@@ -17,16 +17,17 @@ main {
     flex-grow: 3;
     padding:0 1em;
     font-size: 1.3em;
+    min-width:0;
   }
 
   .gadgets {
     flex-grow: 1;
-    max-width: 300px;
-    min-width:300px;
+    max-width: 200px;
+    min-width:200px;
 
     .gadget {
       width:90%;
-      margin: 0 auto;
+      
       background:#fff;
       border-radius: 0.5em;
       font-size: 1.0em;

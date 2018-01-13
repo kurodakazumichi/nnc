@@ -1,7 +1,152 @@
-.contents .note > section {
-  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
-  padding: 1em;
-  margin-bottom: 3em; }
-  .contents .note > section h2 {
-    background: #087;
-    padding: 0.3em; }
+@charset "UTF-8";
+.contents .note {
+  font-size: 3.0vw;
+  line-height: 1.5em;
+  /**
+   * declare un order list styles
+   */ }
+  .contents .note > section {
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    margin-bottom: 3em; }
+  .contents .note h2 {
+    background: #0F8779;
+    padding: 0.2em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1em;
+    font-size: 1.1em; }
+  .contents .note h3 {
+    border-left: 0.8em double #0F8779;
+    margin-bottom: 0.5em;
+    text-indent: 0.3em;
+    font-weight: bold; }
+  .contents .note h4, .contents .note h5, .contents .note h6 {
+    font-weight: bold; }
+  .contents .note p {
+    margin-bottom: 1em; }
+  .contents .note a {
+    text-decoration: none;
+    color: #30A31F; }
+    .contents .note a:hover {
+      color: #68BB5C; }
+  .contents .note em, .contents .note strong {
+    font-weight: bold;
+    font-size: 1.2em; }
+  .contents .note strong {
+    color: #B6304F; }
+  .contents .note em {
+    color: #1280A5; }
+  .contents .note img {
+    width: 100%; }
+  .contents .note blockquote {
+    border-radius: 0.5em;
+    padding: 0.8em;
+    background: rgba(0, 0, 0, 0.1); }
+    .contents .note blockquote blockquote {
+      margin-left: 0.8em; }
+  .contents .note table {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc; }
+    .contents .note table td, .contents .note table th {
+      padding: 0.2em;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc; }
+    .contents .note table td:nth-child(odd) {
+      background: rgba(0, 0, 0, 0.05); }
+    .contents .note table td:nth-child(even) {
+      background: rgba(255, 255, 255, 0.2); }
+    .contents .note table th:nth-child(even) {
+      background: rgba(0, 100, 0, 0.1); }
+    .contents .note table th:nth-child(odd) {
+      background: rgba(0, 100, 0, 0.2); }
+    .contents .note table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.05); }
+  .contents .note ul li {
+    background-image: url(/img/common/pad1.svg);
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    padding-left: 1.8em;
+    margin-bottom: 0.5em; }
+  .contents .note ol {
+    counter-reset: number;
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .contents .note ol li {
+      margin-bottom: 0.5em; }
+    .contents .note ol li:before {
+      counter-increment: number;
+      content: counter(number);
+      background: #000;
+      color: white;
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+      display: inline-block;
+      border-radius: 1em;
+      margin-right: 0.5em; }
+  .contents .note dl dt {
+    background-image: url(/img/pages/home/cat.blue.svg);
+    background-repeat: no-repeat;
+    background-size: 1.4em;
+    padding-left: 1.5em;
+    font-weight: bold;
+    color: #1280A5;
+    font-size: 1.2em; }
+  .contents .note .syntaxhighlighter a,
+  .contents .note .syntaxhighlighter div,
+  .contents .note .syntaxhighlighter code,
+  .contents .note .syntaxhighlighter table,
+  .contents .note .syntaxhighlighter table td,
+  .contents .note .syntaxhighlighter table tr,
+  .contents .note .syntaxhighlighter table tbody,
+  .contents .note .syntaxhighlighter table thead,
+  .contents .note .syntaxhighlighter table caption,
+  .contents .note .syntaxhighlighter textarea {
+    line-height: 1.3em !important;
+    /*行間*/ }
+  .contents .note .syntaxhighlighter {
+    margin: 0 !important;
+    border: solid 1px #92a3b5 !important;
+    /*枠線*/
+    overflow-y: hidden !important;
+    /*縦スクロールバー消去*/
+    font-size: 0.5em !important;
+    box-sizing: border-box; }
+  .contents .note .syntaxhighlighter .line.alt1 {
+    background-color: #FFFFFF !important;
+    /*偶数行背景色*/ }
+  .contents .note .syntaxhighlighter .line.alt2 {
+    background-color: #F5F7FA !important;
+    /*奇数行背景色*/ }
+  .contents .note .syntaxhighlighter .gutter .line {
+    border-right: solid 3px #D6D6D6 !important;
+    /*行番号の境界線*/ }
+  .contents .note .syntaxhighlighter .line.highlighted.alt1 {
+    background-color: #FFDDDD !important;
+    /*偶数行ハイライト背景色*/ }
+  .contents .note .syntaxhighlighter .line.highlighted.alt2 {
+    background-color: #FFDDDD !important;
+    /*奇数行ハイライト背景色*/ }
+  .contents .note .syntaxhighlighter .gutter .line.highlighted {
+    border-color: #EEAAAA !important;
+    /*ハイライトの境界線*/
+    color: #DD6666 !important;
+    /*ハイライト文字色*/ }
+  .contents .note .syntaxhighlighter table caption {
+    padding: 0.2em 0 0.2em 1em !important;
+    /*タイトルの余白*/
+    color: #FFF !important;
+    /*タイトルの文字色*/
+    background-color: #92a3b5 !important;
+    /*タイトルの背景色*/ }
+  .contents .note .syntaxhighlighter.nogutter td.code .container textarea,
+  .contents .note .syntaxhighlighter.nogutter td.code .line {
+    padding: 0 1em !important;
+    /*行番号なしの時の余白*/ }
+  .contents .note .syntaxhighlighter.ie {
+    font-size: 1em !important;
+    /*IEフォントサイズ*/
+    padding: 0 0 1.4em !important;
+    /*IE横スクロールバー対策*/ }
