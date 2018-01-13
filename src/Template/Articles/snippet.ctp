@@ -1,1 +1,1 @@
-<?= $this->element('note') ?>
+<?= $this->element('share/note') ?>
