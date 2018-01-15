@@ -58,10 +58,10 @@ $(function(){
       <h2 class="m0020">ノートを<?= ($note->id)? "編集" :"作成" ?>する。</h2>
       <div id="tabs" style="font-size:0.7em;">
       	<ul>
+          <li><a href="#tabs-4">Options</a></li>
       		<li><a href="#tabs-1">Body</a></li>
       		<li><a href="#tabs-2">CSS</a></li>
           <li><a href="#tabs-3">Javascript</a></li>
-          <li><a href="#tabs-4">Options</a></li>
       	</ul>
       	<div id="tabs-1">
           <?= $this->Form->control('title'); ?>
@@ -87,7 +87,7 @@ $(function(){
             echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true]);
             echo $this->Form->control('status');
             echo $this->Form->control('modules._ids', ['options' => $modules]);
-            echo $this->Form->control('tags._ids', ['options' => $tags]);
+            echo $this->element('share/candidate_tags', ['tags' => $note->tags]);
           ?>
         </div>
       </div>

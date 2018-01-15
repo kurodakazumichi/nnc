@@ -37,7 +37,7 @@ class cNote
     // domのhtmlを取得すると">"などの特殊文字が自動でエスケープされてしまう。
     // ">"はmarkdownのblockquote記法としてそのままにしておきたいのでデコードする。
     this.markdown = this.markdown.replace(/&gt;/g, '>');
-    
+
     this.init();
   }
 
@@ -62,10 +62,11 @@ class cNote
     };
 
     // linkタグはtarget=_blankにする。
-    // Markdown:[text](href)
-    // titleの指定方法が謎。
+    // Markdown:[text](href "title")
     r.link = function(href, title, text) {
-      return `<a href=${href} target="_blank">${text}</a>`;
+      return (title)
+        ? `<a href=${href} target="_blank" title="${title}">${text}</a>`
+        : `<a href=${href} target="_blank">${text}</a>`
     };
 
     marked.setOptions({

@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/*******************************************************************************
+* input_tags.scss
+* タグ入力補助フォームのスタイル。
+*******************************************************************************/
+#candidate-tags
+{
+  // 関連づいているタグの一覧
+  ul#candidate-tags-related
+  {
+    // container
+    li {
+      display: inline-block;
+      margin-right: 0.5em;
+      font-size: 0.8em;
+      line-height: 1.6em;
+      // tag name
+      span {
+        background:#4A8DA7;
+        color:white;
+        display: inline-block;
+        padding:0 0.5em;
+      }
+
+      // delete link
+      a {
+        text-decoration: none;
+        background: #E3E3E3;
+        display: inline-block;
+        padding:0 0.5em;
+        cursor:pointer;
+
+        &:hover{
+          color:red;
+        }
+      }
+    }
+  }
+
+  // 検索フォーム
+  #candidate-tags-search {
+    background: #f0f0FF;
+    width:29.3%;
+  }
+
+  // タグ候補一覧
+  ul#candidate-tags-list
+  {
+    overflow: scroll;
+    width:30%;
+    overflow-x:hidden;
+    max-height: 200px;
+    font-size: 0.8em;
+    line-height: 2.6em;
+    li {
+      padding:0 0.5em;
+
+
+      cursor: pointer;
+
+      &:hover{
+        background:#4A8DA7;
+        color:white;
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+@charset "UTF-8";
+/*******************************************************************************
+* input_tags.scss
+* タグ入力補助フォームのスタイル。
+*******************************************************************************/
+#candidate-tags ul#candidate-tags-related li {
+  display: inline-block;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  line-height: 1.6em; }
+  #candidate-tags ul#candidate-tags-related li span {
+    background: #4A8DA7;
+    color: white;
+    display: inline-block;
+    padding: 0 0.5em; }
+  #candidate-tags ul#candidate-tags-related li a {
+    text-decoration: none;
+    background: #E3E3E3;
+    display: inline-block;
+    padding: 0 0.5em;
+    cursor: pointer; }
+    #candidate-tags ul#candidate-tags-related li a:hover {
+      color: red; }
+#candidate-tags #candidate-tags-search {
+  background: #f0f0FF;
+  width: 29.3%; }
+#candidate-tags ul#candidate-tags-list {
+  overflow: scroll;
+  width: 30%;
+  overflow-x: hidden;
+  max-height: 200px;
+  font-size: 0.8em;
+  line-height: 2.6em; }
+  #candidate-tags ul#candidate-tags-list li {
+    padding: 0 0.5em;
+    cursor: pointer; }
+    #candidate-tags ul#candidate-tags-list li:hover {
+      background: #4A8DA7;
+      color: white; }

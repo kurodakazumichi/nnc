@@ -40,7 +40,6 @@
       this.marked(true);
 
       this.editors.md.on("change", function(this: cView, e){
-        console.log(e);
         this.marked(false);
       }.bind(this));
 

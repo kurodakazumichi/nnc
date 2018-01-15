@@ -150,12 +150,6 @@ main div.admin{
         &.active          { background: rgba(255, 0, 0, 0.1); }
       }
     }
-
-
-
-
-
-
   }
 
   .inputs {
@@ -170,12 +164,15 @@ main div.admin{
         }
 
         input[type=text]{
+          border:1px solid #bbb;
           width:100%;
         }
         select {
+          border:1px solid #bbb;
           width:100%;
         }
         textarea {
+          border:1px solid #bbb;
           width:100%;
         }
 
@@ -189,6 +186,12 @@ main div.admin{
     .error-message {
       color:red;
     }
+  }
+
+  // リストの背景色を縞模様にする
+  ul.stripe li {
+    &:nth-child(odd)  { background: #f0f0FF; }
+    &:nth-child(even) { background: #fafafa; }
   }
 }
 

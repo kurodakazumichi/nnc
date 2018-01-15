@@ -72,7 +72,6 @@ class NotesController extends AppController
   */
   public function edit($id = null)
   {
-
     $note = null;
 
     if(!is_null($id)) {

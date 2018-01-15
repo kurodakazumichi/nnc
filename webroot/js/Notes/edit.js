@@ -14,7 +14,6 @@
         init() {
             this.marked(true);
             this.editors.md.on("change", function (e) {
-                console.log(e);
                 this.marked(false);
             }.bind(this));
             this.editors.css.on("change", function (e) {

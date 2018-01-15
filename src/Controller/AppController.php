@@ -102,6 +102,7 @@ class AppController extends Controller
 
     // replace from default table class to ex table class.
     TableRegistry::config('Categories'    , ['className' => 'App\Model\Table\CategoriesTableEx']);
+    TableRegistry::config('Tags'          , ['className' => 'App\Model\Table\TagsTableEx']);
     TableRegistry::config('Notes'         , ['className' => 'App\Model\Table\NotesTableEx']);
     TableRegistry::config('Articles'      , ['className' => 'App\Model\Table\ArticlesTableEx']);
     TableRegistry::config('Books'         , ['className' => 'App\Model\Table\BooksTableEx']);

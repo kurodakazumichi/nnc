@@ -29,12 +29,14 @@ class TagsTableTest extends TestCase
         'app.categories',
         'app.articles',
         'app.books',
-        'app.modules',
-        'app.notes_modules',
-        'app.notes_tags',
         'app.sections',
         'app.books_sections',
-        'app.sections_notes'
+        'app.sections_notes',
+        'app.modules',
+        'app.assets',
+        'app.modules_assets',
+        'app.notes_modules',
+        'app.notes_tags'
     ];
 
     /**

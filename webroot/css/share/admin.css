@@ -103,16 +103,23 @@ main div.admin {
       font-weight: bold;
       display: block; }
     main div.admin .inputs .input input[type=text] {
+      border: 1px solid #bbb;
       width: 100%; }
     main div.admin .inputs .input select {
+      border: 1px solid #bbb;
       width: 100%; }
     main div.admin .inputs .input textarea {
+      border: 1px solid #bbb;
       width: 100%; }
   main div.admin .inputs .editor {
     width: 100%;
     height: 50vh; }
   main div.admin .inputs .error-message {
     color: red; }
+  main div.admin ul.stripe li:nth-child(odd) {
+    background: #f0f0FF; }
+  main div.admin ul.stripe li:nth-child(even) {
+    background: #fafafa; }
 
 #dialog-link {
   padding: .4em 1em .4em 20px;

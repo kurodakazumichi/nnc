@@ -22,7 +22,9 @@ $(function () {
                 return `<h${level}>${text}</h${level}>`;
             };
             r.link = function (href, title, text) {
-                return `<a href=${href} target="_blank">${text}</a>`;
+                return (title)
+                    ? `<a href=${href} target="_blank" title="${title}">${text}</a>`
+                    : `<a href=${href} target="_blank">${text}</a>`;
             };
             marked.setOptions({
                 gfm: false,
