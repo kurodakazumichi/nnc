@@ -195,4 +195,22 @@ class NotesController extends AppController
     $this->set(compact('note', 'modules'));
     $this->setElementVar("assets", $assets);
   }
+
+  public function image() {
+    $files = $this->request->getData()['files'];
+    $url = [];
+    foreach($files as $file) {
+      // if(file_exists($file['tmp_name'])){
+      //   echo $file['name'];
+      // }
+      //
+      // if(is_uploaded_file($file['tmp_name'])){
+      //   echo "アップロードされました。";
+      // }
+
+      move_uploaded_file($file['tmp_name'], WWW_UPLOAD . $file['name']);
+      $url[] = WWW_UPLOAD_URL . $file['name'];
+    }
+    $this->outputJsonText($url, 'ok');
+  }
 }

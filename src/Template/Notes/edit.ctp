@@ -31,8 +31,9 @@ echo $this->Html->script('share/note');
   height:50vw;
   font-size:0.96em;
 }
-
 </style>
+
+<style id="note-css" media="screen"><?= $note->css ?></style>
 
 
 
@@ -58,10 +59,10 @@ $(function(){
       <h2 class="m0020">ノートを<?= ($note->id)? "編集" :"作成" ?>する。</h2>
       <div id="tabs" style="font-size:0.7em;">
       	<ul>
-          <li><a href="#tabs-4">Options</a></li>
       		<li><a href="#tabs-1">Body</a></li>
       		<li><a href="#tabs-2">CSS</a></li>
           <li><a href="#tabs-3">Javascript</a></li>
+          <li><a href="#tabs-4">Options</a></li>
       	</ul>
       	<div id="tabs-1">
           <?= $this->Form->control('title'); ?>
@@ -75,9 +76,8 @@ $(function(){
           <button type="button" name="button" id="apply-css">Apply</button>
         </div>
         <div id="tabs-3">
-          <div id="js-editor" class="editor"><?= $note->js ?></div>
+          <div id="js-editor" class="editor" title="クリックで適用"><?= $note->js ?></div>
           <input type="hidden" id="ui-js" name="js" value="">
-          <button type="button" name="button" id="apply-js">Apply</button>
         </div>
         <div id="tabs-4">
           <?php

@@ -68,3 +68,8 @@ table {
  .expand {
    width:100%;
  }
+
+// 発光
+.emission {
+  box-shadow: 0 0 1em 0.2em rgba(0, 0, 255, 0.5);
+}
