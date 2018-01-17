@@ -74,14 +74,16 @@ class NotesController extends AppController
   {
     $note = null;
 
-    if(!is_null($id)) {
-      $this->addRelatedLink(['Notes', 'note', $id], "Public View");
-    }
+    $this->gadgets = false;
 
     if(is_null($id)) {
       $note = $this->Notes->newEntity();
     } else {
-      $note = $this->Notes->get($id, ['contain' => ['Modules', 'Tags', 'Sections']]);
+      $note = $this->Notes->get($id, ['contain' => ['Categories', 'Modules', 'Tags', 'Sections']]);
+
+      // 記事のパンくずリストをセットアップ。
+      $this->addCrumb($note->category->name, ['controller' => 'Notes', 'action' => 'notes', $note->category_id]);
+      $this->addCrumb($note->title, ['controller' => 'Notes', 'action' => 'note', $note->id]);
     }
 
     if ($this->request->is(['post', 'put'])) {

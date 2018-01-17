@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
 * Notes/edit.js
 * タブ表示やテキストエディター、シンタックスハイライトやマークダウンの制御
 * リアルタイムプレビュー、フォームサブミット時のデータ整形処理
@@ -8,8 +8,7 @@
 *
 * @依存自作ライブラリ
 * NNC,cAdmin,cNote
-*
-*/
+*******************************************************************************/
 $(function(){
 
   var gAdmin:any = (<any>window).nnc('Admin');
@@ -134,7 +133,7 @@ $(function(){
 
       conf.processData = false;
       conf.contentType =false;
-      conf.success = function (_datas, status, res) {
+      conf.success = function (this:cView, _datas, status, res) {
         console.log(_datas);
         var datas = JSON.parse(_datas);
         var text = "";
@@ -145,7 +144,6 @@ $(function(){
           });
         }
 
-        //console.log(this.editors.md.getCursorPosition());
         this.editors.md.session.insert(this.editors.md.getCursorPosition(), text);
       }.bind(this);
       $.ajax(conf);

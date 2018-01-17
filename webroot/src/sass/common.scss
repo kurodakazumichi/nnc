@@ -73,3 +73,55 @@ table {
 .emission {
   box-shadow: 0 0 1em 0.2em rgba(0, 0, 255, 0.5);
 }
+
+
+
+/*******************************************************************************
+* flex container style
+*******************************************************************************/
+div.flex {
+  display:flex;
+
+  &>.children {
+    flex-grow: 1;
+    width:100%;
+  }
+}
+
+/*******************************************************************************
+* button style
+*******************************************************************************/
+button.nnc {
+  border:none;
+  color:white;
+  font-weight: bold;
+  font-size: 1em;
+  padding:0 0.5em;
+  border-radius: 0.2em;
+  min-width: 5em;
+}
+
+
+
+button.green {
+  background:#37A372;
+
+
+  &:hover {
+    background:#000;
+  }
+}
+
+button.brue {
+  background:#3D93B6;
+  &:hover {
+    background:#000;
+  }
+}
+
+button.red {
+  background:#BE5378;
+  &:hover {
+    background:#000;
+  }
+}

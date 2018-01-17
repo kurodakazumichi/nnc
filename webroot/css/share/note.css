@@ -86,14 +86,16 @@
       display: inline-block;
       border-radius: 1em;
       margin-right: 0.5em; }
-  .contents .note dl dt {
-    background-image: url(/img/pages/home/cat.blue.svg);
-    background-repeat: no-repeat;
-    background-size: 1.4em;
-    padding-left: 1.5em;
-    font-weight: bold;
-    color: #1280A5;
-    font-size: 1.2em; }
+  .contents .note dl {
+    margin-bottom: 1em; }
+    .contents .note dl dt {
+      background-image: url(/img/pages/home/cat.blue.svg);
+      background-repeat: no-repeat;
+      background-size: 1.4em;
+      padding-left: 1.5em;
+      font-weight: bold;
+      color: #1280A5;
+      font-size: 1.2em; }
   .contents .note .syntaxhighlighter a,
   .contents .note .syntaxhighlighter div,
   .contents .note .syntaxhighlighter code,

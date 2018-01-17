@@ -34,7 +34,7 @@ div.message.error {
 }
 
 main div.admin{
-  font-size: 0.6vw;
+  font-size: 1.1vw;
   .paginator {
     ul {
       li {display: inline;}
@@ -123,7 +123,7 @@ main div.admin{
 
       &>li {
         padding:0.3em;
-        font-size:1.3em;
+        font-size:1.0em;
         &:nth-child(odd) {
           background: rgba(0,0,100, 0.05);
         }
@@ -153,8 +153,17 @@ main div.admin{
   }
 
   .inputs {
+    fieldset {
+      legend {
+        font-size: 2em;
+        border-left:1em double #3B98B2;
+        text-indent: 0.5em;
+        font-weight: bold;
+        margin-bottom: 1em;
+      }
+    }
     .input {
-      font-size: 2.0em;
+      font-size: 1.5em;
       line-height: 2.0em;
       margin-bottom:1em;
 
@@ -181,6 +190,10 @@ main div.admin{
     .editor {
       width:100%;
       height:50vh;
+
+      &.mini {
+        height:20vh;
+      }
     }
 
     .error-message {

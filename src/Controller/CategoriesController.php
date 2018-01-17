@@ -32,6 +32,8 @@ class CategoriesController extends AppController
   */
   public function index()
   {
+    $this->gadgets = false;
+    
     // カテゴリ一覧取得(ページャー)
     $categories = $this->paginate(
        $this->Categories

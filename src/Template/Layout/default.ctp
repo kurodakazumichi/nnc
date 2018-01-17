@@ -50,9 +50,6 @@
     </header>
     <?= $this->Flash->render() ?>
     <main>
-      <div class="contents">
-        <?= $this->fetch('content') ?>
-      </div>
       <?php if($element['gadgets']): ?>
       <div class="gadgets">
         <?php foreach($element['gadgets'] as $gadget): ?>
@@ -60,7 +57,11 @@
         <?php endforeach; ?>
         <?= $this->fetch('gadgets') ?>
       </div>
-      <?php endif; ?>
+      <?php endif; ?>      
+      <div class="contents">
+        <?= $this->fetch('content') ?>
+      </div>
+
     </main>
     <footer>
       ©Copyright Since 2017 Nekonecode All rights reserved.

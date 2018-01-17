@@ -4,7 +4,7 @@
 /**
  * base.scss
  */
-html, body {
+html, body, button {
   font-size: 1vw;
   font-family: 'Rounded Mplus 1c', serif; }
 

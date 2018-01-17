@@ -2,18 +2,18 @@
 $(function () {
     class cUIControll {
         show() {
-            this.folder.show();
+            this.container.show();
             return this;
         }
         hide() {
-            this.folder.hide();
+            this.container.hide();
             return this;
         }
     }
     class cUIInput extends cUIControll {
         create(selector) {
             this.input = $(selector);
-            this.folder = this.input.parent();
+            this.container = this.input.parent();
             return this;
         }
         val(value) {
@@ -28,11 +28,11 @@ $(function () {
     }
     class cUIText extends cUIControll {
         create(selector) {
-            this.folder = $(selector);
+            this.container = $(selector);
             return this;
         }
         text(value) {
-            var target = this.folder.find('.text');
+            var target = this.container.find('.text');
             if (value) {
                 target.text(value);
                 return this;
@@ -71,6 +71,17 @@ $(function () {
             $('#' + id).remove();
             $('head').append('<style id="' + id + '">' + css + '</script>');
         }
+        static updateHiddensByArray(_container, name, datas) {
+            var container = $(_container);
+            container.empty();
+            $.each(datas, function (index, value) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: name,
+                    value: value
+                }).appendTo(container);
+            });
+        }
         static aceEditor(id, kind) {
             if (!ace) {
                 console.error("ace is not found.");
@@ -90,6 +101,23 @@ $(function () {
                     break;
             }
             return editor;
+        }
+        static submit(action, method, options = null) {
+            var form = $('<form>', {
+                'action': action,
+                'method': method,
+                'accept-charset': 'UTF-8',
+                'enctype': 'application/x-www-form-unlencoded',
+            });
+            $.each(options, function (name, value) {
+                $('<input>', {
+                    'type': 'hidden',
+                    'name': name,
+                    'value': value,
+                }).appendTo(form);
+            });
+            $('body').append(form);
+            form.submit();
         }
     }
     window.nnc('Admin', cAdmin);

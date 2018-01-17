@@ -18,6 +18,7 @@ class ModulesController extends AppController
   public function beforeFilter($event)
   {
     parent::beforeFilter($event);
+    $this->gadgets = false;
   }
 
   /**
@@ -58,7 +59,7 @@ class ModulesController extends AppController
   public function edit($id = null)
   {
     $module = null;
-
+    $this->loadModel('Assets');
     if(is_null($id)) {
       $module = $this->Modules->newEntity();
     } else {
@@ -77,8 +78,8 @@ class ModulesController extends AppController
       $this->Flash->error(__('The module could not be saved. Please, try again.'));
     }
     $assets = $this->Modules->Assets->find('list', ['valueField' => 'src']);
-    $notes = $this->Modules->Notes->find('list', ['limit' => 200]);
-    $this->set(compact('module', 'assets', 'notes'));
+    $asset_kinds = $this->Assets->getKinds();
+    $this->set(compact('module', 'assets', 'asset_kinds'));
   }
 
   /**
