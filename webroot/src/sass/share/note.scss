@@ -149,6 +149,18 @@
       }
     }
 
+    p,ul,ol,dl,table,div {
+      margin-bottom: 1em;
+    }
+
+    p{
+      font-size: 0.75em;
+      line-height: 2em;
+      background:rgba(0, 255, 0, 0.03);
+      border-radius: 0.2em;
+      padding:0.3em;
+    }
+
     .syntaxhighlighter a,
     .syntaxhighlighter div,
     .syntaxhighlighter code,
@@ -168,6 +180,10 @@
       overflow-y: hidden !important; /*縦スクロールバー消去*/
       font-size: 0.5em !important;
       box-sizing: border-box;
+    }
+
+    .syntaxhighlighter .line {
+      font-size: 1.4em !important;
     }
 
     .syntaxhighlighter .line.alt1 {

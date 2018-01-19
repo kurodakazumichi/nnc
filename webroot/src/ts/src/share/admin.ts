@@ -80,6 +80,17 @@ $(function(){
         return target.text();
       }
     }
+
+    public html(value?:string): any
+    {
+      const target = this.container.find('.text');
+      if(value) {
+        target.html(value);
+        return this;
+      } else {
+        return target.html();
+      }
+    }
   }
 
   /*****************************************************************************
@@ -121,16 +132,43 @@ $(function(){
     static ajaxConf(method: string, url:string): any
     {
       var conf = {
-        type : method,
-        url  : url,
-        data : {},
-        error: function(msg)
+        type    : method,
+        url     : url,
+        data    : {},
+        usually : function(data) { console.log(data); },
+        warning : function(data) { console.log(data); },
+        fainaly : function() { },
+        failed  : function(msg)
         {
           var text = "通信エラーが発生しました。\n" + msg.statusText;
           alert(text);
         }
       };
       return conf;
+    }
+
+    //--------------------------------------------------------------------------
+    // Ajax通信を行う
+    static ajax(conf:any)
+    {
+      // 成功時の処理の振り分けを自動化する。
+      conf.success = function(_msg){
+        var msg = JSON.parse(_msg);
+        (msg.status == 'ok')? conf.usually(msg.data) : conf.warning(msg.data);
+      }
+
+      // エラー時
+      conf.error = function(_msg) {
+        conf.failed(_msg);
+      }
+
+      // 通信完了時の処理
+      conf.complete = function(){
+        conf.fainaly();
+      }
+
+      // ajax開始
+      return $.ajax(conf);
     }
 
     //--------------------------------------------------------------------------

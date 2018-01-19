@@ -213,6 +213,6 @@ class NotesController extends AppController
       move_uploaded_file($file['tmp_name'], WWW_UPLOAD . $file['name']);
       $url[] = WWW_UPLOAD_URL . $file['name'];
     }
-    $this->outputJsonText($url, 'ok');
+    $this->outputJsonText($url);
   }
 }

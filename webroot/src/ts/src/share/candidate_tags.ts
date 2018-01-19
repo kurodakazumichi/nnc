@@ -79,9 +79,6 @@ $(function(){
 
         // 500ms後に検索を開始
         me.searchTimer = setTimeout(me.search.bind(me), 150);
-      })
-      .on('blur', function(){
-        me.removeListItem();
       });
     }
 
@@ -136,7 +133,7 @@ $(function(){
       {
         var json = JSON.parse(msg);
         if(json.status = "ok") {
-          this.createList(json.msg);
+          this.createList(json.data);
         }
       }.bind(this);
 
@@ -199,7 +196,7 @@ $(function(){
       {
         data = JSON.parse(data);
         if(data.status = "ok") {
-          this.addRelatedTag(data.msg.id, data.msg.name);
+          this.addRelatedTag(data.data.id, data.data.name);
         }
       }.bind(this);
 

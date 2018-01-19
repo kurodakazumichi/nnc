@@ -41,6 +41,16 @@ $(function () {
                 return target.text();
             }
         }
+        html(value) {
+            const target = this.container.find('.text');
+            if (value) {
+                target.html(value);
+                return this;
+            }
+            else {
+                return target.html();
+            }
+        }
     }
     class cUI {
         static text(selector) {
@@ -60,12 +70,28 @@ $(function () {
                 type: method,
                 url: url,
                 data: {},
-                error: function (msg) {
+                usually: function (data) { console.log(data); },
+                warning: function (data) { console.log(data); },
+                fainaly: function () { },
+                failed: function (msg) {
                     var text = "通信エラーが発生しました。\n" + msg.statusText;
                     alert(text);
                 }
             };
             return conf;
+        }
+        static ajax(conf) {
+            conf.success = function (_msg) {
+                var msg = JSON.parse(_msg);
+                (msg.status == 'ok') ? conf.usually(msg.data) : conf.warning(msg.data);
+            };
+            conf.error = function (_msg) {
+                conf.failed(_msg);
+            };
+            conf.complete = function () {
+                conf.fainaly();
+            };
+            return $.ajax(conf);
         }
         static updateStyle(id, css) {
             $('#' + id).remove();

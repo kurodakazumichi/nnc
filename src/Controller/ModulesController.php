@@ -68,16 +68,29 @@ class ModulesController extends AppController
       ]);
     }
 
+    $this->loadModel('ModulesAssets');
+
+    $params = $this->request->getData();
+
     if ($this->request->is(['patch', 'post', 'put'])) {
-      $module = $this->Modules->patchEntity($module, $this->request->getData());
+      $module = $this->Modules->patchEntity($module, $params);
       if ($this->Modules->save($module)) {
+
+        foreach($params['assets']['_ids'] as $key => $asset_id) {
+          $entity = $this->ModulesAssets->find()->where(['ModulesAssets.module_id' => $module->id, 'ModulesAssets.asset_id' => $asset_id])->first();
+          $entity = $this->ModulesAssets->patchEntity($entity, ['order_no' => $key]);
+          $this->ModulesAssets->save($entity);
+        }
+
+
         $this->Flash->success(__('The module has been saved.'));
 
         return $this->redirect(['action' => 'index']);
       }
       $this->Flash->error(__('The module could not be saved. Please, try again.'));
     }
-    $assets = $this->Modules->Assets->find('list', ['valueField' => 'src']);
+    $assets = $this->ModulesAssets->find()->select(['Assets.id', 'Assets.src'])->Contain('Assets')->where(['ModulesAssets.module_id' => $id])->order(['ModulesAssets.order_no']);
+    //$assets = $this->Modules->Assets->find('list', ['valueField' => 'src'])->order(['ModulesAssets.order_no']);
     $asset_kinds = $this->Assets->getKinds();
     $this->set(compact('module', 'assets', 'asset_kinds'));
   }

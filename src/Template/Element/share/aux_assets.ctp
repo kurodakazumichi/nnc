@@ -28,29 +28,6 @@ $(function(){ nnc("AuxAssets").create('#aux-assets'); });
     <p class="text">Error</p>
   </div>
 
-  <div class="flex">
-    <div class="children p1111">
-      <b>Related</b>
-      <div class="sortable">
-        <div id="aux-assets-related" class="tbody">
-          <?php foreach($assets as $asset): ?>
-            <ul data-id="<?= $asset->id ?>">
-              <li style="width:100%"><span><?= $asset->src ?></span></li>
-              <li><a data-id="<?= $asset->id ?>">✖</a></li>
-            </ul>
-          <?php endforeach; ?>
-        </div>
-      </div>
-    </div>
-    <div class="children p1111">
-      <b>Search</b>
-      <input type="text" id="aux-assets-search">
-      <ul id="aux-assets-candidate">
-        <li data-id="4">/vender/hoge.css</li>
-        <li data-id="5">/vender/hoge.js</li>
-      </ul>
-    </div>
-  </div>
   <table id="aux-assets-add">
     <tr>
       <th><label>kind</label></th><th><label>memo</label></th><th><label>src</label></th><th>&nbsp;</th>
@@ -68,6 +45,30 @@ $(function(){ nnc("AuxAssets").create('#aux-assets'); });
       <td><button class="nnc green" type="button">登録</button></td>
     </tr>
   </table>
+
+  <div class="flex">
+    <div class="children p1111">
+      <b>Related</b>
+      <div class="sortable">
+        <div id="aux-assets-related" class="tbody">
+          <?php if($assets): ?>
+            <?php foreach($assets as $asset): ?>
+              <ul data-id="<?= $asset->Assets->id ?>">
+                <li style="width:100%"><span><?= $asset->Assets->src ?></span></li>
+                <li><a data-id="<?= $asset->Assets->id ?>">✖</a></li>
+              </ul>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+    <div class="children p1111">
+      <b>Search</b>
+      <input type="text" id="aux-assets-search" autocomplete="off">
+      <ul id="aux-assets-candidate"></ul>
+    </div>
+  </div>
+
 
   <div id="aux-assets-input"></div>
 </div>

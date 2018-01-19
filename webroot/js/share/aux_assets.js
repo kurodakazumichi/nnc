@@ -44,11 +44,8 @@ $(function () {
                 me.onClickRelatedDelete(this);
             });
             $(this.at.searchForm)
-                .on('keyup', function () {
-                me.onKeyupSearch();
-            })
-                .on('blur', function () {
-                me.onBlurSearch();
+                .on('keyup', function (e) {
+                me.onKeyupSearch(e);
             });
             $(document)
                 .on('click', this.at.candidateItem, function () {
@@ -57,6 +54,7 @@ $(function () {
             $(this.at.addButton).on('click', function () {
                 me.onClickAddButton();
             });
+            this.updateInput();
         }
         onStartSortRelated(event, ui) {
             ui.item.addClass("active");
@@ -71,20 +69,17 @@ $(function () {
             this.removeRelated($(target).attr('data-id'));
             this.updateInput();
         }
-        onKeyupSearch() {
-            console.log("onKeyupSearch");
+        onKeyupSearch(e) {
             if (this.searchTimer) {
                 clearTimeout(this.searchTimer);
             }
             this.searchTimer = setTimeout(this.ajaxSearch.bind(this), 200);
         }
-        onBlurSearch() {
-            console.log("onBlurSearch");
-        }
         onClickCandidateItem(_target) {
             var target = $(_target);
             var id = target.attr('data-id');
-            var text = target.text().trim();
+            var text = target.attr('data-src');
+            this.removeCandidate();
             this.addRelated(id, text);
             this.updateInput();
         }
@@ -98,7 +93,6 @@ $(function () {
             this.ajaxAdd(data);
         }
         removeRelated(id) {
-            console.log("removeRelated");
             $(this.at.relatedContainer).find(`[data-id=${id}]`).remove();
         }
         addRelated(id, text) {
@@ -106,10 +100,30 @@ $(function () {
                 .appendTo($(this.at.relatedContainer));
         }
         ajaxSearch() {
-            console.log("ajaxSearch");
+            var conf = gAdmin.ajaxConf('get', '/ajaxs/asset');
+            conf.data = { keyword: $(this.at.searchForm).val() };
+            conf.usually = function (data) {
+                this.updateCandidate(data);
+            }.bind(this);
+            gAdmin.ajax(conf);
         }
         ajaxAdd(data) {
-            console.log("ajaxAdd");
+            var conf = gAdmin.ajaxConf('post', '/ajaxs/asset');
+            conf.data = data;
+            conf.usually = function (data) {
+                this.addRelated(data.id, data.src);
+                this.updateInput();
+            }.bind(this);
+            conf.warning = function (data) {
+                let text = "";
+                $.each(data, function (name, errors) {
+                    $.each(errors, function (type, error) {
+                        text += `[${name}]${error}<br>`;
+                    });
+                });
+                this.uiError.html(text).show();
+            }.bind(this);
+            gAdmin.ajax(conf);
         }
         serialize() {
             return $(this.at.relatedContainer).sortable("toArray", { attribute: 'data-id' });
@@ -119,6 +133,19 @@ $(function () {
         }
         removeCandidate() {
             $(this.at.candidateContainer).empty();
+        }
+        updateCandidate(datas) {
+            this.removeCandidate();
+            var container = $(this.at.candidateContainer);
+            $.each(datas, function (key, data) {
+                $('<li>')
+                    .attr({
+                    'data-id': data.id,
+                    'data-src': data.src,
+                })
+                    .text(`${data.src}\n(${data.memo})`)
+                    .appendTo(container);
+            }.bind(this));
         }
     }
     window.nnc("AuxAssets", cAuxAssets);

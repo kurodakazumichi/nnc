@@ -11,13 +11,13 @@
             return this.modules[name];
         }
     }
-    var ins = new NNC();
+    var _nnc = new NNC();
     window.nnc = function (name, mod) {
         if (mod) {
-            ins.setModule(name, mod);
+            _nnc.setModule(name, mod);
         }
         else {
-            return ins.getModule(name);
+            return _nnc.getModule(name);
         }
     };
 })();

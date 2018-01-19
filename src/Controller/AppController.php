@@ -18,8 +18,7 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\NotFoundException;
+
 
 /**
 * Application Controller
@@ -143,20 +142,14 @@ class AppController extends Controller
   {
     parent::beforeFilter($event);
 
-    $this->buildFirstBreadCrumb();
+    // Ajax以外の場合
+    if(!$this->request->is("ajax"))
+    {
+      // パンくずリストの先頭を設定
+      $this->buildFirstBreadCrumb();
 
-    // beforeRenderで呼ぶと例外時にInternal server errorになる。
-    $this->set('logined', $this->isLogin());
-
-    // AjaxのみのアクションにAjax以外でアクセスされた場合は例外で処理する。
-    if(!$this->request->is("ajax")) {
-      if(in_array($this->request->action, $this->ajaxOnlyActions)){
-        if(Configure::read('debug')) {
-          throw new BadRequestException(__("Ajaxでのみアクセス可能です。"));
-        } else {
-          throw new NotFoundException();
-        }
-      }
+      // beforeRenderで呼ぶと例外時にInternal server errorになる。
+      $this->set('logined', $this->isLogin());
     }
   }
 
@@ -358,12 +351,11 @@ class AppController extends Controller
   /**
   * Viewを使用せず、JSONテキストを出力して終了します。
   */
-  protected function outputJsonText($msg, $status)
+  protected function outputJsonText($data, $ok = true)
   {
     $this->autoRender = false;
     header("Content-Type: application/json; charset=utf-8");
-    $json = ["msg" => $msg, "status" => $status];
+    $json = ["data" => $data, "status" => ($ok)? 'ok':'ng'];
     echo json_encode($json);
   }
-
 }

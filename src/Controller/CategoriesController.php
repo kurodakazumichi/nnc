@@ -33,7 +33,7 @@ class CategoriesController extends AppController
   public function index()
   {
     $this->gadgets = false;
-    
+
     // カテゴリ一覧取得(ページャー)
     $categories = $this->paginate(
        $this->Categories
@@ -148,15 +148,15 @@ class CategoriesController extends AppController
     // 想定されるエラーチェック
     if($category->getError("name")) {
       $errors = $category->getError("name");
-      $this->outputJsonText(array_shift($errors), "error");
+      $this->outputJsonText(array_shift($errors), false);
       return;
     }
 
     // 保存
     if($this->Categories->save($category)) {
-      $this->outputJsonText($category->name, "ok");
+      $this->outputJsonText($category->name);
     } else {
-      $this->outputJsonText(__('システムエラー'), "error");
+      $this->outputJsonText(__('システムエラー'), false);
     }
   }
 }

@@ -29,7 +29,7 @@ echo $this->Html->script('share/note');
   overflow:scroll;
   overflow-x:hidden;
   height:50vw;
-  font-size:0.96em;
+  font-size:1.1em;
 }
 </style>
 

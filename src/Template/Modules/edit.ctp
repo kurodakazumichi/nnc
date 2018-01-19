@@ -23,7 +23,7 @@
     <?= $this->Form->create($module, ['id' => 'myform']) ?>
       <fieldset>
         <legend>Assets</legend>
-        <?= $this->element('share/aux_assets', ['assets' => $module->assets, 'kinds' => $asset_kinds]); ?>
+        <?= $this->element('share/aux_assets', ['assets' => $assets, 'kinds' => $asset_kinds]); ?>
       </fieldset>
       <fieldset>
         <legend>Module</legend>

@@ -96,6 +96,14 @@
       font-weight: bold;
       color: #1280A5;
       font-size: 1.2em; }
+  .contents .note p, .contents .note ul, .contents .note ol, .contents .note dl, .contents .note table, .contents .note div {
+    margin-bottom: 1em; }
+  .contents .note p {
+    font-size: 0.75em;
+    line-height: 2em;
+    background: rgba(0, 255, 0, 0.03);
+    border-radius: 0.2em;
+    padding: 0.3em; }
   .contents .note .syntaxhighlighter a,
   .contents .note .syntaxhighlighter div,
   .contents .note .syntaxhighlighter code,
@@ -116,6 +124,8 @@
     /*縦スクロールバー消去*/
     font-size: 0.5em !important;
     box-sizing: border-box; }
+  .contents .note .syntaxhighlighter .line {
+    font-size: 1.4em !important; }
   .contents .note .syntaxhighlighter .line.alt1 {
     background-color: #FFFFFF !important;
     /*偶数行背景色*/ }

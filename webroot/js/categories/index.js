@@ -26,7 +26,7 @@ $(function () {
                     location.reload();
                 }
                 else {
-                    this.error.text(msg.msg).show();
+                    this.error.text(msg.data).show();
                 }
             }.bind(this);
             $.ajax(conf);
@@ -141,11 +141,11 @@ $(function () {
             conf.success = function (msg, status) {
                 msg = JSON.parse(msg);
                 if (msg.status == "ok") {
-                    text.text(msg.msg);
+                    text.text(msg.data);
                     this.blurFinalizeOfName(text, input, error);
                 }
                 else {
-                    error.show().find("p").text(msg.msg);
+                    error.show().find("p").text(msg.data);
                     ui.focus();
                 }
             }.bind(this);

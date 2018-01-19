@@ -37,9 +37,6 @@ $(function () {
                     clearTimeout(me.searchTimer);
                 }
                 me.searchTimer = setTimeout(me.search.bind(me), 150);
-            })
-                .on('blur', function () {
-                me.removeListItem();
             });
         }
         serialize() {
@@ -68,7 +65,7 @@ $(function () {
             conf.success = function (msg, status, response) {
                 var json = JSON.parse(msg);
                 if (json.status = "ok") {
-                    this.createList(json.msg);
+                    this.createList(json.data);
                 }
             }.bind(this);
             $.ajax(conf);
@@ -102,7 +99,7 @@ $(function () {
             conf.success = function (data, status, responce) {
                 data = JSON.parse(data);
                 if (data.status = "ok") {
-                    this.addRelatedTag(data.msg.id, data.msg.name);
+                    this.addRelatedTag(data.data.id, data.data.name);
                 }
             }.bind(this);
             $.ajax(conf);

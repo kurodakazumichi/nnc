@@ -147,12 +147,9 @@ $(function(){
 
       // 検索フォーム
       $(this.at.searchForm)
-        .on('keyup', function(){
-          me.onKeyupSearch();
+        .on('keyup', function(e){
+          me.onKeyupSearch(e);
         })
-        .on('blur', function(){
-          me.onBlurSearch();
-        });
 
       // アセット候補
       $(document)
@@ -164,6 +161,9 @@ $(function(){
       $(this.at.addButton).on('click', function(){
         me.onClickAddButton();
       });
+
+      // インプットを生成
+      this.updateInput();      
     }
 
     //==========================================================================
@@ -195,25 +195,20 @@ $(function(){
 
     //--------------------------------------------------------------------------
     // 関連アセットの削除ボタンが押された
-    private onClickRelatedDelete(target){
+    private onClickRelatedDelete(target)
+    {
       this.removeRelated($(target).attr('data-id'));
       this.updateInput();
     }
 
     //--------------------------------------------------------------------------
     // 検索入力でキーが押された
-    private onKeyupSearch(){
-      console.log("onKeyupSearch");
+    private onKeyupSearch(e)
+    {
       if(this.searchTimer) {
         clearTimeout(this.searchTimer);
       }
       this.searchTimer = setTimeout(this.ajaxSearch.bind(this), 200);
-    }
-
-    //--------------------------------------------------------------------------
-    // 検索入力からフォーカスが外れた
-    private onBlurSearch (){
-      console.log("onBlurSearch");
     }
 
     //--------------------------------------------------------------------------
@@ -222,15 +217,16 @@ $(function(){
     {
       var target = $(_target);
       var id = target.attr('data-id');
-      var text = target.text().trim();
+      var text = target.attr('data-src');
+      this.removeCandidate();
       this.addRelated(id, text);
       this.updateInput();
     }
 
     //--------------------------------------------------------------------------
     // アセット登録ボタンが押された
-    private onClickAddButton(){
-
+    private onClickAddButton()
+    {
       var data = {
         kind: $(this.at.addItemKind).val(),
         memo: $(this.at.addItemMemo).val(),
@@ -248,7 +244,6 @@ $(function(){
     // 関連アセットの削除
     private removeRelated(id)
     {
-      console.log("removeRelated");
       $(this.at.relatedContainer).find(`[data-id=${id}]`).remove();
     }
 
@@ -262,14 +257,50 @@ $(function(){
 
     //--------------------------------------------------------------------------
     // Ajaxによる検索
-    private ajaxSearch(){
-      console.log("ajaxSearch");
+    private ajaxSearch()
+    {
+      var conf:any = gAdmin.ajaxConf('get', '/ajaxs/asset');
+
+      // データセット
+      conf.data = { keyword:$(this.at.searchForm).val() };
+
+      // 通常時の処理
+      conf.usually = function(data) {
+        this.updateCandidate(data);
+      }.bind(this);
+
+      // Ajax通信開始
+      gAdmin.ajax(conf);
     }
 
     //--------------------------------------------------------------------------
     // Ajaxによる新規アセット登録
-    private ajaxAdd(data){
-      console.log("ajaxAdd");
+    private ajaxAdd(data)
+    {
+      var conf:any = gAdmin.ajaxConf('post', '/ajaxs/asset');
+
+      // データセット
+      conf.data = data;
+
+      // 通常時の処理
+      conf.usually = function(data) {
+        this.addRelated(data.id, data.src);
+        this.updateInput();
+      }.bind(this);
+
+      // 異常時の処理
+      conf.warning = function(data) {
+        let text:string = "";
+        $.each(data, function(name, errors){
+          $.each(errors, function(type, error){
+            text += `[${name}]${error}<br>`;
+          });
+        });
+        this.uiError.html(text).show();
+      }.bind(this);
+
+      // Ajax通信開始
+      gAdmin.ajax(conf);
     }
 
     //--------------------------------------------------------------------------
@@ -289,9 +320,29 @@ $(function(){
       );
     }
 
+    //--------------------------------------------------------------------------
     // 候補を削除する。
     private removeCandidate(){
       $(this.at.candidateContainer).empty();
+    }
+
+    //--------------------------------------------------------------------------
+    // 候補を更新する
+    private updateCandidate(datas) {
+      this.removeCandidate();
+      var container = $(this.at.candidateContainer);
+
+      $.each(datas, function(key, data)
+      {
+        $('<li>')
+          .attr({
+            'data-id': data.id,
+            'data-src': data.src,
+          })
+          .text(`${data.src}\n(${data.memo})`)
+          .appendTo(container);
+
+      }.bind(this));
     }
   }
 

@@ -12,13 +12,14 @@
   * 親要素のulにfont-size:0を指定して解決も可能だが、レスポンシブをしているので都合が悪い。
   * 対策としてli要素間を<!-- -->でコメントでつなぐ事で改行をなくして対応。
   */?>
-  <?php if($tags): ?>
+
   <ul id="candidate-tags-related">
+    <?php if($tags): ?>
     <?php foreach($tags as $tag): ?><!--
     --><li data-id="<?= $tag->id ?>"><span><?= $tag->name ?></span><a>✖</a></li><!--
-    --><?php endforeach; ?><!--
+    --><?php endforeach; ?><?php endif; ?><!--
   --></ul>
-  <?php endif; ?>
+
   <input type="text" id="candidate-tags-search" autocomplete="off">
 
   <ul id="candidate-tags-list" class="stripe"></ul>

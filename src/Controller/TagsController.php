@@ -64,7 +64,7 @@ class TagsController extends AppController
     }
 
     $result = ['id' => $tag->id, 'name' => $tag->name];
-    $this->outputJsonText($result, "ok");
+    $this->outputJsonText($result);
   }
 
   /**
@@ -144,7 +144,7 @@ class TagsController extends AppController
       $result[] = ['id' => -1, 'name' => $keyword, 'count' => 0];
     }
 
-    $this->outputJsonText($result, "ok");
+    $this->outputJsonText($result);
 
   }
 }
